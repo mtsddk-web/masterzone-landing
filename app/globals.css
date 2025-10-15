@@ -3,9 +3,9 @@
 @tailwind utilities;
 
 :root {
-  --primary: #4F46E5;
-  --secondary: #10B981;
-  --accent: #F59E0B;
+  --primary: #194692;
+  --secondary: #bfd8f0;
+  --accent: #194692;
 }
 
 * {
@@ -31,11 +31,11 @@ h1, h2, h3, h4, h5, h6 {
 
 @layer components {
   .btn-primary {
-    @apply bg-primary hover:bg-indigo-700 text-white font-semibold py-3 px-8 rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl;
+    @apply bg-primary hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl;
   }
 
   .btn-secondary {
-    @apply bg-white hover:bg-gray-50 text-primary font-semibold py-3 px-8 rounded-lg border-2 border-primary transition-all duration-300;
+    @apply bg-white hover:bg-lightblue text-primary font-semibold py-3 px-8 rounded-lg border-2 border-primary transition-all duration-300;
   }
 
   .section-padding {

@@ -1,23 +1,22 @@
 ---
-sectionTitle: "Co Zyskujesz w MasterZone?"
-sectionSubtitle: "Program kompleksowego wsparcia w walce z rozproszeniem"
+sectionTitle: "Środowisko Skupienia"
+sectionSubtitle: "Skupienie zamiast siłowania się z dyscypliną"
+description: "Bloki pracy głębokiej na żywo | Wspólne planowanie z przedsiębiorcami | Partnerzy odpowiedzialności, którzy Cię wspierają"
 benefits:
-  - icon: "🎯"
-    title: "Bloki Głębokiej Pracy"
-    description: "Wspólne sesje skupienia z innymi członkami społeczności. Pracuj głęboko, bez rozpraszaczy, w towarzystwie zmotywowanych ludzi."
-  - icon: "📚"
-    title: "Kursy i Zasoby"
-    description: "Dostęp do sprawdzonych technik zarządzania czasem, fokusem i produktywnością. Od podstaw do zaawansowanych strategii."
-  - icon: "👥"
-    title: "Społeczność"
-    description: "Wsparcie grupy osób, które przechodzą tę samą transformację. Dziel się postępami, wyzwaniami i sukcesami."
-  - icon: "📅"
-    title: "Wspólne Planowanie"
-    description: "Cotygodniowe sesje planowania celów. Zaplanuj tydzień z innymi i trzymaj się planu dzięki accountability."
-  - icon: "🧠"
-    title: "Narzędzia Fokusowania"
-    description: "Sprawdzone techniki: Pomodoro, Deep Work, Cal Newport's principles. Wszystko w jednym miejscu."
-  - icon: "📈"
-    title: "Śledzenie Postępów"
-    description: "Monitoruj swoje postępy, buduj nawyki i obserwuj jak Twoja produktywność rośnie z tygodnia na tydzień."
+  - icon: "✅"
+    title: "Bloki pracy głębokiej na żywo"
+    description: "Wspólne sesje skupienia, gdzie pracujesz z innymi przedsiębiorcami. Bez rozpraszaczy, z pełną koncentracją."
+    checked: true
+  - icon: "✅"
+    title: "Wspólne planowanie z przedsiębiorcami"
+    description: "Cotygodniowe sesje planowania, gdzie razem ustalasz cele, priorytety i konkretne działania na tydzień."
+    checked: true
+  - icon: "✅"
+    title: "Partnerzy odpowiedzialności, którzy Cię wspierają"
+    description: "Znajdziesz ludzi, którzy trzymają Cię za słowo i pomagają dotrzymać zobowiązań."
+    checked: true
+  - icon: "✅"
+    title: "Zero rozpraszaczy, pełne skupienie"
+    description: "Środowisko stworzone po to, żeby pracować głęboko — bez notyfikacji, bez chaosu."
+    checked: true
 ---

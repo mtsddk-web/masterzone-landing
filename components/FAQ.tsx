@@ -9,10 +9,13 @@ interface FAQItem {
 
 interface FAQProps {
   sectionTitle: string;
-  faqs: FAQItem[];
+  faqs?: FAQItem[];
+  questions?: FAQItem[];
 }
 
-export default function FAQ({ sectionTitle, faqs }: FAQProps) {
+export default function FAQ({ sectionTitle, faqs, questions }: FAQProps) {
+  // Use whichever array is provided
+  const items = faqs || questions || [];
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   const toggleFAQ = (index: number) => {
@@ -29,7 +32,7 @@ export default function FAQ({ sectionTitle, faqs }: FAQProps) {
 
         {/* FAQ Items */}
         <div className="max-w-3xl mx-auto space-y-4">
-          {faqs.map((faq, index) => (
+          {items.map((faq, index) => (
             <div
               key={index}
               className="bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300"

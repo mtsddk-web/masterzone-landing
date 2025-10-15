@@ -1,6 +1,13 @@
 ---
-headline: "Gotowy na Transformację?"
-subheadline: "Dołącz do MasterZone już dziś i zacznij pracować głęboko, skupiać się na tym co ważne i osiągać więcej w krótszym czasie."
-buttonText: "Dołącz za $9/miesiąc"
-buttonUrl: "https://www.skool.com/masterzone"
+headline: "Gotowy na Zmianę?"
+subheadline: "Dołącz do społeczności MasterZone i zacznij pracować w skupieniu — już dziś."
+description: "Zamiast walczyć z chaosem sam, dołącz do środowiska, które trzyma Cię w skupieniu. Codzienne bloki pracy głębokiej, wspólne planowanie i społeczność, która wspiera."
+ctaText: "Rozpocznij Teraz"
+ctaUrl: "https://www.skool.com/masterzone"
+secondaryText: "$9/miesiąc · Anuluj w każdej chwili"
+features:
+  - "✅ 30+ aktywnych członków"
+  - "✅ 120+ godzin pracy głębokiej miesięcznie"
+  - "✅ Onboarding 1:1 w pierwszym tygodniu"
+  - "✅ Gwarancja satysfakcji"
 ---

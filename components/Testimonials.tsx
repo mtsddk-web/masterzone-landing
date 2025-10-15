@@ -27,7 +27,7 @@ export default function Testimonials({ sectionTitle, testimonials }: Testimonial
               className="bg-gray-50 rounded-xl p-8 shadow-md hover:shadow-xl transition-all duration-300"
             >
               {/* Quote Icon */}
-              <div className="text-indigo-600 text-4xl mb-4">"</div>
+              <div className="text-navy text-4xl mb-4">"</div>
 
               {/* Content */}
               <p className="text-gray-700 mb-6 leading-relaxed italic">
@@ -43,7 +43,7 @@ export default function Testimonials({ sectionTitle, testimonials }: Testimonial
                     className="w-12 h-12 rounded-full mr-4 object-cover"
                   />
                 ) : (
-                  <div className="w-12 h-12 rounded-full mr-4 bg-indigo-600 flex items-center justify-center text-white font-bold">
+                  <div className="w-12 h-12 rounded-full mr-4 bg-navy flex items-center justify-center text-white font-bold">
                     {testimonial.name.charAt(0)}
                   </div>
                 )}

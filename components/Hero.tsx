@@ -5,17 +5,21 @@ import { useState } from "react";
 interface HeroProps {
   headline: string;
   subheadline: string;
+  description?: string;
   ctaText: string;
   ctaUrl: string;
   statsText: string;
+  secondaryCta?: string;
 }
 
 export default function Hero({
   headline,
   subheadline,
+  description,
   ctaText,
   ctaUrl,
-  statsText
+  statsText,
+  secondaryCta
 }: HeroProps) {
   const [email, setEmail] = useState("");
 
@@ -26,7 +30,7 @@ export default function Hero({
   };
 
   return (
-    <section className="bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 text-white section-padding min-h-screen flex items-center">
+    <section className="bg-gradient-to-br from-navy via-primary to-blue-800 text-white section-padding min-h-screen flex items-center">
       <div className="container-custom text-center">
         {/* Stats Badge */}
         <div className="inline-block mb-6 bg-white/20 backdrop-blur-sm rounded-full px-6 py-2 text-sm font-medium">
@@ -39,9 +43,16 @@ export default function Hero({
         </h1>
 
         {/* Subheadline */}
-        <p className="text-xl md:text-2xl mb-12 max-w-3xl mx-auto text-white/90">
+        <p className="text-xl md:text-2xl mb-6 max-w-3xl mx-auto text-white/90">
           {subheadline}
         </p>
+
+        {/* Description */}
+        {description && (
+          <p className="text-lg md:text-xl mb-12 max-w-4xl mx-auto text-white/80">
+            {description}
+          </p>
+        )}
 
         {/* CTA Form */}
         <form onSubmit={handleSubmit} className="max-w-md mx-auto mb-8">
@@ -56,7 +67,7 @@ export default function Hero({
             />
             <button
               type="submit"
-              className="btn-primary bg-white text-indigo-600 hover:bg-gray-100 whitespace-nowrap"
+              className="btn-primary bg-white text-navy hover:bg-lightblue whitespace-nowrap"
             >
               {ctaText}
             </button>
