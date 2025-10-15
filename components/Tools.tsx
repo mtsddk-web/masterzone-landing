@@ -1,3 +1,7 @@
+"use client";
+
+import { trackEvent } from "./FacebookPixel";
+
 interface Tool {
   icon: string;
   title: string;
@@ -24,6 +28,10 @@ export default function Tools({
 }: ToolsProps) {
   // Use whichever array is provided
   const items = tools || support || community || [];
+
+  // Check if this is the community section
+  const isCommunitySection = !!community;
+
   return (
     <section className="section-padding bg-gray-50">
       <div className="container-custom">
@@ -39,7 +47,7 @@ export default function Tools({
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+        <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto mb-12">
           {items.map((tool, index) => (
             <div
               key={index}
@@ -59,6 +67,21 @@ export default function Tools({
             </div>
           ))}
         </div>
+
+        {/* CTA Button - only for community section */}
+        {isCommunitySection && (
+          <div className="text-center">
+            <a
+              href="https://www.skool.com/masterzone"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => trackEvent("Lead", { source: "community_cta_button" })}
+              className="inline-block bg-lightblue hover:bg-blue-400 text-navy font-bold py-4 px-12 rounded-lg transition-all duration-300 text-lg shadow-xl hover:shadow-2xl transform hover:-translate-y-1"
+            >
+              Chcę pracować w pełnym skupieniu
+            </a>
+          </div>
+        )}
       </div>
     </section>
   );
