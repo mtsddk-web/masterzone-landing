@@ -71,11 +71,6 @@ export default function Hero({
           )}
         </div>
 
-        {/* Trust Badge */}
-        <p className="text-sm text-white/70">
-          🔒 Dołącz za jedyne 9$ miesięcznie. Anuluj w każdej chwili.
-        </p>
-
         {/* Scroll Indicator */}
         <div className="mt-16 animate-bounce">
           <svg

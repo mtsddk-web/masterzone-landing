@@ -28,9 +28,6 @@ export default function CTA({ headline, subheadline, buttonText, buttonUrl }: CT
         >
           {buttonText}
         </a>
-        <p className="mt-8 text-sm text-blue-200">
-          Dołącz za $9/miesiąc • Anuluj w każdej chwili • Bez ryzyka
-        </p>
       </div>
     </section>
   );
