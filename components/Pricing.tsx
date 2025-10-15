@@ -82,7 +82,7 @@ export default function Pricing({
                   href={plan.ctaUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block w-full bg-white text-navy text-center font-bold py-4 px-8 rounded-lg hover:bg-lightblue transition-all duration-300 text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+                  className="block w-full bg-gradient-to-r from-lightblue to-blue-400 hover:from-blue-400 hover:to-lightblue text-navy text-center font-bold py-4 px-8 rounded-lg transition-all duration-300 text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1"
                 >
                   {plan.ctaText}
                 </a>

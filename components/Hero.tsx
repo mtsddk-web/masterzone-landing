@@ -1,7 +1,5 @@
 "use client";
 
-import { useState } from "react";
-
 interface HeroProps {
   headline: string;
   subheadline: string;
@@ -21,14 +19,6 @@ export default function Hero({
   statsText,
   secondaryCta
 }: HeroProps) {
-  const [email, setEmail] = useState("");
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Redirect to Skool with email
-    window.location.href = `${ctaUrl}?email=${encodeURIComponent(email)}`;
-  };
-
   return (
     <section className="bg-gradient-to-br from-navy via-primary to-blue-800 text-white section-padding min-h-screen flex items-center">
       <div className="container-custom text-center">
@@ -54,25 +44,28 @@ export default function Hero({
           </p>
         )}
 
-        {/* CTA Form */}
-        <form onSubmit={handleSubmit} className="max-w-md mx-auto mb-8">
-          <div className="flex flex-col sm:flex-row gap-4">
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Twój email"
-              required
-              className="flex-1 px-6 py-4 rounded-lg text-gray-900 text-lg focus:outline-none focus:ring-4 focus:ring-white/50"
-            />
-            <button
-              type="submit"
-              className="btn-primary bg-white text-navy hover:bg-lightblue whitespace-nowrap"
+        {/* CTA Buttons */}
+        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
+          <a
+            href={ctaUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block bg-gradient-to-r from-lightblue to-blue-400 hover:from-blue-400 hover:to-lightblue text-navy font-bold py-4 px-12 rounded-lg transition-all duration-300 text-lg shadow-xl hover:shadow-2xl transform hover:-translate-y-1"
+          >
+            {ctaText}
+          </a>
+
+          {secondaryCta && (
+            <a
+              href={ctaUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white font-semibold py-4 px-12 rounded-lg border-2 border-white/30 transition-all duration-300 text-lg"
             >
-              {ctaText}
-            </button>
-          </div>
-        </form>
+              {secondaryCta}
+            </a>
+          )}
+        </div>
 
         {/* Trust Badge */}
         <p className="text-sm text-white/70">
