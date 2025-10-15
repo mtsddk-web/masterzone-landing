@@ -2,6 +2,36 @@
 
 Landing page dla społeczności MasterZone - program walki z rozproszeniem i budowania głębokiej pracy.
 
+## 🎯 Dla Radka: Jak Edytować Treść (NAJSZYBSZA METODA)
+
+### Edycja przez GitHub (zero instalacji, działa w przeglądarce):
+
+1. **Wejdź na:** https://github.com/mtsddk-web/masterzone-landing
+2. **Otwórz folder** `content/`
+3. **Kliknij na plik** który chcesz edytować (np. `hero.md`)
+4. **Kliknij ikonę ołówka** (Edit this file) w prawym górnym rogu
+5. **Zmień tekst** między `---` (to są dane strony)
+6. **Na dole strony:**
+   - W "Commit message" wpisz co zmieniłeś (np. "Zmieniam nagłówek hero")
+   - Kliknij zielony przycisk **"Commit changes"**
+7. **GOTOWE!** Vercel automatycznie zdeployuje zmiany (2-3 minuty)
+8. **Sprawdź zmiany na:** https://rozproszenie.masterzone.edu.pl
+
+### Co możesz edytować:
+- `content/hero.md` - Główny nagłówek i CTA
+- `content/benefits.md` - Lista korzyści
+- `content/pricing.md` - Sekcja z cennikiem
+- `content/testimonials.md` - Opinie klientów
+- `content/faq.md` - Pytania i odpowiedzi
+- `content/cta.md` - Końcowe wezwanie do działania
+
+### Przykład: Jak zmienić nagłówek?
+1. Otwórz `content/hero.md`
+2. Znajdź linię: `headline: "Koniec z Rozproszeniem..."`
+3. Zmień na: `headline: "Twój Nowy Tekst"`
+4. Zapisz (Commit changes)
+5. Poczekaj 2-3 minuty - gotowe!
+
 ## 🚀 Stack Technologiczny
 
 - **Next.js 15** - React framework
@@ -127,8 +157,9 @@ git push
 
 ## 🔗 Linki
 
-- **Strona główna**: https://masterzone.edu.pl
-- **Panel Admin (CMS)**: https://masterzone.edu.pl/admin
+- **Strona główna**: https://rozproszenie.masterzone.edu.pl
+- **GitHub Repo**: https://github.com/mtsddk-web/masterzone-landing
+- **Vercel Dashboard**: https://vercel.com/mateusz-s-projects-3c07c74b/masterzone-landing
 - **Skool Community**: https://www.skool.com/masterzone
 
 ## 📝 Notatki Techniczne
