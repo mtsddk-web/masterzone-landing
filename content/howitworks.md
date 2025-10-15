@@ -23,6 +23,12 @@ steps:
   - icon: "🏆"
     title: "Kwartalne warsztaty celów"
     description: "Co trzy miesiące zatrzymujesz się, analizujesz postępy i planujesz kolejne działania. Dzięki temu wiesz, dokąd zmierzasz — i nie tracisz energii na rzeczy drugorzędne."
+  - icon: "🤝"
+    title: "Program poleceń"
+    description: "Zyskujesz 40% prowizji za każdego poleconego członka. To nie tylko dodatkowy dochód, ale też sposób na budowanie sieci kontaktów z ludźmi, którzy myślą podobnie i działają w podobnym kierunku."
+  - icon: "📚"
+    title: "Dostęp do nagrań i materiałów"
+    description: "Nie mogłeś być na żywo? Żaden problem. Wszystkie sesje planowania, bloki pracy i spotkania z gośćmi są nagrywane i dostępne 24/7. Uczysz się we własnym tempie, kiedy Ci pasuje."
 infrastructure: "Wszystko odbywa się w jednym miejscu — na platformie Skool. Masz tu kalendarz spotkań, społeczność, kursy, pliki i nagrania. Bez przelogowywania, bez chaosu. Logujesz się raz — i masz cały system pod ręką."
 closingText: "W MasterZone nie tylko planujesz. Ty naprawdę działasz — w skupieniu, z jasnością i z ludźmi, którzy myślą jak Ty."
 ---

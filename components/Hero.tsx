@@ -3,41 +3,34 @@
 import { trackEvent } from "./FacebookPixel";
 
 interface HeroProps {
+  preheadline?: string;
   headline: string;
-  subheadline: string;
   description?: string;
   ctaText: string;
   ctaUrl: string;
-  statsText: string;
-  secondaryCta?: string;
 }
 
 export default function Hero({
+  preheadline,
   headline,
-  subheadline,
   description,
   ctaText,
-  ctaUrl,
-  statsText,
-  secondaryCta
+  ctaUrl
 }: HeroProps) {
   return (
     <section className="bg-gradient-to-br from-navy via-blue-700 to-blue-900 text-white section-padding min-h-screen flex items-center">
       <div className="container-custom text-center">
-        {/* Stats Badge */}
-        <div className="inline-block mb-6 bg-yellow-400 rounded-full px-5 py-1.5 text-xs font-semibold text-gray-900">
-          {statsText}
-        </div>
+        {/* Preheadline - wyróżniony tekst nad nagłówkiem */}
+        {preheadline && (
+          <div className="inline-block mb-6 bg-yellow-400/20 backdrop-blur-sm border-2 border-yellow-400 rounded-full px-8 py-3 text-base md:text-lg font-bold text-yellow-300">
+            {preheadline}
+          </div>
+        )}
 
         {/* Main Headline */}
         <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
           {headline}
         </h1>
-
-        {/* Subheadline */}
-        <p className="text-xl md:text-2xl mb-6 max-w-3xl mx-auto text-white/90">
-          {subheadline}
-        </p>
 
         {/* Description */}
         {description && (
