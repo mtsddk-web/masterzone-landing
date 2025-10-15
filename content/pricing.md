@@ -19,9 +19,8 @@ plans:
       - "Dostęp do społeczności 24/7"
       - "Networking z przedsiębiorcami"
       - "Accountability partnerzy"
-    ctaText: "Dołącz do MasterZone"
+    ctaText: "Chcę pracować w pełnym skupieniu"
     ctaUrl: "https://www.skool.com/masterzone"
     featured: true
-    note: "Anuluj w każdej chwili. Bez zobowiązań."
     guarantee: "Gwarancja satysfakcji: Jeśli po miesiącu nie zobaczysz różnicy — zwrot pieniędzy."
 ---
