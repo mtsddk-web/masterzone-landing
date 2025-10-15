@@ -15,30 +15,38 @@ interface TestimonialsProps {
   testimonials: Testimonial[];
 }
 
-function TestimonialCard({ testimonial, index }: { testimonial: Testimonial; index: number }) {
+function TestimonialCard({
+  allTestimonials,
+  index,
+  interval
+}: {
+  allTestimonials: Testimonial[];
+  index: number;
+  interval: number;
+}) {
   const [fade, setFade] = useState(true);
-  const [currentTestimonial, setCurrentTestimonial] = useState(testimonial);
+  const [currentTestimonialIndex, setCurrentTestimonialIndex] = useState(index);
 
   useEffect(() => {
-    // Random interval between 4-7 seconds for each card
-    const randomInterval = 4000 + Math.random() * 3000;
-
-    const interval = setInterval(() => {
+    const timer = setInterval(() => {
       setFade(false);
 
       setTimeout(() => {
-        // This would cycle through testimonials, but we'll keep it simple for now
-        setCurrentTestimonial(testimonial);
+        // Pick a random testimonial
+        const randomIndex = Math.floor(Math.random() * allTestimonials.length);
+        setCurrentTestimonialIndex(randomIndex);
         setFade(true);
-      }, 500);
-    }, randomInterval);
+      }, 1000); // Wait 1 second for fade out
+    }, interval);
 
-    return () => clearInterval(interval);
-  }, [testimonial]);
+    return () => clearInterval(timer);
+  }, [allTestimonials, interval]);
+
+  const currentTestimonial = allTestimonials[currentTestimonialIndex];
 
   return (
     <div
-      className={`transition-opacity duration-500 ${
+      className={`transition-opacity duration-1000 ${
         fade ? "opacity-100" : "opacity-0"
       }`}
     >
@@ -81,8 +89,8 @@ function TestimonialCard({ testimonial, index }: { testimonial: Testimonial; ind
 }
 
 export default function Testimonials({ sectionTitle, testimonials }: TestimonialsProps) {
-  // Show first 3 testimonials
-  const displayedTestimonials = testimonials.slice(0, 3);
+  // Intervals for each card: 5s, 7s, 9s
+  const intervals = [5000, 7000, 9000];
 
   return (
     <section className="section-padding bg-white">
@@ -94,11 +102,12 @@ export default function Testimonials({ sectionTitle, testimonials }: Testimonial
 
         {/* Testimonials Grid - 3 cards */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-          {displayedTestimonials.map((testimonial, index) => (
+          {[0, 1, 2].map((index) => (
             <TestimonialCard
               key={index}
-              testimonial={testimonial}
+              allTestimonials={testimonials}
               index={index}
+              interval={intervals[index]}
             />
           ))}
         </div>
