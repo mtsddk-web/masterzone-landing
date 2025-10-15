@@ -24,19 +24,22 @@ function TestimonialCard({
   index: number;
   interval: number;
 }) {
-  const [fade, setFade] = useState(true);
+  const [isFlipping, setIsFlipping] = useState(false);
   const [currentTestimonialIndex, setCurrentTestimonialIndex] = useState(index);
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setFade(false);
+      setIsFlipping(true);
 
       setTimeout(() => {
         // Pick a random testimonial
         const randomIndex = Math.floor(Math.random() * allTestimonials.length);
         setCurrentTestimonialIndex(randomIndex);
-        setFade(true);
-      }, 1000); // Wait 1 second for fade out
+      }, 300); // Change content mid-flip
+
+      setTimeout(() => {
+        setIsFlipping(false);
+      }, 600); // Complete flip animation
     }, interval);
 
     return () => clearInterval(timer);
@@ -45,42 +48,49 @@ function TestimonialCard({
   const currentTestimonial = allTestimonials[currentTestimonialIndex];
 
   return (
-    <div
-      className={`transition-opacity duration-1000 ${
-        fade ? "opacity-100" : "opacity-0"
-      }`}
-    >
-      <div className="bg-gray-50 rounded-xl p-8 shadow-md hover:shadow-xl transition-all duration-300 h-full flex flex-col">
-        {/* Quote Icon */}
-        <div className="text-navy text-4xl mb-4">"</div>
+    <div className="perspective-1000">
+      <div
+        className={`transition-transform duration-600 transform-style-3d ${
+          isFlipping ? "rotate-y-180" : ""
+        }`}
+        style={{
+          transformStyle: "preserve-3d",
+          transition: "transform 0.6s",
+          transform: isFlipping ? "rotateY(180deg)" : "rotateY(0deg)"
+        }}
+      >
+        <div className="bg-gray-50 rounded-xl p-8 shadow-md hover:shadow-xl transition-all duration-300 h-full flex flex-col backface-hidden">
+          {/* Quote Icon */}
+          <div className="text-navy text-4xl mb-4">"</div>
 
-        {/* Content */}
-        <p className="text-gray-700 mb-6 leading-relaxed italic flex-grow">
-          {currentTestimonial.content}
-        </p>
+          {/* Content */}
+          <p className="text-gray-700 mb-6 leading-relaxed italic flex-grow">
+            {currentTestimonial.content}
+          </p>
 
-        {/* Author */}
-        <div className="flex items-center">
-          {currentTestimonial.avatar ? (
-            currentTestimonial.avatar.startsWith('http') ? (
-              <img
-                src={currentTestimonial.avatar}
-                alt={currentTestimonial.name}
-                className="w-16 h-16 rounded-full mr-4 object-cover"
-              />
+          {/* Author */}
+          <div className="flex items-center">
+            {currentTestimonial.avatar ? (
+              currentTestimonial.avatar.startsWith('http') ? (
+                <img
+                  src={currentTestimonial.avatar}
+                  alt={currentTestimonial.name}
+                  className="w-16 h-16 rounded-full mr-4 object-cover"
+                />
+              ) : (
+                <div className="w-16 h-16 rounded-full mr-4 bg-gradient-to-br from-lightblue to-blue-300 flex items-center justify-center text-4xl">
+                  {currentTestimonial.avatar}
+                </div>
+              )
             ) : (
-              <div className="w-16 h-16 rounded-full mr-4 bg-gradient-to-br from-lightblue to-blue-300 flex items-center justify-center text-4xl">
-                {currentTestimonial.avatar}
+              <div className="w-16 h-16 rounded-full mr-4 bg-navy flex items-center justify-center text-white font-bold text-xl">
+                {currentTestimonial.name.charAt(0)}
               </div>
-            )
-          ) : (
-            <div className="w-16 h-16 rounded-full mr-4 bg-navy flex items-center justify-center text-white font-bold text-xl">
-              {currentTestimonial.name.charAt(0)}
+            )}
+            <div>
+              <div className="font-bold text-gray-900">{currentTestimonial.name}</div>
+              <div className="text-sm text-gray-600">{currentTestimonial.role}</div>
             </div>
-          )}
-          <div>
-            <div className="font-bold text-gray-900">{currentTestimonial.name}</div>
-            <div className="text-sm text-gray-600">{currentTestimonial.role}</div>
           </div>
         </div>
       </div>
