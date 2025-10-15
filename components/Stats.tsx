@@ -10,8 +10,8 @@ interface StatsProps {
   sectionTitle: string;
   stats: Stat[];
   highlights: string[];
-  footer: string;
-  note: string;
+  footer?: string;
+  note?: string;
 }
 
 export default function Stats({
@@ -55,14 +55,18 @@ export default function Stats({
         </div>
 
         {/* Footer */}
-        <p className="text-center text-lg md:text-xl font-medium text-white/95 mb-4">
-          {footer}
-        </p>
+        {footer && (
+          <p className="text-center text-lg md:text-xl font-medium text-white/95 mb-4">
+            {footer}
+          </p>
+        )}
 
         {/* Note */}
-        <p className="text-center text-sm text-white/70 border-t border-white/20 pt-6 max-w-4xl mx-auto">
-          {note}
-        </p>
+        {note && (
+          <p className="text-center text-sm text-white/70 border-t border-white/20 pt-6 max-w-4xl mx-auto">
+            {note}
+          </p>
+        )}
       </div>
     </section>
   );

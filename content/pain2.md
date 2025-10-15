@@ -1,5 +1,5 @@
 ---
-sectionTitle: "SEKCJA - walka o przetrwanie"
+sectionTitle: "NIE MUSISZ TAK ŻYĆ"
 headline: "Twój dzień nie musi wyglądać jak walka o przetrwanie."
 subheadline: "Odzyskaj kontrolę nad swoim tygodniem — i nad głową."
 description: |

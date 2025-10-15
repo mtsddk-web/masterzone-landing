@@ -19,19 +19,20 @@ description: |
 
   I znów działasz w biznesie, zamiast nad nim.
 
-transition: "Czy to brzmi znajomo?"
-transitionItems:
-  - "Każdy dzień to setki mikrodecyzji i zerowa jasność, co jest naprawdę ważne"
-  - "Niekończące się projekty, które ciągną się tygodniami"
-  - "Brak przestrzeni, by pomyśleć strategicznie — bo zawsze 'coś się dzieje'"
-  - "Plan tygodnia istnieje tylko w teorii"
-  - "Multitasking udaje produktywność, ale tylko rozprasza uwagę"
-  - "Znasz to uczucie, gdy kończą się dzień i nie wiesz, co tak naprawdę zrobiłeś?"
+sections:
+  - title: "Czy to brzmi znajomo?"
+    items:
+      - "Każdy dzień to setki mikrodecyzji i zerowa jasność, co jest naprawdę ważne"
+      - "Niekończące się projekty, które ciągną się tygodniami"
+      - "Brak przestrzeni, by pomyśleć strategicznie — bo zawsze 'coś się dzieje'"
+      - "Plan tygodnia istnieje tylko w teorii"
+      - "Multitasking udaje produktywność, ale tylko rozprasza uwagę"
+      - "Znasz to uczucie, gdy kończą się dzień i nie wiesz, co tak naprawdę zrobiłeś?"
 
-transitionNote: "To nie Twoja wina."
-transitionFooter: "Twój mózg po prostu nigdy nie dostał warunków do skupienia."
+mainHeadline: "To nie Twoja wina."
+mainContent: |
+  Twój mózg po prostu nigdy nie dostał warunków do skupienia.
 
-solution: |
   Dlatego stworzyliśmy **MasterZone** — środowisko, które pozwala Ci wreszcie:
 
   • kończyć to, co zaczynasz,
