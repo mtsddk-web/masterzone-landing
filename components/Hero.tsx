@@ -22,7 +22,7 @@ export default function Hero({
   secondaryCta
 }: HeroProps) {
   return (
-    <section className="bg-gradient-to-br from-navy via-primary to-blue-800 text-white section-padding min-h-screen flex items-center">
+    <section className="bg-gradient-to-br from-navy via-blue-700 to-blue-900 text-white section-padding min-h-screen flex items-center">
       <div className="container-custom text-center">
         {/* Stats Badge */}
         <div className="inline-block mb-6 bg-white/20 backdrop-blur-sm rounded-full px-6 py-2 text-sm font-medium">
