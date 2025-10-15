@@ -1,19 +1,24 @@
 "use client";
 
 import Script from "next/script";
+import { trackEvent } from "./FacebookPixel";
 
 interface VideoProps {
   sectionTitle?: string;
   sectionSubtitle?: string;
   mediaId: string;
   aspectRatio?: string;
+  ctaText?: string;
+  ctaUrl?: string;
 }
 
 export default function Video({
   sectionTitle,
   sectionSubtitle,
   mediaId,
-  aspectRatio = "1.6"
+  aspectRatio = "1.6",
+  ctaText,
+  ctaUrl
 }: VideoProps) {
   return (
     <section className="section-padding bg-gray-50">
@@ -58,6 +63,21 @@ export default function Video({
               `
             }} />
           </div>
+
+          {/* CTA Button under video */}
+          {ctaText && ctaUrl && (
+            <div className="text-center mt-8">
+              <a
+                href={ctaUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => trackEvent("Lead", { source: "video_cta_button" })}
+                className="inline-block bg-lightblue hover:bg-blue-400 text-navy font-bold py-4 px-12 rounded-lg transition-all duration-300 text-lg shadow-xl hover:shadow-2xl transform hover:-translate-y-1"
+              >
+                {ctaText}
+              </a>
+            </div>
+          )}
         </div>
       </div>
     </section>

@@ -1,5 +1,7 @@
 "use client";
 
+import { trackEvent } from "./FacebookPixel";
+
 interface HeroProps {
   headline: string;
   subheadline: string;
@@ -50,6 +52,7 @@ export default function Hero({
             href={ctaUrl}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => trackEvent("Lead", { source: "hero_primary_button" })}
             className="inline-block bg-lightblue hover:bg-blue-400 text-navy font-bold py-4 px-12 rounded-lg transition-all duration-300 text-lg shadow-xl hover:shadow-2xl transform hover:-translate-y-1"
           >
             {ctaText}
@@ -60,6 +63,7 @@ export default function Hero({
               href={ctaUrl}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackEvent("Lead", { source: "hero_secondary_button" })}
               className="inline-block bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white font-semibold py-4 px-12 rounded-lg border-2 border-white/30 transition-all duration-300 text-lg"
             >
               {secondaryCta}

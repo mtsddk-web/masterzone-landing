@@ -1,3 +1,7 @@
+"use client";
+
+import { trackEvent } from "./FacebookPixel";
+
 interface Plan {
   name: string;
   price: string;
@@ -82,6 +86,7 @@ export default function Pricing({
                   href={plan.ctaUrl}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => trackEvent("InitiateCheckout", { plan: plan.name, price: plan.price })}
                   className="block w-full bg-lightblue hover:bg-blue-400 text-navy text-center font-bold py-4 px-8 rounded-lg transition-all duration-300 text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1"
                 >
                   {plan.ctaText}
