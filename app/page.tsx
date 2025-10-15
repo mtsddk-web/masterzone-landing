@@ -4,9 +4,12 @@ import Stats from "@/components/Stats";
 import Benefits from "@/components/Benefits";
 import Tools from "@/components/Tools";
 import PainSection from "@/components/PainSection";
-import Pricing from "@/components/Pricing";
+import HowItWorks from "@/components/HowItWorks";
 import Testimonials from "@/components/Testimonials";
+import Transformation from "@/components/Transformation";
+import Pricing from "@/components/Pricing";
 import FAQ from "@/components/FAQ";
+import JoinSection from "@/components/JoinSection";
 import CTA from "@/components/CTA";
 
 // Import content from markdown files
@@ -32,9 +35,12 @@ export default function Home() {
   const communityData = getContentData("community.md");
   const pain1Data = getContentData("pain1.md");
   const pain2Data = getContentData("pain2.md");
-  const pricingData = getContentData("pricing.md");
+  const howItWorksData = getContentData("howitworks.md");
   const testimonialsData = getContentData("testimonials.md");
+  const transformationData = getContentData("transformation.md");
+  const pricingData = getContentData("pricing.md");
   const faqData = getContentData("faq.md");
+  const joinSectionData = getContentData("joinsection.md");
   const ctaData = getContentData("cta.md");
 
   return (
@@ -48,9 +54,12 @@ export default function Home() {
       <Tools {...communityData} />
       <PainSection {...pain1Data} />
       <PainSection {...pain2Data} />
+      <HowItWorks {...howItWorksData} />
       <Testimonials {...testimonialsData} />
+      <Transformation {...transformationData} />
       <Pricing {...pricingData} />
       <FAQ {...faqData} />
+      <JoinSection {...joinSectionData} />
       <CTA {...ctaData} />
     </main>
   );
