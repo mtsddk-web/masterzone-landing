@@ -25,7 +25,7 @@ export default function Hero({
     <section className="bg-gradient-to-br from-navy via-blue-700 to-blue-900 text-white section-padding min-h-screen flex items-center">
       <div className="container-custom text-center">
         {/* Stats Badge */}
-        <div className="inline-block mb-6 bg-white/20 backdrop-blur-sm rounded-full px-6 py-2 text-sm font-medium">
+        <div className="inline-block mb-6 bg-yellow-400 rounded-full px-5 py-1.5 text-xs font-semibold text-gray-900">
           {statsText}
         </div>
 

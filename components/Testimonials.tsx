@@ -37,13 +37,19 @@ export default function Testimonials({ sectionTitle, testimonials }: Testimonial
               {/* Author */}
               <div className="flex items-center">
                 {testimonial.avatar ? (
-                  <img
-                    src={testimonial.avatar}
-                    alt={testimonial.name}
-                    className="w-12 h-12 rounded-full mr-4 object-cover"
-                  />
+                  testimonial.avatar.startsWith('http') ? (
+                    <img
+                      src={testimonial.avatar}
+                      alt={testimonial.name}
+                      className="w-16 h-16 rounded-full mr-4 object-cover"
+                    />
+                  ) : (
+                    <div className="w-16 h-16 rounded-full mr-4 bg-gradient-to-br from-lightblue to-blue-300 flex items-center justify-center text-4xl">
+                      {testimonial.avatar}
+                    </div>
+                  )
                 ) : (
-                  <div className="w-12 h-12 rounded-full mr-4 bg-navy flex items-center justify-center text-white font-bold">
+                  <div className="w-16 h-16 rounded-full mr-4 bg-navy flex items-center justify-center text-white font-bold text-xl">
                     {testimonial.name.charAt(0)}
                   </div>
                 )}
