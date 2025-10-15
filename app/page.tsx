@@ -1,4 +1,5 @@
 import Hero from "@/components/Hero";
+import Video from "@/components/Video";
 import Stats from "@/components/Stats";
 import Benefits from "@/components/Benefits";
 import Tools from "@/components/Tools";
@@ -23,6 +24,7 @@ function getContentData(filename: string): any {
 export default function Home() {
   // Load all content
   const heroData = getContentData("hero.md");
+  const videoData = getContentData("video.md");
   const statsData = getContentData("stats.md");
   const benefitsData = getContentData("benefits.md");
   const toolsData = getContentData("tools.md");
@@ -38,6 +40,7 @@ export default function Home() {
   return (
     <main>
       <Hero {...heroData} />
+      <Video {...videoData} />
       <Stats {...statsData} />
       <Benefits {...benefitsData} />
       <Tools {...toolsData} />
