@@ -31,7 +31,7 @@ h1, h2, h3, h4, h5, h6 {
 
 @layer components {
   .btn-primary {
-    @apply bg-gradient-to-r from-lightblue to-blue-400 hover:from-blue-400 hover:to-lightblue text-navy font-bold py-3 px-8 rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1;
+    @apply bg-lightblue hover:bg-blue-400 text-navy font-bold py-3 px-8 rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1;
   }
 
   .btn-secondary {

@@ -50,7 +50,7 @@ export default function Hero({
             href={ctaUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-block bg-gradient-to-r from-lightblue to-blue-400 hover:from-blue-400 hover:to-lightblue text-navy font-bold py-4 px-12 rounded-lg transition-all duration-300 text-lg shadow-xl hover:shadow-2xl transform hover:-translate-y-1"
+            className="inline-block bg-lightblue hover:bg-blue-400 text-navy font-bold py-4 px-12 rounded-lg transition-all duration-300 text-lg shadow-xl hover:shadow-2xl transform hover:-translate-y-1"
           >
             {ctaText}
           </a>
