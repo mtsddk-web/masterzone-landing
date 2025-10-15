@@ -46,8 +46,8 @@ export default function Hero({
           </p>
         )}
 
-        {/* CTA Buttons */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
+        {/* CTA Button */}
+        <div className="mb-8">
           <a
             href={ctaUrl}
             target="_blank"
@@ -57,18 +57,6 @@ export default function Hero({
           >
             {ctaText}
           </a>
-
-          {secondaryCta && (
-            <a
-              href={ctaUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => trackEvent("Lead", { source: "hero_secondary_button" })}
-              className="inline-block bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white font-semibold py-4 px-12 rounded-lg border-2 border-white/30 transition-all duration-300 text-lg"
-            >
-              {secondaryCta}
-            </a>
-          )}
         </div>
 
         {/* Scroll Indicator */}
