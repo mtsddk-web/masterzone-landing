@@ -1,0 +1,85 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "public/images"
+public_folder: "/images"
+
+collections:
+  - name: "content"
+    label: "Treść Strony"
+    files:
+      - label: "Hero Section"
+        name: "hero"
+        file: "content/hero.md"
+        fields:
+          - {label: "Nagłówek", name: "headline", widget: "string"}
+          - {label: "Podtytuł", name: "subheadline", widget: "text"}
+          - {label: "Tekst Przycisku", name: "ctaText", widget: "string"}
+          - {label: "Link Przycisku", name: "ctaUrl", widget: "string"}
+          - {label: "Statystyki", name: "statsText", widget: "string"}
+
+      - label: "Benefits (Korzyści)"
+        name: "benefits"
+        file: "content/benefits.md"
+        fields:
+          - {label: "Tytuł Sekcji", name: "sectionTitle", widget: "string"}
+          - {label: "Podtytuł Sekcji", name: "sectionSubtitle", widget: "text"}
+          - label: "Lista Korzyści"
+            name: "benefits"
+            widget: "list"
+            fields:
+              - {label: "Ikona (emoji)", name: "icon", widget: "string"}
+              - {label: "Tytuł", name: "title", widget: "string"}
+              - {label: "Opis", name: "description", widget: "text"}
+
+      - label: "Pricing (Cennik)"
+        name: "pricing"
+        file: "content/pricing.md"
+        fields:
+          - {label: "Tytuł Sekcji", name: "sectionTitle", widget: "string"}
+          - {label: "Podtytuł Sekcji", name: "sectionSubtitle", widget: "text"}
+          - {label: "Cena", name: "price", widget: "string"}
+          - {label: "Opis Ceny", name: "priceDescription", widget: "string"}
+          - {label: "Tekst Przycisku", name: "ctaText", widget: "string"}
+          - {label: "Link Przycisku", name: "ctaUrl", widget: "string"}
+          - {label: "Gwarancja", name: "moneyBackText", widget: "string"}
+          - label: "Funkcje"
+            name: "features"
+            widget: "list"
+            field: {label: "Funkcja", name: "feature", widget: "string"}
+
+      - label: "Testimonials (Opinie)"
+        name: "testimonials"
+        file: "content/testimonials.md"
+        fields:
+          - {label: "Tytuł Sekcji", name: "sectionTitle", widget: "string"}
+          - label: "Opinie"
+            name: "testimonials"
+            widget: "list"
+            fields:
+              - {label: "Imię", name: "name", widget: "string"}
+              - {label: "Rola", name: "role", widget: "string"}
+              - {label: "Treść Opinii", name: "content", widget: "text"}
+              - {label: "Avatar (opcjonalny)", name: "avatar", widget: "image", required: false}
+
+      - label: "FAQ (Pytania)"
+        name: "faq"
+        file: "content/faq.md"
+        fields:
+          - {label: "Tytuł Sekcji", name: "sectionTitle", widget: "string"}
+          - label: "Pytania i Odpowiedzi"
+            name: "faqs"
+            widget: "list"
+            fields:
+              - {label: "Pytanie", name: "question", widget: "string"}
+              - {label: "Odpowiedź", name: "answer", widget: "text"}
+
+      - label: "CTA (Końcowe Wezwanie)"
+        name: "cta"
+        file: "content/cta.md"
+        fields:
+          - {label: "Nagłówek", name: "headline", widget: "string"}
+          - {label: "Podtytuł", name: "subheadline", widget: "text"}
+          - {label: "Tekst Przycisku", name: "buttonText", widget: "string"}
+          - {label: "Link Przycisku", name: "buttonUrl", widget: "string"}

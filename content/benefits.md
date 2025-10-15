@@ -1,0 +1,23 @@
+---
+sectionTitle: "Co Zyskujesz w MasterZone?"
+sectionSubtitle: "Program kompleksowego wsparcia w walce z rozproszeniem"
+benefits:
+  - icon: "🎯"
+    title: "Bloki Głębokiej Pracy"
+    description: "Wspólne sesje skupienia z innymi członkami społeczności. Pracuj głęboko, bez rozpraszaczy, w towarzystwie zmotywowanych ludzi."
+  - icon: "📚"
+    title: "Kursy i Zasoby"
+    description: "Dostęp do sprawdzonych technik zarządzania czasem, fokusem i produktywnością. Od podstaw do zaawansowanych strategii."
+  - icon: "👥"
+    title: "Społeczność"
+    description: "Wsparcie grupy osób, które przechodzą tę samą transformację. Dziel się postępami, wyzwaniami i sukcesami."
+  - icon: "📅"
+    title: "Wspólne Planowanie"
+    description: "Cotygodniowe sesje planowania celów. Zaplanuj tydzień z innymi i trzymaj się planu dzięki accountability."
+  - icon: "🧠"
+    title: "Narzędzia Fokusowania"
+    description: "Sprawdzone techniki: Pomodoro, Deep Work, Cal Newport's principles. Wszystko w jednym miejscu."
+  - icon: "📈"
+    title: "Śledzenie Postępów"
+    description: "Monitoruj swoje postępy, buduj nawyki i obserwuj jak Twoja produktywność rośnie z tygodnia na tydzień."
+---
