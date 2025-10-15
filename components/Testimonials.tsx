@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { trackEvent } from "./FacebookPixel";
 
 interface Testimonial {
@@ -15,25 +15,51 @@ interface TestimonialsProps {
   testimonials: Testimonial[];
 }
 
+// Shared state to track which testimonials are currently displayed
+const displayedIndices = new Set<number>();
+
 function TestimonialCard({
   allTestimonials,
-  index,
+  initialIndex,
   interval
 }: {
   allTestimonials: Testimonial[];
-  index: number;
+  initialIndex: number;
   interval: number;
 }) {
   const [isFlipping, setIsFlipping] = useState(false);
-  const [currentTestimonialIndex, setCurrentTestimonialIndex] = useState(index);
+  const [currentTestimonialIndex, setCurrentTestimonialIndex] = useState(initialIndex);
+  const currentIndexRef = useRef(initialIndex);
+
+  // Initialize with unique testimonial
+  useEffect(() => {
+    displayedIndices.add(initialIndex);
+    currentIndexRef.current = initialIndex;
+
+    return () => {
+      displayedIndices.delete(currentIndexRef.current);
+    };
+  }, [initialIndex]);
 
   useEffect(() => {
     const timer = setInterval(() => {
       setIsFlipping(true);
 
       setTimeout(() => {
-        // Pick a random testimonial
-        const randomIndex = Math.floor(Math.random() * allTestimonials.length);
+        // Remove current index from displayed set
+        displayedIndices.delete(currentIndexRef.current);
+
+        // Pick a random testimonial that's not currently displayed
+        let randomIndex;
+        let attempts = 0;
+        do {
+          randomIndex = Math.floor(Math.random() * allTestimonials.length);
+          attempts++;
+        } while (displayedIndices.has(randomIndex) && attempts < 20);
+
+        // Add new index to displayed set
+        displayedIndices.add(randomIndex);
+        currentIndexRef.current = randomIndex;
         setCurrentTestimonialIndex(randomIndex);
       }, 300); // Change content mid-flip
 
@@ -102,6 +128,11 @@ export default function Testimonials({ sectionTitle, testimonials }: Testimonial
   // Intervals for each card: 5s, 7s, 9s
   const intervals = [5000, 7000, 9000];
 
+  // Clear displayed indices on mount
+  useEffect(() => {
+    displayedIndices.clear();
+  }, []);
+
   return (
     <section className="section-padding bg-white">
       <div className="container-custom">
@@ -116,7 +147,7 @@ export default function Testimonials({ sectionTitle, testimonials }: Testimonial
             <TestimonialCard
               key={index}
               allTestimonials={testimonials}
-              index={index}
+              initialIndex={index}
               interval={intervals[index]}
             />
           ))}
