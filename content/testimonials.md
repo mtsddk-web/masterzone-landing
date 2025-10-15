@@ -2,9 +2,9 @@
 sectionTitle: "Co Mówią Członkowie MasterZone"
 sectionSubtitle: "Realne rezultaty od realnych ludzi"
 testimonials:
-  - name: "Anna K."
-    role: "Przedsiębiorca"
-    content: "MasterZone pomogło mi odzyskać kontrolę nad moim tygodniem. Wreszcie przestałam gaszać pożary i zaczęłam pracować nad tym, co naprawdę ważne."
+  - name: "Iza"
+    role: "Wirtualna Asystentka"
+    content: "Zamiast toczyć poranną walkę z budzikiem, dzięki Blokom Pracy Głębokiej o 7:56 zbieram się do pracy w ekspresowym tempie. Już o 8:00 działam, a o 8:55 świętuje pierwsze sukcesy! To jak poranny zastrzyk energii, który działa lepiej niż kawa – wsiadasz do pociągu produktywności i omijasz stacje prokrastynacji."
     avatar: "👩‍💼"
   - name: "Michał P."
     role: "Freelancer"
