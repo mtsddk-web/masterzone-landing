@@ -41,20 +41,6 @@ export default function Tools({
     ? "bg-amber-50"
     : "bg-blue-50";
 
-  // Different card styles for each section
-  const cardStyle = isToolsSection
-    ? "bg-gradient-to-br from-white to-gray-50 border-2 border-gray-200 rounded-xl shadow-md hover:shadow-xl hover:border-gray-300"
-    : isSupportSection
-    ? "bg-gradient-to-br from-amber-50 to-orange-50 border-2 border-amber-200 rounded-2xl shadow-lg hover:shadow-xl hover:border-amber-300"
-    : "bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-lg shadow-lg hover:shadow-2xl hover:border-blue-300";
-
-  // Different icon colors
-  const iconColor = isToolsSection
-    ? "text-green-600"
-    : isSupportSection
-    ? "text-orange-500"
-    : "text-blue-600";
-
   // CTA tracking source
   const ctaSource = isToolsSection
     ? "tools_cta_button"
@@ -77,26 +63,96 @@ export default function Tools({
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto mb-12">
-          {items.map((tool, index) => (
-            <div
-              key={index}
-              className={`flex items-start p-6 ${cardStyle} transition-all duration-300`}
-            >
-              <span className={`${iconColor} text-2xl mr-4 flex-shrink-0`}>
-                {tool.icon}
-              </span>
-              <div>
-                <h3 className="font-bold text-lg mb-2 text-gray-900">
-                  {tool.title}
-                </h3>
-                <p className="text-gray-600">
-                  {tool.description}
-                </p>
+        {/* TOOLS SECTION - Vertical list with large icons */}
+        {isToolsSection && (
+          <div className="max-w-5xl mx-auto space-y-6 mb-12">
+            {items.map((tool, index) => (
+              <div
+                key={index}
+                className="flex items-start gap-6 p-8 bg-white border-l-8 border-green-500 rounded-r-2xl shadow-lg hover:shadow-2xl hover:border-green-600 transition-all duration-300 hover:translate-x-2"
+              >
+                <div className="flex-shrink-0 w-20 h-20 flex items-center justify-center bg-green-50 rounded-2xl">
+                  <span className="text-5xl">{tool.icon}</span>
+                </div>
+                <div className="flex-1">
+                  <h3 className="font-bold text-2xl mb-3 text-gray-900">
+                    {tool.title}
+                  </h3>
+                  <p className="text-lg text-gray-600 leading-relaxed">
+                    {tool.description}
+                  </p>
+                </div>
               </div>
+            ))}
+          </div>
+        )}
+
+        {/* SUPPORT SECTION - Timeline/numbered steps */}
+        {isSupportSection && (
+          <div className="max-w-4xl mx-auto mb-12">
+            {items.map((tool, index) => (
+              <div
+                key={index}
+                className="relative flex gap-6 mb-8 last:mb-0"
+              >
+                {/* Timeline line */}
+                {index < items.length - 1 && (
+                  <div className="absolute left-8 top-20 bottom-0 w-1 bg-gradient-to-b from-orange-400 to-orange-200" />
+                )}
+
+                {/* Number badge */}
+                <div className="flex-shrink-0 w-16 h-16 flex items-center justify-center bg-gradient-to-br from-orange-500 to-red-500 text-white font-bold text-2xl rounded-full shadow-lg z-10">
+                  {index + 1}
+                </div>
+
+                {/* Content */}
+                <div className="flex-1 bg-gradient-to-r from-amber-50 to-orange-50 p-6 rounded-2xl border-2 border-orange-200 shadow-md hover:shadow-xl hover:border-orange-300 transition-all duration-300">
+                  <div className="flex items-start gap-3 mb-2">
+                    <span className="text-3xl">{tool.icon}</span>
+                    <h3 className="font-bold text-xl text-gray-900 mt-1">
+                      {tool.title}
+                    </h3>
+                  </div>
+                  <p className="text-gray-600 text-lg leading-relaxed ml-12">
+                    {tool.description}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* COMMUNITY SECTION - Big highlight boxes with special styling */}
+        {isCommunitySection && (
+          <div className="max-w-6xl mx-auto mb-12">
+            <div className="grid md:grid-cols-2 gap-8">
+              {items.map((tool, index) => (
+                <div
+                  key={index}
+                  className="relative group"
+                >
+                  {/* Glow effect on hover */}
+                  <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-3xl blur opacity-25 group-hover:opacity-75 transition duration-500" />
+
+                  {/* Card content */}
+                  <div className="relative bg-gradient-to-br from-blue-50 via-white to-indigo-50 p-8 rounded-3xl border-2 border-blue-300 shadow-xl group-hover:shadow-2xl transition-all duration-300 hover:scale-[1.02]">
+                    <div className="flex items-center gap-4 mb-4">
+                      <div className="w-16 h-16 flex items-center justify-center bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl shadow-lg">
+                        <span className="text-4xl filter drop-shadow-md">{tool.icon}</span>
+                      </div>
+                      <h3 className="font-bold text-xl text-gray-900 flex-1">
+                        {tool.title}
+                      </h3>
+                    </div>
+                    <p className="text-gray-700 text-lg leading-relaxed">
+                      {tool.description}
+                    </p>
+                  </div>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
+          </div>
+        )}
 
         {/* CTA Button - for all sections */}
         <div className="text-center">
