@@ -41,6 +41,13 @@ export default function Testimonials({ sectionTitle, testimonials }: Testimonial
           <div className="relative">
             {/* Testimonial Card */}
             <div className="bg-gray-50 rounded-xl p-10 md:p-12 shadow-lg">
+              {/* 5 Stars Rating */}
+              <div className="flex items-center gap-1 mb-4">
+                {[...Array(5)].map((_, i) => (
+                  <span key={i} className="text-yellow-400 text-2xl">⭐</span>
+                ))}
+              </div>
+
               {/* Quote Icon */}
               <div className="text-navy text-5xl mb-6">"</div>
 
