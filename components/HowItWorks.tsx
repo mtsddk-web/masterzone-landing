@@ -24,7 +24,7 @@ export default function HowItWorks({
   infrastructure
 }: HowItWorksProps) {
   return (
-    <section className="section-padding bg-gradient-to-br from-gray-50 to-white">
+    <section className="section-padding bg-blue-50">
       <div className="container-custom">
         {/* Section Header */}
         <div className="text-center mb-16">
