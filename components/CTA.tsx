@@ -1,6 +1,7 @@
 "use client";
 
 import { trackEvent } from "./FacebookPixel";
+import { appendUTM } from "@/lib/utmUtils";
 
 interface CTAProps {
   headline: string;
@@ -23,7 +24,11 @@ export default function CTA({ headline, subheadline, buttonText, buttonUrl }: CT
           href={buttonUrl}
           target="_blank"
           rel="noopener noreferrer"
-          onClick={() => trackEvent("Lead", { source: "cta_bottom_button" })}
+          id="skool-cta"
+          onClick={(e) => {
+            trackEvent("Lead", { source: "cta_bottom_button" });
+            appendUTM(e);
+          }}
           className="inline-block bg-lightblue hover:bg-blue-400 text-navy font-bold py-4 px-12 rounded-lg transition-all duration-300 text-lg shadow-xl hover:shadow-2xl transform hover:-translate-y-1"
         >
           {buttonText}

@@ -1,6 +1,7 @@
 "use client";
 
 import { trackEvent } from "./FacebookPixel";
+import { appendUTM } from "@/lib/utmUtils";
 
 interface Tool {
   icon: string;
@@ -157,10 +158,14 @@ export default function Tools({
         {/* CTA Button - for all sections */}
         <div className="text-center">
           <a
-            href="https://www.skool.com/masterzone"
+            href="https://www.skool.com/masterzone/about"
             target="_blank"
             rel="noopener noreferrer"
-            onClick={() => trackEvent("Lead", { source: ctaSource })}
+            id="skool-cta"
+            onClick={(e) => {
+              trackEvent("Lead", { source: ctaSource });
+              appendUTM(e);
+            }}
             className="inline-block bg-lightblue hover:bg-blue-400 text-navy font-bold py-4 px-12 rounded-lg transition-all duration-300 text-lg shadow-xl hover:shadow-2xl transform hover:-translate-y-1"
           >
             Chcę pracować w pełnym skupieniu
