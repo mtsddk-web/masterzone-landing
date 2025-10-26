@@ -1,3 +1,4 @@
+import AnnouncementBar from "@/components/AnnouncementBar";
 import Hero from "@/components/Hero";
 import Video from "@/components/Video";
 import Stats from "@/components/Stats";
@@ -45,6 +46,9 @@ export default function Home() {
 
   return (
     <main>
+      {pricingData.urgencyAlert && (
+        <AnnouncementBar message={pricingData.urgencyAlert} />
+      )}
       <Hero {...heroData} />
       <Video {...videoData} />
       <Stats {...statsData} />
