@@ -18,12 +18,14 @@ interface Plan {
 interface PricingProps {
   sectionTitle: string;
   sectionSubtitle: string;
+  urgencyAlert?: string;
   plans: Plan[];
 }
 
 export default function Pricing({
   sectionTitle,
   sectionSubtitle,
+  urgencyAlert,
   plans
 }: PricingProps) {
   return (
@@ -38,6 +40,17 @@ export default function Pricing({
             {sectionSubtitle}
           </p>
         </div>
+
+        {/* Urgency Alert - FOMO */}
+        {urgencyAlert && (
+          <div className="max-w-lg mx-auto mb-8">
+            <div className="bg-gradient-to-r from-red-500 to-orange-500 text-white rounded-xl shadow-2xl p-6 border-2 border-red-400 animate-pulse">
+              <p className="text-center text-lg md:text-xl font-bold">
+                {urgencyAlert}
+              </p>
+            </div>
+          </div>
+        )}
 
         {/* Pricing Cards */}
         <div className="grid md:grid-cols-1 gap-8 max-w-lg mx-auto">
