@@ -24,17 +24,17 @@ export default function Hero({
   videoAspectRatio = "1.6"
 }: HeroProps) {
   return (
-    <section className="bg-gradient-to-br from-navy via-blue-700 to-blue-900 text-white py-8 md:py-16 lg:py-20 flex items-center">
-      <div className="container-custom text-center">
-        {/* Logo */}
-        <div className="mb-6 md:mb-8">
-          <img
-            src="/images/logo-masterzone.png"
-            alt="MasterZone Logo"
-            className="mx-auto w-32 h-32 md:w-40 md:h-40 object-contain"
-          />
-        </div>
+    <section className="bg-gradient-to-br from-navy via-blue-700 to-blue-900 text-white py-8 md:py-16 lg:py-20 flex items-center relative">
+      {/* Logo - lewy górny róg */}
+      <div className="absolute top-4 left-4 md:top-6 md:left-6 z-10">
+        <img
+          src="/images/logo-masterzone.png"
+          alt="MasterZone Logo"
+          className="w-12 h-12 md:w-16 md:h-16 object-contain opacity-90 hover:opacity-100 transition-opacity"
+        />
+      </div>
 
+      <div className="container-custom text-center">
         {/* Preheadline - wyróżniony tekst nad nagłówkiem */}
         {preheadline && (
           <div className="inline-block mb-3 md:mb-6 bg-yellow-400/20 backdrop-blur-sm border-2 border-yellow-400 rounded-full px-6 py-2 md:px-8 md:py-3 text-sm md:text-base lg:text-lg font-bold text-yellow-300">
