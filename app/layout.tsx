@@ -9,6 +9,10 @@ export const metadata: Metadata = {
   title: "MasterZone - Koniec z Rozproszeniem",
   description: "Program pomoże Ci odzyskać fokus, produktywność i kontrolę nad czasem. Dołącz do społeczności MasterZone i zacznij pracować głęboko.",
   keywords: "fokus, produktywność, rozproszenie, koncentracja, deep work, praca głęboka",
+  icons: {
+    icon: '/favicon.ico',
+    apple: '/apple-touch-icon.png',
+  },
   openGraph: {
     title: "MasterZone - Koniec z Rozproszeniem",
     description: "Odzyskaj fokus i produktywność",

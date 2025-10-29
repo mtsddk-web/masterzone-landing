@@ -26,6 +26,15 @@ export default function Hero({
   return (
     <section className="bg-gradient-to-br from-navy via-blue-700 to-blue-900 text-white py-8 md:py-16 lg:py-20 flex items-center">
       <div className="container-custom text-center">
+        {/* Logo */}
+        <div className="mb-6 md:mb-8">
+          <img
+            src="/images/logo-masterzone.png"
+            alt="MasterZone Logo"
+            className="mx-auto w-32 h-32 md:w-40 md:h-40 object-contain"
+          />
+        </div>
+
         {/* Preheadline - wyróżniony tekst nad nagłówkiem */}
         {preheadline && (
           <div className="inline-block mb-3 md:mb-6 bg-yellow-400/20 backdrop-blur-sm border-2 border-yellow-400 rounded-full px-6 py-2 md:px-8 md:py-3 text-sm md:text-base lg:text-lg font-bold text-yellow-300">
