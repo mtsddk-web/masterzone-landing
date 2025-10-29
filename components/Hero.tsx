@@ -1,5 +1,6 @@
 "use client";
 
+import Script from "next/script";
 import { trackEvent } from "./FacebookPixel";
 import { appendUTM } from "@/lib/utmUtils";
 
@@ -9,6 +10,8 @@ interface HeroProps {
   description?: string;
   ctaText: string;
   ctaUrl: string;
+  videoMediaId?: string;
+  videoAspectRatio?: string;
 }
 
 export default function Hero({
@@ -16,7 +19,9 @@ export default function Hero({
   headline,
   description,
   ctaText,
-  ctaUrl
+  ctaUrl,
+  videoMediaId,
+  videoAspectRatio = "1.6"
 }: HeroProps) {
   return (
     <section className="bg-gradient-to-br from-navy via-blue-700 to-blue-900 text-white section-padding min-h-screen flex items-center">
@@ -38,6 +43,38 @@ export default function Hero({
           <p className="text-lg md:text-xl mb-12 max-w-4xl mx-auto text-white/80">
             {description}
           </p>
+        )}
+
+        {/* Video Player */}
+        {videoMediaId && (
+          <>
+            <Script
+              src="https://fast.wistia.com/player.js"
+              strategy="afterInteractive"
+            />
+            <Script
+              src={`https://fast.wistia.com/embed/${videoMediaId}.js`}
+              strategy="afterInteractive"
+              type="module"
+            />
+            <div className="max-w-4xl mx-auto mb-12">
+              <div className="rounded-2xl overflow-hidden shadow-2xl">
+                <div dangerouslySetInnerHTML={{
+                  __html: `
+                    <style>
+                      wistia-player[media-id='${videoMediaId}']:not(:defined) {
+                        background: center / contain no-repeat url('https://fast.wistia.com/embed/medias/${videoMediaId}/swatch');
+                        display: block;
+                        filter: blur(5px);
+                        padding-top: ${(100 / parseFloat(videoAspectRatio)).toFixed(2)}%;
+                      }
+                    </style>
+                    <wistia-player media-id="${videoMediaId}" aspect="${videoAspectRatio}"></wistia-player>
+                  `
+                }} />
+              </div>
+            </div>
+          </>
         )}
 
         {/* CTA Button */}

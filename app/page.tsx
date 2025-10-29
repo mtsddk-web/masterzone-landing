@@ -49,8 +49,10 @@ export default function Home() {
       {pricingData.urgencyAlert && (
         <AnnouncementBar message={pricingData.urgencyAlert} />
       )}
-      <Hero {...heroData} />
+      <Hero {...heroData} videoMediaId={videoData.mediaId} videoAspectRatio={videoData.aspectRatio} />
+      {/* Video section moved to Hero - keeping this commented for now
       <Video {...videoData} />
+      */}
       <Stats {...statsData} />
       <Benefits {...benefitsData} />
       <Tools {...toolsData} />
