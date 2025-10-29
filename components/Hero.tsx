@@ -25,12 +25,12 @@ export default function Hero({
 }: HeroProps) {
   return (
     <section className="bg-gradient-to-br from-navy via-blue-700 to-blue-900 text-white py-8 md:py-16 lg:py-20 flex items-center relative">
-      {/* Logo - lewy górny róg */}
-      <div className="absolute top-4 left-4 md:top-6 md:left-6 z-10">
+      {/* Logo - lewy górny róg (tylko desktop) */}
+      <div className="hidden md:block absolute top-6 left-6 z-10">
         <img
           src="/images/logo-masterzone.png"
           alt="MasterZone Logo"
-          className="w-12 h-12 md:w-16 md:h-16 object-contain opacity-90 hover:opacity-100 transition-opacity"
+          className="w-16 h-16 object-contain opacity-90 hover:opacity-100 transition-opacity"
         />
       </div>
 
