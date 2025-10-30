@@ -8,6 +8,7 @@ import PainSection from "@/components/PainSection";
 import HowItWorks from "@/components/HowItWorks";
 import Testimonials from "@/components/Testimonials";
 import Transformation from "@/components/Transformation";
+import ValueStack from "@/components/ValueStack";
 import Pricing from "@/components/Pricing";
 import FAQ from "@/components/FAQ";
 import JoinSection from "@/components/JoinSection";
@@ -39,6 +40,7 @@ export default function Home() {
   const howItWorksData = getContentData("howitworks.md");
   const testimonialsData = getContentData("testimonials.md");
   const transformationData = getContentData("transformation.md");
+  const valueStackData = getContentData("valuestack.md");
   const pricingData = getContentData("pricing.md");
   const faqData = getContentData("faq.md");
   const joinSectionData = getContentData("joinsection.md");
@@ -63,6 +65,7 @@ export default function Home() {
       <HowItWorks {...howItWorksData} />
       <Testimonials {...testimonialsData} />
       <Transformation {...transformationData} />
+      <ValueStack {...valueStackData} />
       <Pricing {...pricingData} />
       <FAQ {...faqData} />
       <JoinSection {...joinSectionData} />

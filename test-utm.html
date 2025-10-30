@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test appendUTM</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-section {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        button {
+            background: #0066cc;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px;
+        }
+        button:hover {
+            background: #0052a3;
+        }
+        .output {
+            background: #f0f0f0;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 4px;
+            font-family: monospace;
+            word-break: break-all;
+        }
+        .info {
+            background: #e3f2fd;
+            padding: 15px;
+            border-left: 4px solid #2196F3;
+            margin: 15px 0;
+        }
+        .current-url {
+            background: #fff3cd;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+            word-break: break-all;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 Test funkcji appendUTM</h1>
+
+    <div class="info">
+        <strong>Aktualny URL:</strong>
+        <div class="current-url" id="currentUrl"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>Test 1: Podstawowy test bez parametrów</h2>
+        <p>Kliknij przycisk - powinno przekierować na czysty URL Skool</p>
+        <button onclick="testAppendUTM(event)">Test bez parametrów</button>
+        <div class="output" id="output1"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>Test 2: Dodaj parametry UTM i testuj</h2>
+        <p>Kliknij przycisk, aby dodać parametry UTM do URL tej strony</p>
+        <button onclick="addTestParams()">Dodaj parametry testowe</button>
+        <button onclick="testAppendUTM(event)">Test z parametrami</button>
+        <div class="output" id="output2"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>Test 3: Symulacja z Facebook Ads</h2>
+        <p>Symuluje kliknięcie z reklamy Facebook (z fbclid)</p>
+        <button onclick="addFacebookParams()">Dodaj parametry Facebook</button>
+        <button onclick="testAppendUTM(event)">Test Facebook</button>
+        <div class="output" id="output3"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>Test 4: Symulacja z Google Ads</h2>
+        <p>Symuluje kliknięcie z reklamy Google (z gclid)</p>
+        <button onclick="addGoogleParams()">Dodaj parametry Google</button>
+        <button onclick="testAppendUTM(event)">Test Google</button>
+        <div class="output" id="output4"></div>
+    </div>
+
+    <script>
+        // Skopiowana funkcja appendUTM z projektu
+        const SKOOL_URL = 'https://www.skool.com/masterzone';
+
+        function appendUTM(event) {
+            event.preventDefault();
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const paramsToKeep = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'fbclid', 'gclid'];
+            const newParams = new URLSearchParams();
+
+            paramsToKeep.forEach(param => {
+                const value = urlParams.get(param);
+                if (value) {
+                    newParams.set(param, value);
+                }
+            });
+
+            if (newParams.toString()) {
+                return SKOOL_URL + '?' + newParams.toString();
+            } else {
+                return SKOOL_URL;
+            }
+        }
+
+        function testAppendUTM(event) {
+            event.preventDefault();
+            const resultUrl = appendUTM(event);
+
+            // Pokaż wynik zamiast przekierowywać
+            const outputs = document.querySelectorAll('.output');
+            outputs.forEach(output => {
+                output.innerHTML = `
+                    <strong>Wygenerowany URL:</strong><br>
+                    ${resultUrl}<br><br>
+                    <strong>Analiza:</strong><br>
+                    ${analyzeUrl(resultUrl)}
+                `;
+            });
+
+            console.log('Wygenerowany URL:', resultUrl);
+
+            // Opcjonalnie: odkomentuj poniżej, aby faktycznie przekierować
+            // window.location.href = resultUrl;
+        }
+
+        function analyzeUrl(url) {
+            const urlObj = new URL(url);
+            const params = new URLSearchParams(urlObj.search);
+
+            if (params.toString() === '') {
+                return '❌ Brak parametrów - czysty URL';
+            }
+
+            let analysis = '✅ Parametry zostały dodane:<br>';
+            params.forEach((value, key) => {
+                analysis += `- ${key} = ${value}<br>`;
+            });
+
+            return analysis;
+        }
+
+        function addTestParams() {
+            const params = new URLSearchParams({
+                utm_source: 'facebook',
+                utm_medium: 'cpc',
+                utm_campaign: 'masterzone_test',
+                utm_content: 'hero_button',
+                utm_term: 'produktywnosc'
+            });
+
+            window.location.search = params.toString();
+        }
+
+        function addFacebookParams() {
+            const params = new URLSearchParams({
+                utm_source: 'facebook',
+                utm_medium: 'paid',
+                utm_campaign: 'masterzone_ads_2025',
+                fbclid: 'IwAR1234567890abcdefghijklmnop'
+            });
+
+            window.location.search = params.toString();
+        }
+
+        function addGoogleParams() {
+            const params = new URLSearchParams({
+                utm_source: 'google',
+                utm_medium: 'cpc',
+                utm_campaign: 'masterzone_search',
+                gclid: 'Cj0KCQiA1234567890ABCDEFG'
+            });
+
+            window.location.search = params.toString();
+        }
+
+        function updateCurrentUrl() {
+            document.getElementById('currentUrl').textContent = window.location.href;
+        }
+
+        // Aktualizuj URL przy załadowaniu
+        updateCurrentUrl();
+
+        // Aktualizuj URL co sekundę (na wypadek zmian)
+        setInterval(updateCurrentUrl, 1000);
+    </script>
+</body>
+</html>
