@@ -97,9 +97,9 @@ export default function Hero({
               trackEvent("Lead", { source: "hero_primary_button" });
               appendUTM(e);
             }}
-            className="inline-block bg-lightblue hover:bg-blue-400 text-navy font-bold py-2 px-6 md:py-4 md:px-12 rounded-lg transition-all duration-300 text-sm md:text-lg shadow-xl hover:shadow-2xl transform hover:-translate-y-1"
+            className="inline-block bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-300 hover:to-orange-400 text-navy font-black py-3 px-8 md:py-4 md:px-12 rounded-xl transition-all duration-300 text-base md:text-xl shadow-2xl hover:shadow-yellow-500/50 transform hover:scale-105 animate-pulse-slow"
           >
-            {ctaText}
+            👉 {ctaText}
           </a>
         </div>
       </div>
