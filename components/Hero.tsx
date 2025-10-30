@@ -35,9 +35,9 @@ export default function Hero({
       </div>
 
       <div className="container-custom text-center">
-        {/* Preheadline - wyróżniony tekst nad nagłówkiem */}
+        {/* Preheadline - wyróżniony tekst nad nagłówkiem - UKRYTY NA MOBILE */}
         {preheadline && (
-          <div className="inline-block mb-2 md:mb-6 bg-yellow-400/20 backdrop-blur-sm border-2 border-yellow-400 rounded-full px-4 py-1 md:px-8 md:py-3 text-xs md:text-base lg:text-lg font-bold text-yellow-300">
+          <div className="hidden md:inline-block mb-6 bg-yellow-400/20 backdrop-blur-sm border-2 border-yellow-400 rounded-full px-8 py-3 text-base lg:text-lg font-bold text-yellow-300">
             {preheadline}
           </div>
         )}
