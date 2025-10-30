@@ -47,31 +47,7 @@ export default function Hero({
           {headline}
         </h1>
 
-        {/* Description */}
-        {description && (
-          <p className="text-sm md:text-lg lg:text-xl mb-2 md:mb-8 max-w-4xl mx-auto text-white/80 px-4 leading-snug">
-            {description}
-          </p>
-        )}
-
-        {/* CTA Button - Above Video (Above the Fold) */}
-        <div className="mb-2 md:mb-8">
-          <a
-            href={ctaUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            id="skool-cta-above"
-            onClick={(e) => {
-              trackEvent("Lead", { source: "hero_above_video_button" });
-              appendUTM(e);
-            }}
-            className="inline-block bg-lightblue hover:bg-blue-400 text-navy font-bold py-2 px-6 md:py-4 md:px-12 rounded-lg transition-all duration-300 text-sm md:text-lg shadow-xl hover:shadow-2xl transform hover:-translate-y-1"
-          >
-            {ctaText}
-          </a>
-        </div>
-
-        {/* Video Player */}
+        {/* Video Player - ZARAZ POD H1 */}
         {videoMediaId && (
           <>
             <Script
@@ -103,8 +79,15 @@ export default function Hero({
           </>
         )}
 
-        {/* CTA Button - Hidden on mobile (mamy już CTA nad video) */}
-        <div className="hidden md:block mb-8">
+        {/* Description - PO VIDEO */}
+        {description && (
+          <p className="text-sm md:text-lg lg:text-xl mb-3 md:mb-8 max-w-4xl mx-auto text-white/80 px-4 leading-snug">
+            {description}
+          </p>
+        )}
+
+        {/* CTA Button - PO VIDEO */}
+        <div className="mb-3 md:mb-8">
           <a
             href={ctaUrl}
             target="_blank"
@@ -114,7 +97,7 @@ export default function Hero({
               trackEvent("Lead", { source: "hero_primary_button" });
               appendUTM(e);
             }}
-            className="inline-block bg-lightblue hover:bg-blue-400 text-navy font-bold py-4 px-12 rounded-lg transition-all duration-300 text-lg shadow-xl hover:shadow-2xl transform hover:-translate-y-1"
+            className="inline-block bg-lightblue hover:bg-blue-400 text-navy font-bold py-2 px-6 md:py-4 md:px-12 rounded-lg transition-all duration-300 text-sm md:text-lg shadow-xl hover:shadow-2xl transform hover:-translate-y-1"
           >
             {ctaText}
           </a>
