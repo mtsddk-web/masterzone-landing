@@ -54,6 +54,23 @@ export default function Hero({
           </p>
         )}
 
+        {/* CTA Button - Above Video (Above the Fold) */}
+        <div className="mb-4 md:mb-8">
+          <a
+            href={ctaUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            id="skool-cta-above"
+            onClick={(e) => {
+              trackEvent("Lead", { source: "hero_above_video_button" });
+              appendUTM(e);
+            }}
+            className="inline-block bg-lightblue hover:bg-blue-400 text-navy font-bold py-3 px-8 md:py-4 md:px-12 rounded-lg transition-all duration-300 text-base md:text-lg shadow-xl hover:shadow-2xl transform hover:-translate-y-1"
+          >
+            {ctaText}
+          </a>
+        </div>
+
         {/* Video Player */}
         {videoMediaId && (
           <>
