@@ -13,6 +13,8 @@ import Pricing from "@/components/Pricing";
 import FAQ from "@/components/FAQ";
 import JoinSection from "@/components/JoinSection";
 import CTA from "@/components/CTA";
+import ExitIntentPopup from "@/components/ExitIntentPopup";
+import FloatingHelpButton from "@/components/FloatingHelpButton";
 
 // Import content from markdown files
 import fs from "fs";
@@ -67,9 +69,17 @@ export default function Home() {
       <Transformation {...transformationData} />
       <ValueStack {...valueStackData} />
       <Pricing {...pricingData} />
-      <FAQ {...faqData} />
+      <div id="faq">
+        <FAQ {...faqData} />
+      </div>
       <JoinSection {...joinSectionData} />
       <CTA {...ctaData} />
+
+      {/* Exit Intent Popup - CRO boost */}
+      <ExitIntentPopup />
+
+      {/* Floating Help Button - Secondary CTA */}
+      <FloatingHelpButton />
     </main>
   );
 }
