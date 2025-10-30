@@ -47,7 +47,21 @@ export default function Hero({
           {headline}
         </h1>
 
-        {/* Video Player - ZARAZ POD H1 */}
+        {/* Description - PO H1, PRZED VIDEO */}
+        {description && (
+          <>
+            {/* Mobile - krótka wersja */}
+            <p className="md:hidden text-sm mb-3 max-w-4xl mx-auto text-white/90 px-3 leading-snug">
+              Nie potrzebujesz więcej dyscypliny — potrzebujesz środowiska, które trzyma Cię w skupieniu.
+            </p>
+            {/* Desktop - pełna wersja */}
+            <p className="hidden md:block text-lg lg:text-xl mb-6 max-w-4xl mx-auto text-white/80 px-4 leading-snug">
+              {description}
+            </p>
+          </>
+        )}
+
+        {/* Video Player - PO DESCRIPTION */}
         {videoMediaId && (
           <>
             <Script
@@ -77,13 +91,6 @@ export default function Hero({
               </div>
             </div>
           </>
-        )}
-
-        {/* Description - PO VIDEO */}
-        {description && (
-          <p className="text-sm md:text-lg lg:text-xl mb-3 md:mb-8 max-w-4xl mx-auto text-white/80 px-4 leading-snug">
-            {description}
-          </p>
         )}
 
         {/* CTA Button - PO VIDEO */}
