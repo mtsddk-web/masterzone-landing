@@ -43,7 +43,7 @@ export default function Hero({
         )}
 
         {/* Main Headline */}
-        <h1 className="text-2xl md:text-6xl lg:text-7xl font-bold mb-2 md:mb-6 leading-tight">
+        <h1 className="text-2xl md:text-6xl lg:text-7xl font-bold mb-1 md:mb-6 leading-tight">
           {headline}
         </h1>
 
@@ -59,7 +59,7 @@ export default function Hero({
               strategy="afterInteractive"
               type="module"
             />
-            <div className="max-w-4xl mx-auto mb-2 md:mb-8 px-4">
+            <div className="max-w-4xl mx-auto mb-2 md:mb-8 px-2">
               <div className="rounded-lg md:rounded-2xl overflow-hidden shadow-2xl">
                 <div dangerouslySetInnerHTML={{
                   __html: `
