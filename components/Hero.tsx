@@ -43,7 +43,7 @@ export default function Hero({
         )}
 
         {/* Main Headline */}
-        <h1 className="text-2xl md:text-6xl lg:text-7xl font-bold mb-3 md:mb-6 leading-tight">
+        <h1 className="text-2xl md:text-6xl lg:text-7xl font-bold mb-4 md:mb-6 leading-tight">
           {headline}
         </h1>
 
@@ -51,7 +51,7 @@ export default function Hero({
         {description && (
           <>
             {/* Mobile - krótka wersja */}
-            <p className="md:hidden text-sm mb-3 max-w-4xl mx-auto text-white/90 px-3 leading-snug">
+            <p className="md:hidden text-sm mb-4 max-w-4xl mx-auto text-white/90 px-3 leading-snug">
               Nie potrzebujesz więcej dyscypliny — potrzebujesz środowiska, które trzyma Cię w skupieniu.
             </p>
             {/* Desktop - pełna wersja */}
@@ -73,7 +73,7 @@ export default function Hero({
               strategy="afterInteractive"
               type="module"
             />
-            <div className="max-w-4xl mx-auto mt-3 mb-3 md:mb-8 px-3 md:px-4">
+            <div className="max-w-4xl mx-auto mt-4 mb-4 md:mb-8 px-3 md:px-4">
               <div className="rounded-lg md:rounded-2xl overflow-hidden shadow-2xl">
                 <div dangerouslySetInnerHTML={{
                   __html: `
