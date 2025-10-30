@@ -24,7 +24,7 @@ export default function Hero({
   videoAspectRatio = "1.6"
 }: HeroProps) {
   return (
-    <section className="bg-gradient-to-br from-navy via-blue-700 to-blue-900 text-white py-4 md:py-16 lg:py-20 flex items-center relative">
+    <section className="bg-gradient-to-br from-navy via-blue-700 to-blue-900 text-white py-8 md:py-16 lg:py-20 flex items-center relative">
       {/* Logo - lewy górny róg (tylko desktop) */}
       <div className="hidden md:block absolute top-6 left-6 z-10">
         <img
@@ -35,33 +35,26 @@ export default function Hero({
       </div>
 
       <div className="container-custom text-center">
-        {/* Preheadline - wyróżniony tekst nad nagłówkiem - UKRYTY NA MOBILE */}
+        {/* Preheadline - wyróżniony tekst nad nagłówkiem */}
         {preheadline && (
-          <div className="hidden md:inline-block mb-6 bg-yellow-400/20 backdrop-blur-sm border-2 border-yellow-400 rounded-full px-8 py-3 text-base lg:text-lg font-bold text-yellow-300">
+          <div className="inline-block mb-3 md:mb-6 bg-yellow-400/20 backdrop-blur-sm border-2 border-yellow-400 rounded-full px-6 py-2 md:px-8 md:py-3 text-sm md:text-base lg:text-lg font-bold text-yellow-300">
             {preheadline}
           </div>
         )}
 
         {/* Main Headline */}
-        <h1 className="text-2xl md:text-6xl lg:text-7xl font-bold mb-4 md:mb-6 leading-tight">
+        <h1 className="text-3xl md:text-6xl lg:text-7xl font-bold mb-3 md:mb-6 leading-tight">
           {headline}
         </h1>
 
-        {/* Description - PO H1, PRZED VIDEO */}
+        {/* Description */}
         {description && (
-          <>
-            {/* Mobile - krótka wersja */}
-            <p className="md:hidden text-sm mb-4 max-w-4xl mx-auto text-white/90 px-3 leading-snug">
-              Nie potrzebujesz więcej dyscypliny — potrzebujesz środowiska, które trzyma Cię w skupieniu.
-            </p>
-            {/* Desktop - pełna wersja */}
-            <p className="hidden md:block text-lg lg:text-xl mb-6 max-w-4xl mx-auto text-white/80 px-4 leading-snug">
-              {description}
-            </p>
-          </>
+          <p className="text-base md:text-lg lg:text-xl mb-4 md:mb-8 max-w-4xl mx-auto text-white/80 px-4">
+            {description}
+          </p>
         )}
 
-        {/* Video Player - PO DESCRIPTION */}
+        {/* Video Player */}
         {videoMediaId && (
           <>
             <Script
@@ -73,7 +66,7 @@ export default function Hero({
               strategy="afterInteractive"
               type="module"
             />
-            <div className="max-w-4xl mx-auto mt-4 mb-4 md:mb-8 px-3 md:px-4">
+            <div className="max-w-4xl mx-auto mb-4 md:mb-8 px-4">
               <div className="rounded-lg md:rounded-2xl overflow-hidden shadow-2xl">
                 <div dangerouslySetInnerHTML={{
                   __html: `
@@ -93,8 +86,8 @@ export default function Hero({
           </>
         )}
 
-        {/* CTA Button - PO VIDEO */}
-        <div className="mb-3 md:mb-8">
+        {/* CTA Button */}
+        <div className="mb-4 md:mb-8">
           <a
             href={ctaUrl}
             target="_blank"
@@ -104,9 +97,9 @@ export default function Hero({
               trackEvent("Lead", { source: "hero_primary_button" });
               appendUTM(e);
             }}
-            className="inline-block bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-300 hover:to-orange-400 text-navy font-black py-3 px-8 md:py-4 md:px-12 rounded-xl transition-all duration-300 text-base md:text-xl shadow-2xl hover:shadow-yellow-500/50 transform hover:scale-105 animate-pulse-slow"
+            className="inline-block bg-lightblue hover:bg-blue-400 text-navy font-bold py-3 px-8 md:py-4 md:px-12 rounded-lg transition-all duration-300 text-base md:text-lg shadow-xl hover:shadow-2xl transform hover:-translate-y-1"
           >
-            👉 {ctaText}
+            {ctaText}
           </a>
         </div>
       </div>

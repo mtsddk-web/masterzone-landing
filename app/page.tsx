@@ -8,13 +8,10 @@ import PainSection from "@/components/PainSection";
 import HowItWorks from "@/components/HowItWorks";
 import Testimonials from "@/components/Testimonials";
 import Transformation from "@/components/Transformation";
-import ValueStack from "@/components/ValueStack";
 import Pricing from "@/components/Pricing";
 import FAQ from "@/components/FAQ";
 import JoinSection from "@/components/JoinSection";
 import CTA from "@/components/CTA";
-import ExitIntentPopup from "@/components/ExitIntentPopup";
-import FloatingHelpButton from "@/components/FloatingHelpButton";
 
 // Import content from markdown files
 import fs from "fs";
@@ -42,7 +39,6 @@ export default function Home() {
   const howItWorksData = getContentData("howitworks.md");
   const testimonialsData = getContentData("testimonials.md");
   const transformationData = getContentData("transformation.md");
-  const valueStackData = getContentData("valuestack.md");
   const pricingData = getContentData("pricing.md");
   const faqData = getContentData("faq.md");
   const joinSectionData = getContentData("joinsection.md");
@@ -67,19 +63,10 @@ export default function Home() {
       <HowItWorks {...howItWorksData} />
       <Testimonials {...testimonialsData} />
       <Transformation {...transformationData} />
-      <ValueStack {...valueStackData} />
       <Pricing {...pricingData} />
-      <div id="faq">
-        <FAQ {...faqData} />
-      </div>
+      <FAQ {...faqData} />
       <JoinSection {...joinSectionData} />
       <CTA {...ctaData} />
-
-      {/* Exit Intent Popup - CRO boost */}
-      <ExitIntentPopup />
-
-      {/* Floating Help Button - Secondary CTA */}
-      <FloatingHelpButton />
     </main>
   );
 }
