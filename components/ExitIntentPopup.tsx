@@ -74,7 +74,7 @@ export default function ExitIntentPopup() {
           <p className="text-lg text-gray-700 mb-6">
             <strong className="text-red-600">Ostatnia szansa na cenę $9/msc</strong>
             <br />
-            Za 3 dni cena rośnie do <span className="line-through text-gray-500">$14</span> (+56%)
+            Promocja kończy się <strong className="text-red-600">1.11.2025</strong> - potem cena rośnie do <span className="line-through text-gray-500">$14</span> (+56%)
           </p>
 
           {/* Value Props */}
