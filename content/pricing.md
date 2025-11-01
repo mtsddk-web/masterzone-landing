@@ -1,7 +1,6 @@
 ---
 sectionTitle: "Prosty, Przejrzysty Cennik"
 sectionSubtitle: "Wszystko w jednej cenie — bez ukrytych kosztów"
-urgencyAlert: "⏰ Ostatnie dni w cenie $9/mies. — od 1 listopada cena wzrasta do $14 (+56%)"
 plans:
   - name: "MasterZone Community"
     price: "$9"

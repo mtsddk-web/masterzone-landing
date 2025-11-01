@@ -99,13 +99,6 @@ export default function ValueStack({
             </p>
           </div>
         </div>
-
-        {/* Urgency Note */}
-        <div className="text-center mt-8">
-          <p className="text-base md:text-lg text-gray-700">
-            ⚠️ <strong>Ta cena jest dostępna tylko do 31 października.</strong> Od 1 listopada cena wzrasta do $14/msc.
-          </p>
-        </div>
       </div>
     </section>
   );
