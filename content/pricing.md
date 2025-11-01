@@ -3,7 +3,7 @@ sectionTitle: "Prosty, Przejrzysty Cennik"
 sectionSubtitle: "Wszystko w jednej cenie — bez ukrytych kosztów"
 plans:
   - name: "MasterZone Community"
-    price: "$9"
+    price: "$14"
     period: "/miesiąc"
     description: "Pełen dostęp do wszystkiego"
     features:

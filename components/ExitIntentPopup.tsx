@@ -72,9 +72,9 @@ export default function ExitIntentPopup() {
 
           {/* Subheadline */}
           <p className="text-lg text-gray-700 mb-6">
-            <strong className="text-red-600">Ostatnia szansa na cenę $9/msc</strong>
+            Dołącz do społeczności przedsiębiorców walczących z rozproszeniem
             <br />
-            Promocja kończy się <strong className="text-red-600">1.11.2025</strong> - potem cena rośnie do <span className="line-through text-gray-500">$14</span> (+56%)
+            Tylko <strong className="text-indigo-600">$14/msc</strong> - pełen dostęp do wszystkiego
           </p>
 
           {/* Value Props */}
@@ -108,7 +108,7 @@ export default function ExitIntentPopup() {
             onClick={handleCTA}
             className="inline-block w-full bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-300 hover:to-orange-400 text-navy font-black py-4 px-8 rounded-xl transition-all duration-300 text-lg shadow-2xl hover:shadow-yellow-500/50 transform hover:scale-105 mb-4"
           >
-            👉 Dołączam za $9/msc (oszczędzam $663)
+            👉 Dołączam za $14/msc (oszczędzam $658)
           </a>
 
           {/* Risk Reversal */}

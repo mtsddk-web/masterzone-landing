@@ -75,7 +75,7 @@ benefits:
 sectionTitle: "Prosty, Przejrzysty Cennik"
 plans:
   - name: "MasterZone Community"
-    price: "$9"
+    price: "$14"
     period: "/miesiąc"
 ---
 ```
