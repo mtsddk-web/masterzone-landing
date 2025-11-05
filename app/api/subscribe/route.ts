@@ -36,6 +36,7 @@ export async function POST(request: NextRequest) {
     // Prepare subscriber data for MailerLite
     const subscriberData = {
       email: email,
+      groups: ["170230618054985586"], // "Z reklam FB przez Landing Page Rozproszenie"
       fields: {
         name: firstName,
         source: source || "contact_form",
