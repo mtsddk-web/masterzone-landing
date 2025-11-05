@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import FacebookPixel from "@/components/FacebookPixel";
 import MicrosoftClarity from "@/components/MicrosoftClarity";
+import Hotjar from "@/components/Hotjar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -42,6 +43,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <FacebookPixel />
         <MicrosoftClarity />
+        <Hotjar />
         {children}
       </body>
     </html>
