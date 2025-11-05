@@ -2,6 +2,7 @@
 
 import { trackEvent } from "./FacebookPixel";
 import { appendUTM } from "@/lib/utmUtils";
+import { scrollToContactForm } from "@/lib/scrollToForm";
 
 interface CTAProps {
   headline: string;
@@ -21,15 +22,13 @@ export default function CTA({ headline, subheadline, buttonText, buttonUrl }: CT
           {subheadline}
         </p>
         <a
-          href={buttonUrl}
-          target="_blank"
-          rel="noopener noreferrer"
+          href="#contact-form"
           id="skool-cta"
           onClick={(e) => {
             trackEvent("Lead", { source: "cta_bottom_button" });
-            appendUTM(e);
+            scrollToContactForm(e);
           }}
-          className="inline-block bg-lightblue hover:bg-blue-400 text-navy font-bold py-4 px-12 rounded-lg transition-all duration-300 text-lg shadow-xl hover:shadow-2xl transform hover:-translate-y-1"
+          className="inline-block bg-lightblue hover:bg-blue-400 text-navy font-bold py-4 px-12 rounded-lg transition-all duration-300 text-lg shadow-xl hover:shadow-2xl transform hover:-translate-y-1 cursor-pointer"
         >
           {buttonText}
         </a>

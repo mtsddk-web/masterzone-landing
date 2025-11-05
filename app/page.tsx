@@ -12,6 +12,7 @@ import ValueStack from "@/components/ValueStack";
 import Pricing from "@/components/Pricing";
 import FAQ from "@/components/FAQ";
 import JoinSection from "@/components/JoinSection";
+import ContactForm from "@/components/ContactForm";
 import CTA from "@/components/CTA";
 import ExitIntentPopup from "@/components/ExitIntentPopup";
 import FloatingHelpButton from "@/components/FloatingHelpButton";
@@ -73,6 +74,12 @@ export default function Home() {
         <FAQ {...faqData} />
       </div>
       <JoinSection {...joinSectionData} />
+      <ContactForm
+        headline="Dołącz do MasterZone już teraz"
+        subheadline="Podaj swoje dane, a za chwilę przekierujemy Cię do społeczności"
+        ctaText="Dołącz teraz →"
+        source="landing_page_form"
+      />
       <CTA {...ctaData} />
 
       {/* Exit Intent Popup - CRO boost */}

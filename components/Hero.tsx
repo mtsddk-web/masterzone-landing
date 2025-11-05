@@ -3,6 +3,7 @@
 import Script from "next/script";
 import { trackEvent } from "./FacebookPixel";
 import { appendUTM } from "@/lib/utmUtils";
+import { scrollToContactForm } from "@/lib/scrollToForm";
 
 interface HeroProps {
   preheadline?: string;
@@ -86,18 +87,16 @@ export default function Hero({
           </>
         )}
 
-        {/* CTA Button */}
+        {/* CTA Button - Scroll to Form */}
         <div className="mb-4 md:mb-8">
           <a
-            href={ctaUrl}
-            target="_blank"
-            rel="noopener noreferrer"
+            href="#contact-form"
             id="skool-cta"
             onClick={(e) => {
               trackEvent("Lead", { source: "hero_primary_button" });
-              appendUTM(e);
+              scrollToContactForm(e);
             }}
-            className="inline-block bg-lightblue hover:bg-blue-400 text-navy font-bold py-3 px-8 md:py-4 md:px-12 rounded-lg transition-all duration-300 text-base md:text-lg shadow-xl hover:shadow-2xl transform hover:-translate-y-1"
+            className="inline-block bg-lightblue hover:bg-blue-400 text-navy font-bold py-3 px-8 md:py-4 md:px-12 rounded-lg transition-all duration-300 text-base md:text-lg shadow-xl hover:shadow-2xl transform hover:-translate-y-1 cursor-pointer"
           >
             {ctaText}
           </a>
