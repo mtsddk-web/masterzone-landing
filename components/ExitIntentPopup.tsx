@@ -7,6 +7,7 @@ import { scrollToContactForm } from "@/lib/scrollToForm";
 export default function ExitIntentPopup() {
   const [isVisible, setIsVisible] = useState(false);
   const [hasShown, setHasShown] = useState(false);
+  const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
     // Check if popup was already shown in this session
@@ -15,6 +16,17 @@ export default function ExitIntentPopup() {
       setHasShown(true);
       return;
     }
+
+    // Wait 5 seconds before activating exit intent
+    const timer = setTimeout(() => {
+      setIsReady(true);
+    }, 5000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    if (!isReady || hasShown) return;
 
     const handleMouseLeave = (e: MouseEvent) => {
       // Trigger only when cursor moves to top of screen (likely closing tab/window)
@@ -31,7 +43,7 @@ export default function ExitIntentPopup() {
     return () => {
       document.removeEventListener("mouseleave", handleMouseLeave);
     };
-  }, [hasShown]);
+  }, [isReady, hasShown]);
 
   const handleClose = () => {
     setIsVisible(false);
