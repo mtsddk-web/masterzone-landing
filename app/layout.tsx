@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import FacebookPixel from "@/components/FacebookPixel";
+import MicrosoftClarity from "@/components/MicrosoftClarity";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -37,6 +38,7 @@ export default function RootLayout({
     <html lang="pl">
       <body className={inter.className}>
         <FacebookPixel />
+        <MicrosoftClarity />
         {children}
       </body>
     </html>
