@@ -10,6 +10,9 @@ export const metadata: Metadata = {
   title: "MasterZone - Koniec z Rozproszeniem",
   description: "Program pomoże Ci odzyskać fokus, produktywność i kontrolę nad czasem. Dołącz do społeczności MasterZone i zacznij pracować głęboko.",
   keywords: "fokus, produktywność, rozproszenie, koncentracja, deep work, praca głęboka",
+  verification: {
+    google: "qB1wI-NEnLVsY9wLdsXL9RyO5RVuY5f8_g-2PIEal5o",
+  },
   icons: {
     icon: [
       { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
