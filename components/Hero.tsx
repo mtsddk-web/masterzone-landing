@@ -2,7 +2,6 @@
 
 import Script from "next/script";
 import { trackEvent } from "./FacebookPixel";
-import { appendUTM } from "@/lib/utmUtils";
 import { scrollToContactForm } from "@/lib/scrollToForm";
 
 interface HeroProps {

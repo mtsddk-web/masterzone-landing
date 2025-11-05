@@ -1,6 +1,7 @@
 "use client";
 
 import { trackEvent } from "./FacebookPixel";
+import { scrollToContactForm } from "@/lib/scrollToForm";
 
 interface Plan {
   name: string;
@@ -96,11 +97,12 @@ export default function Pricing({
 
                 {/* CTA Button */}
                 <a
-                  href={plan.ctaUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => trackEvent("InitiateCheckout", { plan: plan.name, price: plan.price })}
-                  className="block w-full bg-lightblue hover:bg-blue-400 text-navy text-center font-bold py-4 px-8 rounded-lg transition-all duration-300 text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+                  href="#contact-form"
+                  onClick={(e) => {
+                    trackEvent("InitiateCheckout", { plan: plan.name, price: plan.price });
+                    scrollToContactForm(e);
+                  }}
+                  className="block w-full bg-lightblue hover:bg-blue-400 text-navy text-center font-bold py-4 px-8 rounded-lg transition-all duration-300 text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 cursor-pointer"
                 >
                   {plan.ctaText}
                 </a>

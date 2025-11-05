@@ -1,7 +1,6 @@
 "use client";
 
 import { trackEvent } from "./FacebookPixel";
-import { appendUTM } from "@/lib/utmUtils";
 import { scrollToContactForm } from "@/lib/scrollToForm";
 
 interface CTAProps {
