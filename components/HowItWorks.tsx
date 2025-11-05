@@ -1,7 +1,7 @@
 "use client";
 
 import { trackEvent } from "./FacebookPixel";
-import { appendUTM } from "@/lib/utmUtils";
+import { scrollToContactForm } from "@/lib/scrollToForm";
 
 interface Step {
   icon: string;
@@ -79,15 +79,13 @@ export default function HowItWorks({
         {/* CTA Button */}
         <div className="text-center">
           <a
-            href="https://www.skool.com/masterzone/about"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="#contact-form"
             id="skool-cta"
             onClick={(e) => {
               trackEvent("Lead", { source: "how_it_works_cta_button" });
-              appendUTM(e);
+              scrollToContactForm(e);
             }}
-            className="inline-block bg-lightblue hover:bg-blue-400 text-navy font-bold py-4 px-12 rounded-lg transition-all duration-300 text-lg shadow-xl hover:shadow-2xl transform hover:-translate-y-1"
+            className="inline-block bg-lightblue hover:bg-blue-400 text-navy font-bold py-4 px-12 rounded-lg transition-all duration-300 text-lg shadow-xl hover:shadow-2xl transform hover:-translate-y-1 cursor-pointer"
           >
             Chcę pracować w pełnym skupieniu
           </a>

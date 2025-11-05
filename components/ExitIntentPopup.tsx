@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { trackEvent } from "./FacebookPixel";
-import { appendUTM } from "@/lib/utmUtils";
+import { scrollToContactForm } from "@/lib/scrollToForm";
 
 export default function ExitIntentPopup() {
   const [isVisible, setIsVisible] = useState(false);
@@ -39,7 +39,7 @@ export default function ExitIntentPopup() {
 
   const handleCTA = (e: React.MouseEvent<HTMLAnchorElement>) => {
     trackEvent("Lead", { source: "exit_intent_popup_cta" });
-    appendUTM(e);
+    scrollToContactForm(e);
     setIsVisible(false);
   };
 
@@ -102,11 +102,9 @@ export default function ExitIntentPopup() {
 
           {/* CTA Button */}
           <a
-            href="https://www.skool.com/masterzone"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="#contact-form"
             onClick={handleCTA}
-            className="inline-block w-full bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-300 hover:to-orange-400 text-navy font-black py-4 px-8 rounded-xl transition-all duration-300 text-lg shadow-2xl hover:shadow-yellow-500/50 transform hover:scale-105 mb-4"
+            className="inline-block w-full bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-300 hover:to-orange-400 text-navy font-black py-4 px-8 rounded-xl transition-all duration-300 text-lg shadow-2xl hover:shadow-yellow-500/50 transform hover:scale-105 mb-4 cursor-pointer"
           >
             👉 Dołączam za $14/msc (oszczędzam $658)
           </a>
