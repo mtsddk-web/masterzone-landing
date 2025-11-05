@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   description: "Program pomoże Ci odzyskać fokus, produktywność i kontrolę nad czasem. Dołącz do społeczności MasterZone i zacznij pracować głęboko.",
   keywords: "fokus, produktywność, rozproszenie, koncentracja, deep work, praca głęboka",
   verification: {
-    google: "qB1wI-NEnLVsY9wLdsXL9RyO5RVuY5f8_g-2PIEal5o",
+    google: "qT6xxbkTyOYWZ05vBVgFUYbll0yCE7qGIkDdqIwSUSM",
   },
   icons: {
     icon: [
