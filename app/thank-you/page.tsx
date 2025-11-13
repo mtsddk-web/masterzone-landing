@@ -7,11 +7,11 @@ export default function ThankYouPage() {
   const router = useRouter();
   const [countdown, setCountdown] = useState<number | null>(null);
 
-  // Auto-redirect po 60 sekundach (daje czas obejrzeć film)
+  // Auto-redirect po ~170 sekundach (film 153s + bufor 7s + countdown 10s)
   useEffect(() => {
     const timer = setTimeout(() => {
       setCountdown(10);
-    }, 50000); // Po 50 sekundach zaczyna countdown
+    }, 160000); // Po 160 sekundach (2min 40s) zaczyna countdown
 
     return () => clearTimeout(timer);
   }, []);
