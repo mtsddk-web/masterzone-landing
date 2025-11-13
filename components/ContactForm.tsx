@@ -70,15 +70,15 @@ export default function ContactForm({
 
       setStatus("success");
 
-      // Redirect to Skool after 1.5 seconds
+      // Redirect to Thank You page after 1.5 seconds
       setTimeout(() => {
-        // Append UTM params to Skool URL
+        // Append UTM params to Thank You URL
         const params = new URLSearchParams(window.location.search);
-        const skoolUrl = params.toString()
-          ? `https://www.skool.com/masterzone?${params.toString()}`
-          : "https://www.skool.com/masterzone";
+        const thankYouUrl = params.toString()
+          ? `/thank-you?${params.toString()}`
+          : "/thank-you";
 
-        window.location.href = skoolUrl;
+        window.location.href = thankYouUrl;
       }, 1500);
 
     } catch (error) {

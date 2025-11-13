@@ -27,7 +27,7 @@ items:
     description: "Praktyczne warsztaty od przedsiębiorców"
     value: "$47"
 totalValue: "$672"
-actualPrice: "$14"
-savings: "$658"
+actualPrice: "7 dni ZA DARMO"
+savings: "Następnie $14/msc"
 savingsPercent: "98%"
 ---
