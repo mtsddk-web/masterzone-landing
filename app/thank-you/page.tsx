@@ -91,7 +91,7 @@ export default function ThankYouPage() {
           {/* Wistia Video Embed - iframe version (Next.js compatible) */}
           <div className="relative rounded-xl overflow-hidden bg-black" style={{ paddingTop: '62.5%' }}>
             <iframe
-              src="https://fast.wistia.net/embed/iframe/65js2p406n?seo=true&videoFoam=true"
+              src="https://fast.wistia.net/embed/iframe/65js2p406n?seo=true&videoFoam=true&autoplay=1&muted=0"
               title="Jak poruszać się po MasterZone"
               allow="autoplay; fullscreen"
               allowFullScreen
