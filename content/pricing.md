@@ -5,7 +5,7 @@ plans:
   - name: "MasterZone Community"
     price: "7 DNI ZA DARMO"
     period: "potem $14/msc"
-    description: "Pełen dostęp do wszystkiego"
+    description: "Natychmiastowy start: Planowanie + Bloki Pracy + Społeczność"
     features:
       - "Codzienne bloki pracy głębokiej na żywo"
       - "4 wspólne sesje planowania miesięcznie"

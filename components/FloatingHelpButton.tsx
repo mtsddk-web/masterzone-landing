@@ -54,7 +54,7 @@ export default function FloatingHelpButton() {
 
             {/* Email */}
             <a
-              href="mailto:twojmasterplan@gmail.com?subject=Pytanie o MasterZone"
+              href="mailto:kontakt@masterzone.edu.pl?subject=Pytanie o MasterZone"
               onClick={() => handleContact("email")}
               className="bg-gray-700 hover:bg-gray-800 text-white px-4 py-3 rounded-lg shadow-lg transition-all duration-300 flex items-center gap-2 text-sm font-semibold whitespace-nowrap"
             >

@@ -86,7 +86,7 @@ export default function ExitIntentPopup() {
           <p className="text-lg text-gray-700 mb-6">
             Dołącz do społeczności przedsiębiorców walczących z rozproszeniem
             <br />
-            <strong className="text-indigo-600">7 DNI ZA DARMO</strong> - pełen dostęp do wszystkiego, potem $14/msc
+            <strong className="text-indigo-600">7 DNI ZA DARMO</strong> - planowanie, bloki pracy i społeczność od pierwszego dnia
           </p>
 
           {/* Value Props */}
