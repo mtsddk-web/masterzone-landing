@@ -91,25 +91,26 @@ export default function ExitIntentPopup() {
 
           {/* Value Props */}
           <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-6 mb-6 text-left">
-            <p className="font-bold text-gray-900 mb-3">Otrzymasz NATYCHMIAST:</p>
+            <p className="font-bold text-gray-900 mb-3">W 7-dniowym trial dostaniesz:</p>
             <ul className="space-y-2 text-sm text-gray-700">
               <li className="flex items-center">
                 <span className="text-green-500 mr-2">✓</span>
-                120+ godzin pracy głębokiej miesięcznie
+                Dostęp do codziennych bloków pracy na żywo
               </li>
               <li className="flex items-center">
                 <span className="text-green-500 mr-2">✓</span>
-                Kursy: Praca Głęboka + System BLS + ClickUp
+                Wspólne sesje planowania tygodnia
               </li>
               <li className="flex items-center">
                 <span className="text-green-500 mr-2">✓</span>
-                Społeczność 30+ przedsiębiorców
+                Społeczność 30+ przedsiębiorców 24/7
               </li>
               <li className="flex items-center">
                 <span className="text-green-500 mr-2">✓</span>
-                Gwarancja zwrotu pieniędzy
+                Onboarding 1:1 — start bez zgadywania
               </li>
             </ul>
+            <p className="text-xs text-gray-500 mt-3 italic">Reszta odblokowuje się automatycznie po przedłużeniu ($14/msc)</p>
           </div>
 
           {/* CTA Button */}
