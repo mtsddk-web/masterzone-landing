@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { trackEvent } from "./FacebookPixel";
-import { scrollToContactForm } from "@/lib/scrollToForm";
 
 interface Testimonial {
   name: string;
@@ -130,13 +129,12 @@ export default function Testimonials({ sectionTitle, testimonials }: Testimonial
         {/* CTA Button */}
         <div className="text-center">
           <a
-            href="#contact-form"
+            href="https://www.skool.com/masterzone"
             id="skool-cta"
-            onClick={(e) => {
+            onClick={() => {
               trackEvent("Lead", { source: "testimonials_cta_button" });
-              scrollToContactForm(e);
             }}
-            className="inline-block bg-lightblue hover:bg-blue-400 text-navy font-bold py-4 px-12 rounded-lg transition-all duration-300 text-lg shadow-xl hover:shadow-2xl transform hover:-translate-y-1 cursor-pointer"
+            className="inline-block bg-lightblue hover:bg-blue-400 text-navy font-bold py-4 px-12 rounded-lg transition-all duration-300 text-lg shadow-xl hover:shadow-2xl transform hover:-translate-y-1"
           >
             Chcę pracować w pełnym skupieniu
           </a>

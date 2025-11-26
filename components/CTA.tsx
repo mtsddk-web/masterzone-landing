@@ -1,7 +1,6 @@
 "use client";
 
 import { trackEvent } from "./FacebookPixel";
-import { scrollToContactForm } from "@/lib/scrollToForm";
 
 interface CTAProps {
   headline: string;
@@ -21,13 +20,12 @@ export default function CTA({ headline, subheadline, buttonText, buttonUrl }: CT
           {subheadline}
         </p>
         <a
-          href="#contact-form"
+          href="https://www.skool.com/masterzone"
           id="skool-cta"
-          onClick={(e) => {
+          onClick={() => {
             trackEvent("Lead", { source: "cta_bottom_button" });
-            scrollToContactForm(e);
           }}
-          className="inline-block bg-lightblue hover:bg-blue-400 text-navy font-bold py-4 px-12 rounded-lg transition-all duration-300 text-lg shadow-xl hover:shadow-2xl transform hover:-translate-y-1 cursor-pointer"
+          className="inline-block bg-lightblue hover:bg-blue-400 text-navy font-bold py-4 px-12 rounded-lg transition-all duration-300 text-lg shadow-xl hover:shadow-2xl transform hover:-translate-y-1"
         >
           {buttonText}
         </a>

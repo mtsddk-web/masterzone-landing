@@ -2,7 +2,6 @@
 
 import Script from "next/script";
 import { trackEvent } from "./FacebookPixel";
-import { scrollToContactForm } from "@/lib/scrollToForm";
 
 interface HeroProps {
   preheadline?: string;
@@ -12,6 +11,9 @@ interface HeroProps {
   ctaUrl: string;
   videoMediaId?: string;
   videoAspectRatio?: string;
+  trialInfo?: string;
+  securityInfo?: string;
+  skoolInfo?: string;
 }
 
 export default function Hero({
@@ -21,7 +23,10 @@ export default function Hero({
   ctaText,
   ctaUrl,
   videoMediaId,
-  videoAspectRatio = "1.6"
+  videoAspectRatio = "1.6",
+  trialInfo,
+  securityInfo,
+  skoolInfo
 }: HeroProps) {
   return (
     <section className="bg-gradient-to-br from-navy via-blue-700 to-blue-900 text-white py-8 md:py-16 lg:py-20 flex items-center relative">
@@ -86,20 +91,42 @@ export default function Hero({
           </>
         )}
 
-        {/* CTA Button - Scroll to Form */}
-        <div className="mb-4 md:mb-8">
+        {/* Trial Info */}
+        {trialInfo && (
+          <div className="mb-4 text-lg md:text-xl font-semibold text-yellow-300">
+            {trialInfo}
+          </div>
+        )}
+
+        {/* CTA Button - Direct to Skool */}
+        <div className="mb-6 md:mb-8">
           <a
-            href="#contact-form"
+            href={ctaUrl}
             id="skool-cta"
-            onClick={(e) => {
+            onClick={() => {
               trackEvent("Lead", { source: "hero_primary_button" });
-              scrollToContactForm(e);
             }}
-            className="inline-block bg-lightblue hover:bg-blue-400 text-navy font-bold py-3 px-8 md:py-4 md:px-12 rounded-lg transition-all duration-300 text-base md:text-lg shadow-xl hover:shadow-2xl transform hover:-translate-y-1 cursor-pointer"
+            className="inline-block bg-lightblue hover:bg-blue-400 text-navy font-bold py-3 px-8 md:py-4 md:px-12 rounded-lg transition-all duration-300 text-base md:text-lg shadow-xl hover:shadow-2xl transform hover:-translate-y-1"
           >
             {ctaText}
           </a>
         </div>
+
+        {/* Security Info */}
+        {securityInfo && (
+          <div className="mb-4 text-sm md:text-base text-white/70 max-w-2xl mx-auto">
+            {securityInfo}
+          </div>
+        )}
+
+        {/* Skool Info */}
+        {skoolInfo && (
+          <div className="mt-6 md:mt-8 p-4 md:p-6 bg-white/10 backdrop-blur-sm rounded-lg max-w-3xl mx-auto border border-white/20">
+            <p className="text-sm md:text-base text-white/90">
+              ℹ️ {skoolInfo}
+            </p>
+          </div>
+        )}
       </div>
     </section>
   );

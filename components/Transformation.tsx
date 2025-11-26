@@ -1,7 +1,6 @@
 "use client";
 
 import { trackEvent } from "./FacebookPixel";
-import { scrollToContactForm } from "@/lib/scrollToForm";
 
 interface TransformationStep {
   number: string;
@@ -68,12 +67,11 @@ export default function Transformation({
         {/* CTA */}
         <div className="text-center">
           <a
-            href="#contact-form"
-            onClick={(e) => {
+            href="https://www.skool.com/masterzone"
+            onClick={() => {
               trackEvent("Lead", { source: "transformation_cta_button" });
-              scrollToContactForm(e);
             }}
-            className="inline-block bg-lightblue hover:bg-blue-400 text-navy font-bold py-4 px-12 rounded-lg transition-all duration-300 text-lg shadow-xl hover:shadow-2xl transform hover:-translate-y-1 cursor-pointer"
+            className="inline-block bg-lightblue hover:bg-blue-400 text-navy font-bold py-4 px-12 rounded-lg transition-all duration-300 text-lg shadow-xl hover:shadow-2xl transform hover:-translate-y-1"
           >
             {ctaText}
           </a>
