@@ -44,12 +44,30 @@ export default function ExitIntentPopup() {
     };
   }, [isReady, hasShown]);
 
+  const [selectedReason, setSelectedReason] = useState("");
+  const [otherReason, setOtherReason] = useState("");
+
   const handleClose = () => {
     setIsVisible(false);
   };
 
+  const handleSubmit = async () => {
+    const reason = selectedReason === "other" ? otherReason : selectedReason;
+
+    // Track w Facebook Pixel
+    trackEvent("Survey", {
+      source: "exit_intent_survey",
+      reason: reason
+    });
+
+    // TODO: Wysłać do Google Sheets / MailerLite / Twojego systemu
+    console.log("Exit Survey:", reason);
+
+    setIsVisible(false);
+  };
+
   const handleCTA = () => {
-    trackEvent("Lead", { source: "exit_intent_popup_cta" });
+    trackEvent("Lead", { source: "exit_intent_popup_cta_after_survey" });
     setIsVisible(false);
   };
 
@@ -71,58 +89,114 @@ export default function ExitIntentPopup() {
         </button>
 
         {/* Content */}
-        <div className="text-center">
+        <div className="text-left">
           {/* Icon */}
-          <div className="text-6xl mb-4">⚠️</div>
+          <div className="text-5xl mb-4 text-center">💬</div>
 
           {/* Headline */}
-          <h2 className="text-2xl md:text-3xl font-black text-gray-900 mb-4">
-            Czekaj! Nie odchodź jeszcze...
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3 text-center">
+            Zanim odejdziesz - pomóż nam!
           </h2>
 
           {/* Subheadline */}
-          <p className="text-lg text-gray-700 mb-6">
-            Dołącz do społeczności przedsiębiorców walczących z rozproszeniem
-            <br />
-            <strong className="text-indigo-600">7 DNI ZA DARMO</strong> - planowanie, bloki pracy i społeczność od pierwszego dnia
+          <p className="text-base text-gray-600 mb-6 text-center">
+            Co sprawiło, że opuszczasz stronę? Twoja opinia pomoże nam stworzyć lepszą ofertę.
           </p>
 
-          {/* Value Props */}
-          <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-6 mb-6 text-left">
-            <p className="font-bold text-gray-900 mb-3">W 7-dniowym trial dostaniesz:</p>
-            <ul className="space-y-2 text-sm text-gray-700">
-              <li className="flex items-center">
-                <span className="text-green-500 mr-2">✓</span>
-                Dostęp do codziennych bloków pracy na żywo
-              </li>
-              <li className="flex items-center">
-                <span className="text-green-500 mr-2">✓</span>
-                Wspólne sesje planowania tygodnia
-              </li>
-              <li className="flex items-center">
-                <span className="text-green-500 mr-2">✓</span>
-                Społeczność 30+ przedsiębiorców 24/7
-              </li>
-              <li className="flex items-center">
-                <span className="text-green-500 mr-2">✓</span>
-                Onboarding 1:1 — start bez zgadywania
-              </li>
-            </ul>
-            <p className="text-xs text-gray-500 mt-3 italic">Reszta odblokowuje się automatycznie po przedłużeniu ($14/msc)</p>
+          {/* Survey Options */}
+          <div className="space-y-3 mb-6">
+            <label className="flex items-start p-3 bg-gray-50 rounded-lg hover:bg-gray-100 cursor-pointer transition-colors border-2 border-transparent has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50">
+              <input
+                type="radio"
+                name="exit-reason"
+                value="price"
+                checked={selectedReason === "price"}
+                onChange={(e) => setSelectedReason(e.target.value)}
+                className="mt-1 mr-3"
+              />
+              <span className="text-gray-800">Za drogo - $14/msc to za dużo</span>
+            </label>
+
+            <label className="flex items-start p-3 bg-gray-50 rounded-lg hover:bg-gray-100 cursor-pointer transition-colors border-2 border-transparent has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50">
+              <input
+                type="radio"
+                name="exit-reason"
+                value="not-for-me"
+                checked={selectedReason === "not-for-me"}
+                onChange={(e) => setSelectedReason(e.target.value)}
+                className="mt-1 mr-3"
+              />
+              <span className="text-gray-800">To nie dla mnie / Nie potrzebuję tego</span>
+            </label>
+
+            <label className="flex items-start p-3 bg-gray-50 rounded-lg hover:bg-gray-100 cursor-pointer transition-colors border-2 border-transparent has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50">
+              <input
+                type="radio"
+                name="exit-reason"
+                value="no-time"
+                checked={selectedReason === "no-time"}
+                onChange={(e) => setSelectedReason(e.target.value)}
+                className="mt-1 mr-3"
+              />
+              <span className="text-gray-800">Nie mam teraz czasu / Wrócę później</span>
+            </label>
+
+            <label className="flex items-start p-3 bg-gray-50 rounded-lg hover:bg-gray-100 cursor-pointer transition-colors border-2 border-transparent has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50">
+              <input
+                type="radio"
+                name="exit-reason"
+                value="need-more-info"
+                checked={selectedReason === "need-more-info"}
+                onChange={(e) => setSelectedReason(e.target.value)}
+                className="mt-1 mr-3"
+              />
+              <span className="text-gray-800">Potrzebuję więcej informacji</span>
+            </label>
+
+            <label className="flex items-start p-3 bg-gray-50 rounded-lg hover:bg-gray-100 cursor-pointer transition-colors border-2 border-transparent has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50">
+              <input
+                type="radio"
+                name="exit-reason"
+                value="other"
+                checked={selectedReason === "other"}
+                onChange={(e) => setSelectedReason(e.target.value)}
+                className="mt-1 mr-3"
+              />
+              <span className="text-gray-800">Inne (wpisz poniżej)</span>
+            </label>
+
+            {selectedReason === "other" && (
+              <textarea
+                value={otherReason}
+                onChange={(e) => setOtherReason(e.target.value)}
+                placeholder="Powiedz nam więcej..."
+                className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none resize-none"
+                rows={3}
+              />
+            )}
           </div>
 
-          {/* CTA Button */}
-          <a
-            href="https://www.skool.com/masterzone"
-            onClick={handleCTA}
-            className="inline-block w-full bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-300 hover:to-orange-400 text-navy font-black py-4 px-8 rounded-xl transition-all duration-300 text-lg shadow-2xl hover:shadow-yellow-500/50 transform hover:scale-105 mb-4"
-          >
-            👉 Wypróbuj 7 dni ZA DARMO (oszczędzasz $658)
-          </a>
+          {/* Buttons */}
+          <div className="space-y-3">
+            <button
+              onClick={handleSubmit}
+              disabled={!selectedReason || (selectedReason === "other" && !otherReason)}
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
+            >
+              Wyślij opinię
+            </button>
 
-          {/* Risk Reversal */}
-          <p className="text-xs text-gray-500">
-            🔒 Bezpieczna płatność przez Skool | 💯 Gwarancja satysfakcji
+            <a
+              href="https://www.skool.com/masterzone"
+              onClick={handleCTA}
+              className="block w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white text-center font-bold py-3 px-6 rounded-lg transition-all"
+            >
+              Jednak chcę spróbować 7 dni ZA DARMO →
+            </a>
+          </div>
+
+          <p className="text-xs text-gray-400 mt-4 text-center">
+            Dziękujemy za feedback - pomaga nam to rozwijać MasterZone
           </p>
         </div>
       </div>
