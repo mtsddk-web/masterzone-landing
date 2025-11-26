@@ -79,23 +79,20 @@ export default function ValueStack({
 
           {/* Your Price */}
           <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-6 mb-6 border-2 border-green-300">
-            <div className="flex justify-between items-center">
-              <span className="text-xl md:text-2xl font-bold text-gray-900">
+            <div className="text-center">
+              <span className="text-xl md:text-2xl font-bold text-gray-900 block mb-2">
                 TWOJA CENA DZIŚ:
               </span>
               <span className="text-3xl md:text-5xl font-black text-green-600">
-                {actualPrice}/msc
+                {actualPrice}
               </span>
             </div>
           </div>
 
-          {/* Savings */}
-          <div className="text-center bg-gradient-to-r from-yellow-100 to-orange-100 rounded-xl p-6 border-2 border-yellow-400">
-            <p className="text-lg md:text-2xl font-bold text-gray-900 mb-2">
-              🎉 OSZCZĘDZASZ: <span className="text-orange-600">{savings}/msc</span>
-            </p>
-            <p className="text-base md:text-xl font-semibold text-gray-700">
-              To zniżka {savingsPercent}!
+          {/* Simple CTA */}
+          <div className="text-center bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-6 border-2 border-blue-300">
+            <p className="text-lg md:text-2xl font-bold text-gray-900">
+              💎 {savings}
             </p>
           </div>
         </div>
