@@ -28,6 +28,6 @@ items:
     value: "$47"
 totalValue: "$672"
 actualPrice: "7 dni ZA DARMO"
-savings: "Następnie $14/msc"
+savings: "Następnie $14"
 savingsPercent: "98%"
 ---
