@@ -1,7 +1,8 @@
 "use client";
 
 import Script from "next/script";
-import { trackEvent } from "./FacebookPixel";
+import { useEmailGate } from "@/hooks/useEmailGate";
+import EmailGateModal from "./EmailGateModal";
 
 interface VideoProps {
   sectionTitle?: string;
@@ -20,8 +21,16 @@ export default function Video({
   ctaText,
   ctaUrl
 }: VideoProps) {
+  const { isEmailGateOpen, openEmailGate, closeEmailGate, handleEmailSuccess } = useEmailGate(ctaUrl);
+
   return (
-    <section className="section-padding bg-gray-50">
+    <>
+      <EmailGateModal
+        isOpen={isEmailGateOpen}
+        onClose={closeEmailGate}
+        onSuccess={handleEmailSuccess}
+      />
+      <section className="section-padding bg-gray-50">
       <div className="container-custom">
         {/* Section Header */}
         {sectionTitle && (
@@ -65,21 +74,19 @@ export default function Video({
           </div>
 
           {/* CTA Button under video */}
-          {ctaText && ctaUrl && (
+          {ctaText && (
             <div className="text-center mt-8">
-              <a
-                href={ctaUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => trackEvent("Lead", { source: "video_cta_button" })}
-                className="inline-block bg-red-600 hover:bg-red-700 text-white font-bold py-4 px-12 rounded-lg transition-all duration-300 text-lg shadow-xl hover:shadow-2xl transform hover:-translate-y-1"
+              <button
+                onClick={() => openEmailGate("video_cta_button")}
+                className="inline-block bg-red-600 hover:bg-red-700 text-white font-bold py-4 px-12 rounded-lg transition-all duration-300 text-lg shadow-xl hover:shadow-2xl transform hover:-translate-y-1 cursor-pointer"
               >
                 {ctaText}
-              </a>
+              </button>
             </div>
           )}
         </div>
       </div>
     </section>
+    </>
   );
 }

@@ -1,6 +1,7 @@
 "use client";
 
-import { trackEvent } from "./FacebookPixel";
+import { useEmailGate } from "@/hooks/useEmailGate";
+import EmailGateModal from "./EmailGateModal";
 
 interface Step {
   icon: string;
@@ -23,8 +24,16 @@ export default function HowItWorks({
   closingText,
   infrastructure
 }: HowItWorksProps) {
+  const { isEmailGateOpen, openEmailGate, closeEmailGate, handleEmailSuccess } = useEmailGate();
+
   return (
-    <section className="section-padding bg-blue-50">
+    <>
+      <EmailGateModal
+        isOpen={isEmailGateOpen}
+        onClose={closeEmailGate}
+        onSuccess={handleEmailSuccess}
+      />
+      <section className="section-padding bg-blue-50">
       <div className="container-custom">
         {/* Section Header */}
         <div className="text-center mb-16">
@@ -77,18 +86,15 @@ export default function HowItWorks({
 
         {/* CTA Button */}
         <div className="text-center">
-          <a
-            href="https://www.skool.com/masterzone"
-            id="skool-cta"
-            onClick={() => {
-              trackEvent("Lead", { source: "how_it_works_cta_button" });
-            }}
-            className="inline-block bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white font-bold py-4 px-12 rounded-lg transition-all duration-300 text-lg shadow-xl hover:shadow-2xl transform hover:-translate-y-1 border-2 border-yellow-300"
+          <button
+            onClick={() => openEmailGate("how_it_works_cta_button")}
+            className="inline-block bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white font-bold py-4 px-12 rounded-lg transition-all duration-300 text-lg shadow-xl hover:shadow-2xl transform hover:-translate-y-1 border-2 border-yellow-300 cursor-pointer"
           >
             Chcę pracować w pełnym skupieniu
-          </a>
+          </button>
         </div>
       </div>
     </section>
+    </>
   );
 }

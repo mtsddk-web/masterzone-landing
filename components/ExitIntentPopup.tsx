@@ -1,9 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { trackEvent } from "./FacebookPixel";
+import { useEmailGate } from "@/hooks/useEmailGate";
+import EmailGateModal from "./EmailGateModal";
 
 export default function ExitIntentPopup() {
+  const { isEmailGateOpen, openEmailGate, closeEmailGate, handleEmailSuccess } = useEmailGate();
   const [isVisible, setIsVisible] = useState(false);
   const [hasShown, setHasShown] = useState(false);
   const [isReady, setIsReady] = useState(false);
@@ -82,14 +84,20 @@ export default function ExitIntentPopup() {
   };
 
   const handleCTA = () => {
-    trackEvent("Lead", { source: "exit_intent_popup_cta_after_survey" });
     setIsVisible(false);
+    openEmailGate("exit_intent_popup_cta_after_survey");
   };
 
   if (!isVisible) return null;
 
   return (
-    <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/70 backdrop-blur-sm animate-fade-in">
+    <>
+      <EmailGateModal
+        isOpen={isEmailGateOpen}
+        onClose={closeEmailGate}
+        onSuccess={handleEmailSuccess}
+      />
+      <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/70 backdrop-blur-sm animate-fade-in">
       {/* Popup Container */}
       <div className="relative bg-white rounded-2xl shadow-2xl max-w-lg mx-4 p-8 md:p-10 animate-scale-in">
         {/* Close Button */}
@@ -201,13 +209,12 @@ export default function ExitIntentPopup() {
               Wyślij opinię
             </button>
 
-            <a
-              href="https://www.skool.com/masterzone"
+            <button
               onClick={handleCTA}
-              className="block w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white text-center font-bold py-3 px-6 rounded-lg transition-all"
+              className="block w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white text-center font-bold py-3 px-6 rounded-lg transition-all cursor-pointer"
             >
               Jednak chcę spróbować 7 dni ZA DARMO →
-            </a>
+            </button>
           </div>
 
           <p className="text-xs text-gray-400 mt-4 text-center">
@@ -247,5 +254,6 @@ export default function ExitIntentPopup() {
         }
       `}</style>
     </div>
+    </>
   );
 }
