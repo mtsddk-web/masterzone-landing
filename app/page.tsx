@@ -39,7 +39,6 @@ export default function Home() {
   const supportData = getContentData("support.md");
   const communityData = getContentData("community.md");
   const pain1Data = getContentData("pain1.md");
-  const pain2Data = getContentData("pain2.md");
   const howItWorksData = getContentData("howitworks.md");
   const videoTestimonialData = getContentData("video-testimonial.md");
   const testimonialsData = getContentData("testimonials.md");
@@ -60,13 +59,12 @@ export default function Home() {
       <Video {...videoData} />
       */}
       <Stats {...statsData} />
+      <PainSection {...pain1Data} />
       <Benefits {...benefitsData} />
+      <HowItWorks {...howItWorksData} />
       <Tools {...toolsData} />
       <Tools {...supportData} />
       <Tools {...communityData} />
-      <PainSection {...pain1Data} />
-      <PainSection {...pain2Data} />
-      <HowItWorks {...howItWorksData} />
       <VideoTestimonial {...videoTestimonialData} />
       <Testimonials {...testimonialsData} />
       <Transformation {...transformationData} />

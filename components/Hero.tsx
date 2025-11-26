@@ -62,13 +62,16 @@ export default function Hero({
         {/* Video Player */}
         {videoMediaId && (
           <>
+            {/* Preload Wistia scripts for faster LCP */}
+            <link rel="preconnect" href="https://fast.wistia.com" />
+            <link rel="dns-prefetch" href="https://fast.wistia.com" />
             <Script
               src="https://fast.wistia.com/player.js"
-              strategy="afterInteractive"
+              strategy="beforeInteractive"
             />
             <Script
               src={`https://fast.wistia.com/embed/${videoMediaId}.js`}
-              strategy="afterInteractive"
+              strategy="beforeInteractive"
               type="module"
             />
             <div className="max-w-4xl mx-auto mb-4 md:mb-8 px-4">
@@ -83,7 +86,7 @@ export default function Hero({
                         padding-top: ${(100 / parseFloat(videoAspectRatio)).toFixed(2)}%;
                       }
                     </style>
-                    <wistia-player media-id="${videoMediaId}" aspect="${videoAspectRatio}"></wistia-player>
+                    <wistia-player media-id="${videoMediaId}" aspect="${videoAspectRatio}" preload="metadata"></wistia-player>
                   `
                 }} />
               </div>
@@ -106,7 +109,7 @@ export default function Hero({
             onClick={() => {
               trackEvent("Lead", { source: "hero_primary_button" });
             }}
-            className="inline-block bg-lightblue hover:bg-blue-400 text-navy font-bold py-3 px-8 md:py-4 md:px-12 rounded-lg transition-all duration-300 text-base md:text-lg shadow-xl hover:shadow-2xl transform hover:-translate-y-1"
+            className="inline-block bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white font-bold py-3 px-8 md:py-4 md:px-12 rounded-lg transition-all duration-300 text-base md:text-lg shadow-xl hover:shadow-2xl transform hover:-translate-y-1 border-2 border-yellow-300"
           >
             {ctaText}
           </a>
@@ -118,6 +121,24 @@ export default function Hero({
             {securityInfo}
           </div>
         )}
+
+        {/* Social Proof Micro-Testimonial - Above the Fold */}
+        <div className="mt-6 flex flex-col md:flex-row items-center justify-center gap-4 text-left max-w-2xl mx-auto bg-white/10 backdrop-blur-sm rounded-xl p-4 md:p-6 border-2 border-yellow-400/40 shadow-2xl">
+          <div className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center text-3xl md:text-4xl flex-shrink-0 shadow-lg">
+            👩‍💼
+          </div>
+          <div className="flex-1 text-center md:text-left">
+            <div className="flex justify-center md:justify-start mb-1">
+              {[...Array(5)].map((_, i) => (
+                <span key={i} className="text-yellow-400 text-base md:text-lg">⭐</span>
+              ))}
+            </div>
+            <p className="text-sm md:text-base text-white/95 italic leading-relaxed mb-2">
+              "W ciągu godziny robię więcej niż zwykle w cały dzień. To jak poranny zastrzyk energii!"
+            </p>
+            <p className="text-xs md:text-sm text-yellow-300 font-semibold">— Iza, Wirtualna Asystentka</p>
+          </div>
+        </div>
 
         {/* Skool Info */}
         {skoolInfo && (

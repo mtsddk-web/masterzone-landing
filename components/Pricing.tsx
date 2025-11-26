@@ -100,7 +100,7 @@ export default function Pricing({
                   onClick={() => {
                     trackEvent("InitiateCheckout", { plan: plan.name, price: plan.price });
                   }}
-                  className="block w-full bg-lightblue hover:bg-blue-400 text-navy text-center font-bold py-4 px-8 rounded-lg transition-all duration-300 text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+                  className="block w-full bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white text-center font-bold py-4 px-8 rounded-lg transition-all duration-300 text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 border-2 border-yellow-300"
                 >
                   {plan.ctaText}
                 </a>

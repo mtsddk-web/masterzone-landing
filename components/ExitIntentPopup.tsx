@@ -60,8 +60,23 @@ export default function ExitIntentPopup() {
       reason: reason
     });
 
-    // TODO: Wysłać do Google Sheets / MailerLite / Twojego systemu
-    console.log("Exit Survey:", reason);
+    // Wyślij do Google Sheets via API
+    try {
+      await fetch('/api/exit-survey', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          reason: reason,
+          timestamp: Date.now(),
+          url: window.location.href
+        }),
+      });
+    } catch (error) {
+      console.error('Failed to send exit survey:', error);
+      // Nie blokuj UI nawet jeśli webhook nie działa
+    }
 
     setIsVisible(false);
   };
