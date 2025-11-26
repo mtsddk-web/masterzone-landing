@@ -1,11 +1,6 @@
 ---
 sectionTitle: "Co Mówią Członkowie MasterZone"
 testimonials:
-  - name: "Uczestnik Bloków Pracy"
-    role: "Członek MasterZone"
-    content: "Zobacz jak bloki pracy głębokiej zmieniają efektywność - prawdziwa opinia uczestnika"
-    avatar: "🎥"
-    videoUrl: "/videos/testimonial-bloki-pracy.mp4"
   - name: "Iza"
     role: "Wirtualna Asystentka"
     content: "Zamiast toczyć poranną walkę z budzikiem, dzięki Blokom Pracy Głębokiej o 7:56 zbieram się do pracy w ekspresowym tempie. Już o 8:00 działam, a o 8:55 świętuje pierwsze sukcesy! To jak poranny zastrzyk energii, który działa lepiej niż kawa – wsiadasz do pociągu produktywności i omijasz stacje prokrastynacji."

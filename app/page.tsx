@@ -6,6 +6,7 @@ import Benefits from "@/components/Benefits";
 import Tools from "@/components/Tools";
 import PainSection from "@/components/PainSection";
 import HowItWorks from "@/components/HowItWorks";
+import VideoTestimonial from "@/components/VideoTestimonial";
 import Testimonials from "@/components/Testimonials";
 import Transformation from "@/components/Transformation";
 import ValueStack from "@/components/ValueStack";
@@ -40,6 +41,7 @@ export default function Home() {
   const pain1Data = getContentData("pain1.md");
   const pain2Data = getContentData("pain2.md");
   const howItWorksData = getContentData("howitworks.md");
+  const videoTestimonialData = getContentData("video-testimonial.md");
   const testimonialsData = getContentData("testimonials.md");
   const transformationData = getContentData("transformation.md");
   const valueStackData = getContentData("valuestack.md");
@@ -65,6 +67,7 @@ export default function Home() {
       <PainSection {...pain1Data} />
       <PainSection {...pain2Data} />
       <HowItWorks {...howItWorksData} />
+      <VideoTestimonial {...videoTestimonialData} />
       <Testimonials {...testimonialsData} />
       <Transformation {...transformationData} />
       <ValueStack {...valueStackData} />
