@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useEmailGate } from "@/hooks/useEmailGate";
+import { trackEvent } from "./FacebookPixel";
 import EmailGateModal from "./EmailGateModal";
 
 export default function ExitIntentPopup() {
