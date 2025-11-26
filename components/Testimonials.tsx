@@ -8,6 +8,7 @@ interface Testimonial {
   role: string;
   content: string;
   avatar?: string;
+  videoUrl?: string;
 }
 
 interface TestimonialsProps {
@@ -41,20 +42,41 @@ export default function Testimonials({ sectionTitle, testimonials }: Testimonial
           <div className="relative">
             {/* Testimonial Card */}
             <div className="bg-gray-50 rounded-xl p-10 md:p-12 shadow-lg">
-              {/* 5 Stars Rating */}
-              <div className="flex items-center gap-1 mb-4">
-                {[...Array(5)].map((_, i) => (
-                  <span key={i} className="text-yellow-400 text-2xl">⭐</span>
-                ))}
-              </div>
+              {/* Video Testimonial */}
+              {currentTestimonial.videoUrl ? (
+                <div className="mb-8">
+                  <video
+                    controls
+                    className="w-full rounded-lg shadow-xl"
+                    poster="/images/video-thumbnail.jpg"
+                  >
+                    <source src={currentTestimonial.videoUrl} type="video/mp4" />
+                    Twoja przeglądarka nie obsługuje odtwarzania wideo.
+                  </video>
+                  {currentTestimonial.content && (
+                    <p className="text-gray-600 text-sm md:text-base mt-4 italic">
+                      {currentTestimonial.content}
+                    </p>
+                  )}
+                </div>
+              ) : (
+                <>
+                  {/* 5 Stars Rating */}
+                  <div className="flex items-center gap-1 mb-4">
+                    {[...Array(5)].map((_, i) => (
+                      <span key={i} className="text-yellow-400 text-2xl">⭐</span>
+                    ))}
+                  </div>
 
-              {/* Quote Icon */}
-              <div className="text-navy text-5xl mb-6">"</div>
+                  {/* Quote Icon */}
+                  <div className="text-navy text-5xl mb-6">"</div>
 
-              {/* Content */}
-              <p className="text-gray-700 text-lg md:text-xl mb-8 leading-relaxed italic min-h-[120px]">
-                {currentTestimonial.content}
-              </p>
+                  {/* Content */}
+                  <p className="text-gray-700 text-lg md:text-xl mb-8 leading-relaxed italic min-h-[120px]">
+                    {currentTestimonial.content}
+                  </p>
+                </>
+              )}
 
               {/* Author */}
               <div className="flex items-center">
