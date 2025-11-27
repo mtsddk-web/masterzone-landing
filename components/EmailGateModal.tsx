@@ -30,6 +30,8 @@ export default function EmailGateModal({ isOpen, onClose, onSuccess }: EmailGate
     }
 
     try {
+      console.log('🚀 Sending email to API:', email);
+
       // Send to MailerLite
       const response = await fetch('/api/subscribe-trial', {
         method: 'POST',
@@ -42,7 +44,9 @@ export default function EmailGateModal({ isOpen, onClose, onSuccess }: EmailGate
         }),
       });
 
+      console.log('📡 API response status:', response.status);
       const data = await response.json();
+      console.log('📦 API response data:', data);
 
       if (!response.ok || !data.success) {
         throw new Error(data.error || 'Coś poszło nie tak');
@@ -65,11 +69,11 @@ export default function EmailGateModal({ isOpen, onClose, onSuccess }: EmailGate
       setIsSuccess(true);
       setIsSubmitting(false);
 
-      // Auto-redirect to Skool after 10 seconds
+      // Auto-redirect to Skool after 15 seconds
       setTimeout(() => {
         // Redirect to Skool
         window.location.href = 'https://www.skool.com/masterzone';
-      }, 10000);
+      }, 15000);
 
     } catch (err) {
       console.error('Email gate error:', err);
@@ -145,7 +149,7 @@ export default function EmailGateModal({ isOpen, onClose, onSuccess }: EmailGate
               {/* Auto-redirect countdown */}
               <div className="bg-orange-100 border border-orange-300 rounded-lg p-3 mt-4">
                 <p className="text-sm font-bold text-orange-900">
-                  ⏱️ Przekierowanie za 10 sekund...
+                  ⏱️ Przekierowanie za 15 sekund...
                 </p>
                 <p className="text-xs text-orange-700 mt-1">
                   Do zobaczenia w skupieniu! 🎯

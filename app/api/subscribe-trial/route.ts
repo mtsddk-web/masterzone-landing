@@ -23,6 +23,7 @@ export async function POST(request: Request) {
 
     // Pobierz group_id z env (jeśli skonfigurowane)
     const groupId = process.env.MAILERLITE_TRIAL_GROUP_ID;
+    console.log('🔍 DEBUG - Group ID from env:', groupId);
 
     // Add subscriber to MailerLite
     const requestBody: any = {
@@ -39,7 +40,12 @@ export async function POST(request: Request) {
     // Dodaj do grupy jeśli group_id jest skonfigurowane
     if (groupId) {
       requestBody.groups = [groupId];
+      console.log('✅ Adding to group:', groupId);
+    } else {
+      console.log('⚠️ No group ID configured - subscriber will not be added to any group');
     }
+
+    console.log('📤 Request body to MailerLite:', JSON.stringify(requestBody, null, 2));
 
     const response = await fetch('https://connect.mailerlite.com/api/subscribers', {
       method: 'POST',
@@ -52,11 +58,14 @@ export async function POST(request: Request) {
     });
 
     const data = await response.json();
+    console.log('📥 MailerLite API response status:', response.status);
+    console.log('📥 MailerLite API response data:', JSON.stringify(data, null, 2));
 
     if (!response.ok) {
       // MailerLite zwraca już użytkownika jako sukces jeśli email istnieje
       if (response.status === 422 && data.message?.includes('already exists')) {
         // User już istnieje - to też sukces
+        console.log('ℹ️ Email already exists in MailerLite');
         return NextResponse.json({
           success: true,
           message: 'Email already subscribed',
@@ -64,13 +73,14 @@ export async function POST(request: Request) {
         });
       }
 
-      console.error('MailerLite error:', data);
+      console.error('❌ MailerLite error:', data);
       return NextResponse.json({
         success: false,
         error: data.message || 'Failed to subscribe'
       }, { status: response.status });
     }
 
+    console.log('✅ Successfully added subscriber to MailerLite');
     return NextResponse.json({
       success: true,
       message: 'Successfully subscribed',
