@@ -34,6 +34,13 @@ export default function PainSection({
   callout,
   calloutText
 }: PainSectionProps) {
+  // Convert Markdown to HTML for bold and italic text
+  const formatMarkdown = (text: string) => {
+    return text
+      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>') // **bold**
+      .replace(/\*(.+?)\*/g, '<em>$1</em>'); // *italic*
+  };
+
   return (
     <section className="section-padding bg-gradient-to-br from-red-50 via-orange-50 to-yellow-50">
       <div className="container-custom max-w-4xl">
@@ -111,7 +118,11 @@ export default function PainSection({
             {mainContent && (
               <div className="prose prose-lg max-w-none text-gray-700">
                 {mainContent.split('\n\n').map((paragraph, index) => (
-                  <p key={index} className="mb-4">{paragraph}</p>
+                  <p
+                    key={index}
+                    className="mb-4"
+                    dangerouslySetInnerHTML={{ __html: formatMarkdown(paragraph) }}
+                  />
                 ))}
               </div>
             )}
