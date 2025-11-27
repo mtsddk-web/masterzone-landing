@@ -15,8 +15,14 @@ export default function EmailGateModal({ isOpen, onClose, onSuccess }: EmailGate
   const [error, setError] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
   const [countdown, setCountdown] = useState(15);
+  const [isMounted, setIsMounted] = useState(false);
 
-  if (!isOpen) return null;
+  // Ensure we're on client side before rendering
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  if (!isMounted || !isOpen) return null;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
