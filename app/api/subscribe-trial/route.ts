@@ -64,8 +64,62 @@ export async function POST(request: Request) {
     if (!response.ok) {
       // MailerLite zwraca już użytkownika jako sukces jeśli email istnieje
       if (response.status === 422 && data.message?.includes('already exists')) {
-        // User już istnieje - to też sukces
-        console.log('ℹ️ Email already exists in MailerLite');
+        // User już istnieje - musimy go zaktualizować i dodać do grupy
+        console.log('ℹ️ Email already exists in MailerLite, updating subscriber...');
+
+        // Najpierw znajdź subskrybenta po emailu
+        const searchResponse = await fetch(
+          `https://connect.mailerlite.com/api/subscribers?filter[email]=${encodeURIComponent(email)}`,
+          {
+            method: 'GET',
+            headers: {
+              'Authorization': `Bearer ${apiKey}`,
+              'Accept': 'application/json',
+            },
+          }
+        );
+
+        const searchData = await searchResponse.json();
+        console.log('🔍 Search response:', JSON.stringify(searchData, null, 2));
+
+        if (searchData.data && searchData.data.length > 0) {
+          const subscriberId = searchData.data[0].id;
+          console.log('📝 Found subscriber ID:', subscriberId);
+
+          // Teraz zaktualizuj subskrybenta i dodaj do grupy
+          const updateResponse = await fetch(
+            `https://connect.mailerlite.com/api/subscribers/${subscriberId}`,
+            {
+              method: 'PUT',
+              headers: {
+                'Authorization': `Bearer ${apiKey}`,
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+              },
+              body: JSON.stringify({
+                fields: {
+                  source: source || 'Landing - rozproszenie.masterzone.edu.pl',
+                  last_interest: new Date().toISOString(),
+                  trial_status: 'pending',
+                },
+                groups: [groupId],
+              }),
+            }
+          );
+
+          const updateData = await updateResponse.json();
+          console.log('✅ Updated existing subscriber:', JSON.stringify(updateData, null, 2));
+
+          return NextResponse.json({
+            success: true,
+            message: 'Email updated and added to group',
+            existing: true,
+            subscriber_id: subscriberId
+          });
+        }
+
+        // Jeśli nie znaleziono subskrybenta, zwróć sukces (może być delay w API)
+        console.log('⚠️ Could not find subscriber, but email exists');
         return NextResponse.json({
           success: true,
           message: 'Email already subscribed',
