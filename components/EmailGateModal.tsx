@@ -65,10 +65,10 @@ export default function EmailGateModal({ isOpen, onClose, onSuccess }: EmailGate
       setIsSuccess(true);
       setIsSubmitting(false);
 
-      // Auto-close modal after 5 seconds
+      // Auto-close modal after 10 seconds
       setTimeout(() => {
         onSuccess(); // Just closes the modal
-      }, 5000);
+      }, 10000);
 
     } catch (err) {
       console.error('Email gate error:', err);
@@ -125,13 +125,13 @@ export default function EmailGateModal({ isOpen, onClose, onSuccess }: EmailGate
                 <ol className="text-sm text-blue-800 space-y-1">
                   <li>1️⃣ Kliknij link w emailu</li>
                   <li>2️⃣ Załóż konto na Skool (7 dni FREE)</li>
-                  <li>3️⃣ Dołącz do pierwszego bloku pracy jutro o 6:00!</li>
+                  <li>3️⃣ Dołącz do pierwszego bloku pracy (pon-pt o 9:00)!</li>
                 </ol>
               </div>
 
               {/* Auto-close info */}
               <p className="text-xs text-gray-500 mt-4">
-                To okno zamknie się automatycznie za 5 sekund...
+                To okno zamknie się automatycznie za 10 sekund...
               </p>
             </>
           ) : (
