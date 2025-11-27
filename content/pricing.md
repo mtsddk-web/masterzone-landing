@@ -19,8 +19,8 @@ plans:
       - "Dostęp do społeczności 24/7"
       - "Networking z przedsiębiorcami"
       - "Accountability partnerzy"
-    ctaText: "Chcę pracować w pełnym skupieniu"
+    ctaText: "Testuję 7 dni za darmo"
     ctaUrl: "https://www.skool.com/masterzone"
     featured: true
-    guarantee: "Gwarancja satysfakcji: Jeśli po miesiącu nie zobaczysz różnicy — zwrot pieniędzy."
+    guarantee: "7 dni za darmo, potem $14/miesiąc. Możesz anulować w każdej chwili."
 ---

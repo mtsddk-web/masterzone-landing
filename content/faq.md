@@ -10,7 +10,7 @@ questions:
   - question: "Czy to działa dla freelancerów i przedsiębiorców?"
     answer: "Tak. MasterZone został stworzony dla ludzi, którzy pracują samodzielnie lub prowadzą małe zespoły. Jeśli borykasz się z chaosem, rozproszeniem i brakiem struktury — to miejsce dla Ciebie."
   - question: "Co jeśli nie widzę efektów?"
-    answer: "Jeśli po miesiącu nie zauważysz różnicy w skupieniu, produktywności lub spokoju — napisz do nas. Pomożemy Ci albo zwrócimy pieniądze."
+    answer: "Możesz anulować subskrypcję w każdej chwili. Większość członków zostaje, bo widzą realną różnicę już w pierwszym tygodniu — ale nie ma żadnych długoterminowych zobowiązań."
   - question: "Jak wygląda pierwszy tydzień?"
     answer: "Po dołączeniu dostajesz onboarding 1:1, żeby od razu wiedzieć, jak wszystko działa. Następnie dołączasz do pierwszego bloku pracy głębokiej i sesji planowania. Już w pierwszym tygodniu poczujesz różnicę."
 ---

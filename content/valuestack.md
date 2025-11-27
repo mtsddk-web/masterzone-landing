@@ -33,5 +33,5 @@ items:
 actualPrice: "7 dni ZA DARMO"
 monthlyPrice: "$14/miesiąc"
 savingsText: "To 98% oszczędności vs. kupowanie tych samych rzeczy osobno"
-ctaText: "Zacznij za darmo — bez karty kredytowej"
+ctaText: "Wypróbuj 7 dni za darmo"
 ---

@@ -59,13 +59,13 @@ export default function Home() {
       <Video {...videoData} />
       */}
       <Stats {...statsData} />
+      <VideoTestimonial {...videoTestimonialData} />
       <PainSection {...pain1Data} />
       <Benefits {...benefitsData} />
       <HowItWorks {...howItWorksData} />
       <Tools {...toolsData} />
       <Tools {...supportData} />
       <Tools {...communityData} />
-      <VideoTestimonial {...videoTestimonialData} />
       <Testimonials {...testimonialsData} />
       <Transformation {...transformationData} />
       <ValueStack {...valueStackData} />

@@ -31,6 +31,25 @@ export default function Hero({
 }: HeroProps) {
   const { isEmailGateOpen, openEmailGate, closeEmailGate, handleEmailSuccess } = useEmailGate(ctaUrl);
 
+  // Render headline with highlighted key numbers
+  const renderHighlightedHeadline = () => {
+    let text = headline;
+
+    // Replace "4 godziny" with orange/red highlighted version
+    text = text.replace(
+      /4 godziny/gi,
+      '<span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-red-500">4 godziny</span>'
+    );
+
+    // Replace "2x więcej" with green highlighted version
+    text = text.replace(
+      /2x więcej/gi,
+      '<span class="text-green-400">2x więcej</span>'
+    );
+
+    return { __html: text };
+  };
+
   return (
     <>
       <EmailGateModal
@@ -57,9 +76,10 @@ export default function Hero({
         )}
 
         {/* Main Headline */}
-        <h1 className="text-3xl md:text-6xl lg:text-7xl font-bold mb-3 md:mb-6 leading-tight">
-          {headline}
-        </h1>
+        <h1
+          className="text-3xl md:text-6xl lg:text-7xl font-bold mb-3 md:mb-6 leading-tight"
+          dangerouslySetInnerHTML={renderHighlightedHeadline()}
+        />
 
         {/* Description */}
         {description && (
