@@ -21,7 +21,26 @@ export async function POST(request: Request) {
       }, { status: 500 });
     }
 
+    // Pobierz group_id z env (jeśli skonfigurowane)
+    const groupId = process.env.MAILERLITE_TRIAL_GROUP_ID;
+
     // Add subscriber to MailerLite
+    const requestBody: any = {
+      email: email,
+      fields: {
+        source: source || 'Landing - rozproszenie.masterzone.edu.pl',
+        last_interest: new Date().toISOString(),
+        signup_date: new Date().toISOString(),
+        trial_status: 'pending', // pending → active → paid
+      },
+      status: 'active', // active subscriber
+    };
+
+    // Dodaj do grupy jeśli group_id jest skonfigurowane
+    if (groupId) {
+      requestBody.groups = [groupId];
+    }
+
     const response = await fetch('https://connect.mailerlite.com/api/subscribers', {
       method: 'POST',
       headers: {
@@ -29,15 +48,7 @@ export async function POST(request: Request) {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
       },
-      body: JSON.stringify({
-        email: email,
-        fields: {
-          source: source || 'Landing - rozproszenie.masterzone.edu.pl',
-          last_interest: new Date().toISOString(),
-        },
-        // Automatycznie przypisz do grupy jeśli istnieje
-        // groups: ['group_id_here'], // Opcjonalnie dodaj grupę
-      }),
+      body: JSON.stringify(requestBody),
     });
 
     const data = await response.json();

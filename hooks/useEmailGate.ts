@@ -5,7 +5,7 @@ export function useEmailGate(ctaUrl: string = 'https://www.skool.com/masterzone'
   const [isEmailGateOpen, setIsEmailGateOpen] = useState(false);
 
   const openEmailGate = (source: string) => {
-    trackEvent("Lead", { source });
+    // Don't track Lead here - only track when email is actually submitted
     setIsEmailGateOpen(true);
   };
 
@@ -14,8 +14,9 @@ export function useEmailGate(ctaUrl: string = 'https://www.skool.com/masterzone'
   };
 
   const handleEmailSuccess = () => {
-    // Email captured successfully - redirect to Skool
-    window.location.href = ctaUrl;
+    // Email captured successfully - just close modal
+    // User will get email with link to Skool
+    setIsEmailGateOpen(false);
   };
 
   return {

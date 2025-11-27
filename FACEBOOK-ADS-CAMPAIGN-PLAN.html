@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎯 Facebook Ads Campaign Plan - MasterZone</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.95;
+        }
+
+        .meta {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 10px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            text-align: left;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .meta-item strong {
+            font-weight: 600;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        h2 {
+            color: #667eea;
+            font-size: 2em;
+            margin: 40px 0 20px 0;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            color: #764ba2;
+            font-size: 1.5em;
+            margin: 30px 0 15px 0;
+        }
+
+        h4 {
+            color: #333;
+            font-size: 1.3em;
+            margin: 20px 0 10px 0;
+            padding: 15px;
+            background: linear-gradient(to right, #f7f7f7, white);
+            border-left: 4px solid #667eea;
+        }
+
+        .tier-s h4 {
+            background: linear-gradient(to right, #fff3cd, white);
+            border-left: 4px solid #ffc107;
+        }
+
+        .tier-a h4 {
+            background: linear-gradient(to right, #d1ecf1, white);
+            border-left: 4px solid #17a2b8;
+        }
+
+        .tier-b h4 {
+            background: linear-gradient(to right, #d4edda, white);
+            border-left: 4px solid #28a745;
+        }
+
+        .tier-c h4 {
+            background: linear-gradient(to right, #f8d7da, white);
+            border-left: 4px solid #dc3545;
+        }
+
+        ul {
+            margin: 15px 0;
+            padding-left: 25px;
+        }
+
+        li {
+            margin: 8px 0;
+        }
+
+        .ad-copy {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .ad-copy h5 {
+            color: #495057;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .ad-copy-text {
+            background: white;
+            padding: 15px;
+            border-radius: 5px;
+            white-space: pre-wrap;
+            font-family: 'Georgia', serif;
+            line-height: 1.8;
+            color: #212529;
+        }
+
+        .headline, .description {
+            background: #e7f3ff;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border-left: 3px solid #0066cc;
+        }
+
+        .phase {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .phase h4 {
+            color: white;
+            background: rgba(255,255,255,0.1);
+            border-left: 4px solid white;
+        }
+
+        .phase ul {
+            color: white;
+        }
+
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .metric-card {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .metric-card.green {
+            border-color: #28a745;
+            background: #d4edda;
+        }
+
+        .metric-card.red {
+            border-color: #dc3545;
+            background: #f8d7da;
+        }
+
+        .metric-card h5 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .budget-table {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .budget-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .budget-row:last-child {
+            border-bottom: none;
+            font-weight: bold;
+            background: #f8f9fa;
+        }
+
+        .action-items {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .action-items h4 {
+            background: transparent;
+            border: none;
+            padding: 0;
+            color: #856404;
+        }
+
+        .action-items ul {
+            color: #856404;
+        }
+
+        code {
+            background: #f8f9fa;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #e83e8c;
+        }
+
+        .note {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            .container {
+                box-shadow: none;
+            }
+        }
+
+        .toc {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .toc ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .toc li {
+            padding: 8px 0;
+        }
+
+        .toc a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .toc a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎯 FACEBOOK ADS CAMPAIGN PLAN</h1>
+            <p>MasterZone - Nowa kampania z 11 kreacjami</p>
+
+            <div class="meta">
+                <div class="meta-item">
+                    <strong>📅 Data:</strong> 27.11.2025
+                </div>
+                <div class="meta-item">
+                    <strong>🌐 Landing:</strong> rozproszenie.masterzone.edu.pl
+                </div>
+                <div class="meta-item">
+                    <strong>📊 Pixel:</strong> ViewContent + Lead events
+                </div>
+                <div class="meta-item">
+                    <strong>💰 Budżet:</strong> 3,000 PLN (grudzień)
+                </div>
+            </div>
+        </header>
+
+        <div class="content">
+            <div class="toc">
+                <h3>📋 Spis treści</h3>
+                <ul>
+                    <li><a href="#ranking">📊 Analiza i Ranking Kreacji</a></li>
+                    <li><a href="#tier-s">🏆 TIER S - Top Performers</a></li>
+                    <li><a href="#tier-a">💪 TIER A - Strong Contenders</a></li>
+                    <li><a href="#tier-b">👍 TIER B - Good Performers</a></li>
+                    <li><a href="#tier-c">⚠️ TIER C - Test Later</a></li>
+                    <li><a href="#strategy">🎯 Strategia Testowania</a></li>
+                    <li><a href="#technical">⚙️ Technical Setup</a></li>
+                    <li><a href="#metrics">📊 Success Metrics</a></li>
+                    <li><a href="#actions">🚀 Immediate Action Items</a></li>
+                </ul>
+            </div>
+
+            <h2 id="ranking">📊 ANALIZA I RANKING KREACJI</h2>
+
+            <div class="tier-s">
+                <h3 id="tier-s">TIER S - TOP PERFORMERS 🏆 (Przetestuj PIERWSZA)</h3>
+
+                <h4>🥇 #1: Drake Meme - Deep Work (7.png)</h4>
+                <p><strong>Dlaczego zwycięzca:</strong></p>
+                <ul>
+                    <li>Drake meme = proven format na FB (mega viralny)</li>
+                    <li>Konkretne liczby: "8h chaotycznej pracy" vs "90 min deep work"</li>
+                    <li>Bezpośrednie nawiązanie do winning copy "2h > 6h"</li>
+                    <li>Scroll-stopping visual</li>
+                    <li>Humor + pain point w jednym</li>
+                </ul>
+
+                <div class="ad-copy">
+                    <h5>📝 Primary Text:</h5>
+                    <div class="ad-copy-text">Czy to Ty? 👇
+
+❌ 8 godzin "pracy" = 170 otwartych zakładek + 0 ukończonych zadań
+✅ 90 minut deep work = więcej zrobionego niż w cały dzień
+
+Problem nie w ilości czasu. Problem w JAKOŚCI skupienia.
+
+MasterZone to system bloków głębokiej pracy, który:
+• Zamyka 44 przedsiębiorców codziennie o tej samej godzinie
+• Usuwa WSZYSTKIE rozpraszacze (telefon, notyfikacje, kuszące zakładki)
+• I pozwala Ci wreszcie skończyć to, co zacząłeś
+
+Wypróbuj 7 dni za darmo. Jeśli nie zrobisz 2x więcej w połowie czasu - anuluj.
+
+👉 Kliknij "Testuję 7 dni FREE" i sprawdź sam</div>
+
+                    <div class="headline">
+                        <strong>Headline:</strong> Koniec z chaosem. Czas na deep work.
+                    </div>
+
+                    <div class="description">
+                        <strong>Description:</strong> 7 dni za darmo • System bloków pracy • 44 przedsiębiorców już testuje
+                    </div>
+                </div>
+
+                <h4>🥈 #2: Drake Meme - Więcej dyscypliny (8.png)</h4>
+                <p><strong>Dlaczego mocny:</strong></p>
+                <ul>
+                    <li>Ten sam viral format co #1</li>
+                    <li>Kontratakuje najbardziej powszechne false belief ("potrzebuję więcej dyscypliny")</li>
+                    <li>Pain point: "więcej godzin, więcej dyscypliny" NIE DZIAŁA</li>
+                </ul>
+
+                <div class="ad-copy">
+                    <h5>📝 Primary Text:</h5>
+                    <div class="ad-copy-text">Wszyscy Ci mówią: "Pracuj więcej godzin. Miej więcej dyscypliny."
+
+Ale prawda jest taka:
+
+❌ Więcej godzin = więcej wypalenia
+❌ Więcej dyscypliny = walka z własnym mózgiem (i przegrana)
+
+✅ 90 minut deep work dziennie = więcej zrobionego niż 8h chaotycznej pracy
+
+Problem nie w Tobie. Problem w ŚRODOWISKU.
+
+MasterZone to miejsce, gdzie:
+• 44 przedsiębiorców zamyka się codziennie o 6:00 rano
+• Wyłączamy telefony, notyfikacje, pokusy
+• I robimy 2x więcej w połowie czasu
+
+Nie potrzebujesz więcej dyscypliny. Potrzebujesz lepszego systemu.
+
+👉 Testuj 7 dni za darmo - jeśli nie zadziała, anuluj bez pytań</div>
+
+                    <div class="headline">
+                        <strong>Headline:</strong> Dyscyplina ≠ Wyniki. System = Wyniki.
+                    </div>
+
+                    <div class="description">
+                        <strong>Description:</strong> 90 min deep work > 8h chaosu • Dołącz do 44 przedsiębiorców
+                    </div>
+                </div>
+
+                <h4>🥉 #3: Before/After - Przed/Po (pigppb.png)</h4>
+                <p><strong>Dlaczego działa:</strong></p>
+                <ul>
+                    <li>Before/After = proven format konwersyjny</li>
+                    <li>Jasny kontrast wizualny (dark chaos vs organized purple)</li>
+                    <li>3 konkretne pain points + 3 konkretne rozwiązania</li>
+                    <li>Checkmark psychology (✓ = done)</li>
+                </ul>
+
+                <div class="ad-copy">
+                    <h5>📝 Primary Text:</h5>
+                    <div class="ad-copy-text">PRZED MasterZone:
+❌ Chaos w głowie
+❌ Brak fokusa
+❌ Stres i przepracowanie
+
+PO MasterZone:
+✅ System bloków głębokiej pracy
+✅ Laserowy focus przez 90 minut
+✅ Kontrola nad czasem (i biznesem)
+
+To nie magia. To proste środowisko, które:
+• Usuwa rozpraszacze (telefon wyłączony, 0 notyfikacji)
+• Zamyka Cię z 44 innymi przedsiębiorcami o tej samej godzinie
+• I daje Ci warunki do PRAWDZIWEJ pracy
+
+Efekt? 2x więcej zrobionego w połowie czasu.
+
+Nie wierzysz? Testuj 7 dni za darmo.
+Jeśli nie zadziała - anuluj bez pytań.
+
+👉 Kliknij "Zmieniam sposób pracy" i zacznij dziś</div>
+
+                    <div class="headline">
+                        <strong>Headline:</strong> Chaos → System. Rozproszenie → Focus.
+                    </div>
+
+                    <div class="description">
+                        <strong>Description:</strong> Testuj 7 dni FREE • System bloków pracy • Kontrola nad czasem
+                    </div>
+                </div>
+            </div>
+
+            <div class="tier-a">
+                <h3 id="tier-a">TIER A - STRONG CONTENDERS 💪</h3>
+
+                <h4>#4: Twoja szansa - Dołącz dziś (md8iq5.png)</h4>
+                <ul>
+                    <li>Red/orange gradient = attention-grabbing</li>
+                    <li>Wyraźne "7 dni za darmo" jako główny element</li>
+                    <li>Social proof: "44 przedsiębiorców"</li>
+                </ul>
+
+                <h4>#5: Before/After - Desk Chaos (3.png)</h4>
+                <ul>
+                    <li>Real-world before/after (fizyczny desk)</li>
+                    <li>Relatable pain: chaos który każdy zna</li>
+                </ul>
+
+                <h4>#6: 2X Arrow (5.png)</h4>
+                <ul>
+                    <li>Bold visual: giant "2X" + arrow</li>
+                    <li>Numerical promise (2x konkretne)</li>
+                </ul>
+
+                <div class="note">
+                    <strong>💡 Strategia:</strong> Testuj te kreacje w FAZIE 2 po znalezieniu winners z TOP 3
+                </div>
+            </div>
+
+            <div class="tier-b">
+                <h3 id="tier-b">TIER B - GOOD PERFORMERS 👍</h3>
+
+                <h4>#7: Purple Gradient - Testimonial Michał (4pkj0e.png)</h4>
+                <ul>
+                    <li>Testimonial = social proof</li>
+                    <li>"3x więcej głębokiej pracy" = strong claim</li>
+                </ul>
+
+                <h4>#8: Navy Blue - Problem/Solution (6r3689.png)</h4>
+                <ul>
+                    <li>Problem-agitate-solve structure</li>
+                    <li>"Za dużo na głowie?" = relatable hook</li>
+                </ul>
+
+                <h4>#9: Social Proof - 44 przedsiębiorców (ji32s7.png)</h4>
+                <ul>
+                    <li>Social proof as main message</li>
+                    <li>Community angle = trust-building</li>
+                </ul>
+            </div>
+
+            <div class="tier-c">
+                <h3 id="tier-c">TIER C - TEST LATER ⚠️</h3>
+
+                <h4>#10: Black Background (1.png)</h4>
+                <ul>
+                    <li>Minimalistyczny = mniej attention-grabbing</li>
+                    <li>Black może źle wyglądać w feedzie</li>
+                </ul>
+
+                <h4>#11: Dark Blue Checkmark (6.png)</h4>
+                <ul>
+                    <li>Zbyt abstrakcyjny visual</li>
+                    <li>Brak clear message bez tekstu</li>
+                </ul>
+
+                <div class="note">
+                    <strong>⚠️ Uwaga:</strong> Testuj te kreacje tylko jeśli TIER A/B nie działają
+                </div>
+            </div>
+
+            <h2 id="strategy">🎯 STRATEGIA TESTOWANIA</h2>
+
+            <div class="phase">
+                <h4>FAZA 1: Quick Win Test (1-3 grudnia) - 200 PLN</h4>
+                <p><strong>Cel:</strong> Znaleźć 1-2 winners FAST</p>
+
+                <p><strong>Setup:</strong></p>
+                <ul>
+                    <li>Campaign: Advantage+ Shopping Campaign</li>
+                    <li>Budget: 200 PLN (3 dni × 66 PLN/dzień)</li>
+                    <li>Optimization: Maximize conversions (Lead event)</li>
+                    <li>Test: TOP 3 kreacje (Drake #1, Drake #2, Before/After #3)</li>
+                </ul>
+
+                <p><strong>Decision point:</strong></p>
+                <ul>
+                    <li>✅ Jeśli CPL < 35 PLN → skaluj winnera</li>
+                    <li>❌ Jeśli CPL > 45 PLN → pause i test kolejne 3</li>
+                </ul>
+            </div>
+
+            <div class="phase">
+                <h4>FAZA 2: Scale Winners (4-14 grudnia) - 800 PLN</h4>
+                <p><strong>Cel:</strong> Skalować winners + testować Tier A</p>
+
+                <p><strong>Setup:</strong></p>
+                <ul>
+                    <li>Campaign 1: Winners z fazy 1 (budget 400 PLN)</li>
+                    <li>Campaign 2: Tier A test (4 kreacje) (budget 400 PLN)</li>
+                    <li>Optimization: Cost per result</li>
+                </ul>
+
+                <p><strong>Decision point:</strong></p>
+                <ul>
+                    <li>Top 2 kreacje dostają 70% budżetu</li>
+                    <li>Reszta 30% na testy</li>
+                </ul>
+            </div>
+
+            <div class="phase">
+                <h4>FAZA 3: Maximize Volume (15-31 grudnia) - 2,000 PLN</h4>
+                <p><strong>Cel:</strong> Max conversions z proven winners</p>
+
+                <p><strong>Setup:</strong></p>
+                <ul>
+                    <li>Campaign: Best performers only (2-3 kreacje MAX)</li>
+                    <li>Budget: 120 PLN/dzień</li>
+                    <li>Retargeting: ViewContent audiences</li>
+                    <li>Lookalike: 1% z ludzi którzy wypełnili Lead event</li>
+                </ul>
+            </div>
+
+            <h2 id="technical">⚙️ TECHNICAL SETUP</h2>
+
+            <div class="note">
+                <h4>Campaign Structure:</h4>
+                <pre style="background: white; padding: 15px; border-radius: 5px; overflow-x: auto;">
+KAMPANIA: MasterZone - Grudzień 2025 (Advantage+)
+├── Budget: Campaign budget optimization
+├── Objective: Conversions
+├── Conversion event: Lead
+│
+└── AD SET 1: Advantage+ Audience
+    ├── Placements: Advantage+ (auto)
+    ├── Budget: 66-120 PLN/dzień
+    ├── Optimization: Lowest cost per lead
+    │
+    └── ADS (11 variants - testuj po 3 na raz):
+        ├── Ad 1: Drake Deep Work (7.png)
+        ├── Ad 2: Drake Dyscyplina (8.png)
+        ├── Ad 3: Before/After (pigppb.png)
+        └── ... (8 więcej)
+                </pre>
+            </div>
+
+            <h4>Pixel Events:</h4>
+            <ul>
+                <li><strong>ViewContent:</strong> Triggered on page load rozproszenie.masterzone.edu.pl</li>
+                <li><strong>Lead:</strong> Triggered when email submitted in modal</li>
+                <li><strong>Tracking:</strong> MailerLite + Facebook Pixel</li>
+            </ul>
+
+            <h4>Landing Page:</h4>
+            <ul>
+                <li><strong>URL:</strong> https://rozproszenie.masterzone.edu.pl</li>
+                <li><strong>Flow:</strong> Email gate modal → redirect to Skool</li>
+                <li><strong>Note:</strong> No thank you page (email gate handles everything)</li>
+            </ul>
+
+            <h2 id="metrics">📊 SUCCESS METRICS</h2>
+
+            <div class="metrics">
+                <div class="metric-card green">
+                    <h5>✅ Green Flags (SKALUJ!)</h5>
+                    <ul style="text-align: left;">
+                        <li>CPL < 30 PLN</li>
+                        <li>CTR > 2.5%</li>
+                        <li>Bounce rate < 60%</li>
+                        <li>Email → Skool signup > 70%</li>
+                    </ul>
+                </div>
+
+                <div class="metric-card red">
+                    <h5>❌ Red Flags (PAUSE!)</h5>
+                    <ul style="text-align: left;">
+                        <li>CPL > 45 PLN</li>
+                        <li>CTR < 1%</li>
+                        <li>Bounce rate > 75%</li>
+                        <li>Zero conversions after 50 PLN</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h2 id="actions">🚀 IMMEDIATE ACTION ITEMS</h2>
+
+            <div class="action-items">
+                <h4>DZISIAJ (27.11):</h4>
+                <ul>
+                    <li>☐ Upload wszystkie 11 kreacje do Facebook Ads Manager</li>
+                    <li>☐ Setup Advantage+ campaign z TOP 3 (Drake, Drake, Before/After)</li>
+                    <li>☐ Test pixel events (ViewContent + Lead)</li>
+                    <li>☐ Launch z budżetem 66 PLN/dzień</li>
+                </ul>
+            </div>
+
+            <div class="action-items">
+                <h4>JUTRO (28.11):</h4>
+                <ul>
+                    <li>☐ Check CPL rano</li>
+                    <li>☐ Jeśli CPL < 35 PLN → zwiększ budżet +20%</li>
+                    <li>☐ Jeśli CPL > 45 PLN → pause i zmień kreacje</li>
+                </ul>
+            </div>
+
+            <div class="action-items">
+                <h4>1 GRUDNIA:</h4>
+                <ul>
+                    <li>☐ Raport z 3-dniowego testu</li>
+                    <li>☐ Decision: które kreacje do fazy 2?</li>
+                    <li>☐ Upload kolejnych 4 kreacji (Tier A)</li>
+                    <li>☐ Scale winners do 400 PLN/tydzień</li>
+                </ul>
+            </div>
+
+            <h2>💰 BUDGET BREAKDOWN</h2>
+
+            <div class="budget-table">
+                <div class="budget-row">
+                    <span><strong>FAZA 1 (1-3 gru):</strong> Test TOP 3</span>
+                    <span>200 PLN</span>
+                </div>
+                <div class="budget-row">
+                    <span><strong>FAZA 2 (4-14 gru):</strong> Scale + test Tier A</span>
+                    <span>800 PLN</span>
+                </div>
+                <div class="budget-row">
+                    <span><strong>FAZA 3 (15-31 gru):</strong> Maximize volume</span>
+                    <span>2,000 PLN</span>
+                </div>
+                <div class="budget-row">
+                    <span><strong>TOTAL GRUDZIEŃ 2025</strong></span>
+                    <span>3,000 PLN</span>
+                </div>
+            </div>
+
+            <div class="note">
+                <strong>🎯 Cel:</strong> 30 członków z ads (@ 30 PLN CPL × 100 trials × 30% conversion)
+            </div>
+
+            <h2>🎯 EXPECTED RESULTS</h2>
+
+            <div class="metrics">
+                <div class="metric-card" style="border-color: #dc3545;">
+                    <h5>😰 Pesymistyczny</h5>
+                    <p>20 członków | CPL 40 PLN</p>
+                    <p>Trial→Paid: 25%</p>
+                    <p><strong>Spend: 3,200 PLN</strong></p>
+                </div>
+
+                <div class="metric-card" style="border-color: #17a2b8;">
+                    <h5>😊 Realistyczny ⭐</h5>
+                    <p>30 członków | CPL 30 PLN</p>
+                    <p>Trial→Paid: 30%</p>
+                    <p><strong>Spend: 3,000 PLN</strong></p>
+                </div>
+
+                <div class="metric-card" style="border-color: #28a745;">
+                    <h5>🚀 Optymistyczny</h5>
+                    <p>40 członków | CPL 25 PLN</p>
+                    <p>Trial→Paid: 35%</p>
+                    <p><strong>Spend: 2,850 PLN</strong></p>
+                </div>
+            </div>
+
+            <h2>📝 KLUCZOWE NOTATKI</h2>
+
+            <ul>
+                <li><strong>Previous winner:</strong> "2h skupienia > 6h dłubania" (CPL 17-58 PLN)</li>
+                <li><strong>Problem:</strong> CPL rósł 3.3x przy skalowaniu</li>
+                <li><strong>Solution:</strong> Więcej kreacji = więcej fresh audiences</li>
+                <li><strong>Advantage+</strong> > Manual targeting (FB wie lepiej)</li>
+                <li><strong>Test 3 kreacje na raz</strong> (nie więcej - trudno analizować)</li>
+                <li><strong>Pause po 50 PLN</strong> jeśli 0 conversions</li>
+            </ul>
+
+            <div style="margin-top: 40px; padding: 20px; background: #f8f9fa; border-radius: 10px; text-align: center;">
+                <p><strong>Created:</strong> 27.11.2025</p>
+                <p><strong>Landing:</strong> rozproszenie.masterzone.edu.pl</p>
+                <p><strong>Contact:</strong> MasterZone Team</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -13,6 +13,7 @@ export default function EmailGateModal({ isOpen, onClose, onSuccess }: EmailGate
   const [email, setEmail] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
+  const [isSuccess, setIsSuccess] = useState(false);
 
   if (!isOpen) return null;
 
@@ -60,8 +61,14 @@ export default function EmailGateModal({ isOpen, onClose, onSuccess }: EmailGate
         });
       }
 
-      // Success - trigger redirect to Skool
-      onSuccess();
+      // Success - show success message (NO redirect)
+      setIsSuccess(true);
+      setIsSubmitting(false);
+
+      // Auto-close modal after 5 seconds
+      setTimeout(() => {
+        onSuccess(); // Just closes the modal
+      }, 5000);
 
     } catch (err) {
       console.error('Email gate error:', err);
@@ -88,21 +95,63 @@ export default function EmailGateModal({ isOpen, onClose, onSuccess }: EmailGate
 
         {/* Content */}
         <div className="text-center">
-          {/* Icon */}
-          <div className="text-5xl mb-4">🎁</div>
+          {isSuccess ? (
+            // SUCCESS VIEW
+            <>
+              {/* Success Icon */}
+              <div className="text-6xl mb-4">✅</div>
 
-          {/* Headline */}
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3">
-            Ostatni krok do 7 dni FREE!
-          </h2>
+              {/* Success Headline */}
+              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3">
+                Link wysłany!
+              </h2>
 
-          {/* Subheadline */}
-          <p className="text-base text-gray-600 mb-6">
-            Podaj email → od razu dostaniesz link do Skool i rozpoczniesz 7-dniowy trial
-          </p>
+              {/* Success Message */}
+              <div className="bg-green-50 border-2 border-green-200 rounded-lg p-6 mb-4">
+                <p className="text-lg text-gray-800 mb-4">
+                  <strong>Sprawdź swoją skrzynkę email:</strong>
+                </p>
+                <p className="text-base text-gray-700 mb-2">
+                  📧 Wysłaliśmy Ci link do społeczności MasterZone
+                </p>
+                <p className="text-sm text-gray-600 italic">
+                  (Jeśli nie widzisz emaila - sprawdź SPAM)
+                </p>
+              </div>
 
-          {/* Form */}
-          <form onSubmit={handleSubmit} className="space-y-4">
+              {/* What's next */}
+              <div className="text-left bg-blue-50 border border-blue-200 rounded-lg p-4">
+                <p className="text-sm font-semibold text-blue-900 mb-2">Co dalej?</p>
+                <ol className="text-sm text-blue-800 space-y-1">
+                  <li>1️⃣ Kliknij link w emailu</li>
+                  <li>2️⃣ Załóż konto na Skool (7 dni FREE)</li>
+                  <li>3️⃣ Dołącz do pierwszego bloku pracy jutro o 6:00!</li>
+                </ol>
+              </div>
+
+              {/* Auto-close info */}
+              <p className="text-xs text-gray-500 mt-4">
+                To okno zamknie się automatycznie za 5 sekund...
+              </p>
+            </>
+          ) : (
+            // FORM VIEW
+            <>
+              {/* Icon */}
+              <div className="text-5xl mb-4">🎁</div>
+
+              {/* Headline */}
+              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3">
+                Ostatni krok do 7 dni FREE!
+              </h2>
+
+              {/* Subheadline */}
+              <p className="text-base text-gray-600 mb-6">
+                Podaj email → wyślemy Ci link do społeczności MasterZone
+              </p>
+
+              {/* Form */}
+              <form onSubmit={handleSubmit} className="space-y-4">
             {/* Email Input */}
             <div>
               <input
@@ -133,21 +182,23 @@ export default function EmailGateModal({ isOpen, onClose, onSuccess }: EmailGate
             </button>
           </form>
 
-          {/* Trust Signals */}
-          <div className="mt-6 space-y-2">
-            <p className="text-xs text-gray-500 flex items-center justify-center gap-2">
-              <svg className="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-              </svg>
-              7 dni za darmo • Potem $14/mies
-            </p>
-            <p className="text-xs text-gray-500 flex items-center justify-center gap-2">
-              <svg className="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-              </svg>
-              Możesz anulować w każdej chwili
-            </p>
-          </div>
+              {/* Trust Signals */}
+              <div className="mt-6 space-y-2">
+                <p className="text-xs text-gray-500 flex items-center justify-center gap-2">
+                  <svg className="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                  </svg>
+                  7 dni za darmo • Potem $14/mies
+                </p>
+                <p className="text-xs text-gray-500 flex items-center justify-center gap-2">
+                  <svg className="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                  </svg>
+                  Możesz anulować w każdej chwili
+                </p>
+              </div>
+            </>
+          )}
         </div>
       </div>
 
