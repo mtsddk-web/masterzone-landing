@@ -98,7 +98,7 @@ export default function EmailGateModal({ isOpen, onClose, onSuccess }: EmailGate
 
           {/* Subheadline */}
           <p className="text-base text-gray-600 mb-6">
-            Podaj email → dostaniesz instant link do Skool i rozpoczniesz 7-dniowy trial
+            Podaj email → od razu dostaniesz link do Skool i rozpoczniesz 7-dniowy trial
           </p>
 
           {/* Form */}
