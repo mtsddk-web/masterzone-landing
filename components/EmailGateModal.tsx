@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { trackEvent } from "./FacebookPixel";
 
 interface EmailGateModalProps {
@@ -14,6 +14,7 @@ export default function EmailGateModal({ isOpen, onClose, onSuccess }: EmailGate
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
+  const [countdown, setCountdown] = useState(15);
 
   if (!isOpen) return null;
 
@@ -68,18 +69,38 @@ export default function EmailGateModal({ isOpen, onClose, onSuccess }: EmailGate
       // Success - show success message
       setIsSuccess(true);
       setIsSubmitting(false);
-
-      // Auto-redirect to Skool after 15 seconds
-      setTimeout(() => {
-        // Redirect to Skool
-        window.location.href = 'https://www.skool.com/masterzone';
-      }, 15000);
+      setCountdown(15); // Reset countdown to 15 seconds
 
     } catch (err) {
       console.error('Email gate error:', err);
       setError(err instanceof Error ? err.message : 'Wystąpił błąd. Spróbuj ponownie.');
       setIsSubmitting(false);
     }
+  };
+
+  // Countdown timer effect
+  useEffect(() => {
+    if (!isSuccess) return; // Only run when success modal is shown
+
+    // Countdown timer
+    const timer = setInterval(() => {
+      setCountdown((prev) => {
+        if (prev <= 1) {
+          // Redirect when countdown reaches 0
+          window.location.href = 'https://www.skool.com/masterzone';
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    // Cleanup
+    return () => clearInterval(timer);
+  }, [isSuccess]);
+
+  // Manual redirect function
+  const handleManualRedirect = () => {
+    window.location.href = 'https://www.skool.com/masterzone';
   };
 
   return (
@@ -149,12 +170,20 @@ export default function EmailGateModal({ isOpen, onClose, onSuccess }: EmailGate
               {/* Auto-redirect countdown */}
               <div className="bg-orange-100 border border-orange-300 rounded-lg p-3 mt-4">
                 <p className="text-sm font-bold text-orange-900">
-                  ⏱️ Przekierowanie za 15 sekund...
+                  ⏱️ Przekierowanie za {countdown} {countdown === 1 ? 'sekundę' : 'sekund'}...
                 </p>
                 <p className="text-xs text-orange-700 mt-1">
                   Do zobaczenia w skupieniu! 🎯
                 </p>
               </div>
+
+              {/* Manual redirect button */}
+              <button
+                onClick={handleManualRedirect}
+                className="w-full mt-3 bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 text-sm shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+              >
+                🚀 Nie chcę czekać - przejdź teraz do MasterZone →
+              </button>
 
               <p className="text-xs text-gray-500 mt-3">
                 <strong>Radek Pustelnik & Mateusz Dudek</strong><br/>
