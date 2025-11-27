@@ -61,13 +61,14 @@ export default function EmailGateModal({ isOpen, onClose, onSuccess }: EmailGate
         });
       }
 
-      // Success - show success message (NO redirect)
+      // Success - show success message
       setIsSuccess(true);
       setIsSubmitting(false);
 
-      // Auto-close modal after 10 seconds
+      // Auto-redirect to Skool after 10 seconds
       setTimeout(() => {
-        onSuccess(); // Just closes the modal
+        // Redirect to Skool
+        window.location.href = 'https://www.skool.com/masterzone';
       }, 10000);
 
     } catch (err) {
@@ -99,39 +100,61 @@ export default function EmailGateModal({ isOpen, onClose, onSuccess }: EmailGate
             // SUCCESS VIEW
             <>
               {/* Success Icon */}
-              <div className="text-6xl mb-4">✅</div>
+              <div className="text-6xl mb-4">🎉</div>
 
               {/* Success Headline */}
               <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3">
-                Link wysłany!
+                Dzięki za zapis!
               </h2>
 
               {/* Success Message */}
-              <div className="bg-green-50 border-2 border-green-200 rounded-lg p-6 mb-4">
-                <p className="text-lg text-gray-800 mb-4">
-                  <strong>Sprawdź swoją skrzynkę email:</strong>
+              <div className="bg-gradient-to-br from-green-50 to-blue-50 border-2 border-green-300 rounded-lg p-6 mb-4">
+                <p className="text-base text-gray-800 mb-3">
+                  <strong>Twoje miejsce zostało zarezerwowane</strong> — możesz już wejść do społeczności <strong>MasterZone</strong> ZA DARMO przez 7 dni i zacząć w 90 min robić 2 razy więcej! 🚀
                 </p>
-                <p className="text-base text-gray-700 mb-2">
-                  📧 Wysłaliśmy Ci link do społeczności MasterZone
+                <p className="text-sm text-gray-700 mb-4">
+                  Nie wiem jak ty ale <strong>MY jesteśmy podekscytowani!</strong> 😊
                 </p>
-                <p className="text-sm text-gray-600 italic">
-                  (Jeśli nie widzisz emaila - sprawdź SPAM)
-                </p>
+
+                {/* CTA Box */}
+                <div className="bg-white border-2 border-orange-400 rounded-lg p-4 text-center">
+                  <p className="text-sm font-semibold text-gray-800 mb-2">
+                    ➡️ Za chwilę przekierujemy Cię do MasterZone
+                  </p>
+                  <p className="text-xs text-gray-600">
+                    Wszystko działa bezpiecznie przez platformę Skool
+                  </p>
+                </div>
               </div>
 
               {/* What's next */}
-              <div className="text-left bg-blue-50 border border-blue-200 rounded-lg p-4">
-                <p className="text-sm font-semibold text-blue-900 mb-2">Co dalej?</p>
+              <div className="text-left bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
+                <p className="text-sm font-semibold text-blue-900 mb-2">📋 Co dalej?</p>
                 <ol className="text-sm text-blue-800 space-y-1">
-                  <li>1️⃣ Kliknij link w emailu</li>
-                  <li>2️⃣ Załóż konto na Skool (7 dni FREE)</li>
-                  <li>3️⃣ Dołącz do pierwszego bloku pracy (pon-pt o 9:00)!</li>
+                  <li>1️⃣ Załóż konto na Skool (zajmie 30 sekund)</li>
+                  <li>2️⃣ Pierwszy blok pracy: pon-pt o 9:00</li>
+                  <li>3️⃣ 7 dni FREE → potem $14/mies</li>
                 </ol>
               </div>
 
-              {/* Auto-close info */}
-              <p className="text-xs text-gray-500 mt-4">
-                To okno zamknie się automatycznie za 10 sekund...
+              {/* Footer */}
+              <p className="text-xs text-gray-600 italic mb-2">
+                ps. Jeśli masz jakieś pytania - napisz do nas! 💬
+              </p>
+
+              {/* Auto-redirect countdown */}
+              <div className="bg-orange-100 border border-orange-300 rounded-lg p-3 mt-4">
+                <p className="text-sm font-bold text-orange-900">
+                  ⏱️ Przekierowanie za 10 sekund...
+                </p>
+                <p className="text-xs text-orange-700 mt-1">
+                  Do zobaczenia w skupieniu! 🎯
+                </p>
+              </div>
+
+              <p className="text-xs text-gray-500 mt-3">
+                <strong>Radek Pustelnik & Mateusz Dudek</strong><br/>
+                MasterZone – Strefa Skupienia
               </p>
             </>
           ) : (
