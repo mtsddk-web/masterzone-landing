@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { trackEvent } from "./FacebookPixel";
 
 interface EmailGateModalProps {
@@ -14,6 +14,7 @@ export default function EmailGateModal({ isOpen, onClose, onSuccess }: EmailGate
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
+  const [countdown, setCountdown] = useState<number | null>(null);
 
   if (!isOpen) return null;
 
@@ -68,13 +69,7 @@ export default function EmailGateModal({ isOpen, onClose, onSuccess }: EmailGate
       // Success - show success message
       setIsSuccess(true);
       setIsSubmitting(false);
-
-      // Auto-redirect after 15 seconds
-      setTimeout(() => {
-        if (typeof window !== 'undefined') {
-          window.location.href = 'https://www.skool.com/masterzone';
-        }
-      }, 15000);
+      setCountdown(20); // Start countdown from 20 seconds
 
     } catch (err) {
       console.error('Email gate error:', err);
@@ -82,6 +77,26 @@ export default function EmailGateModal({ isOpen, onClose, onSuccess }: EmailGate
       setIsSubmitting(false);
     }
   };
+
+  // Countdown effect - only runs on client side
+  useEffect(() => {
+    if (!isSuccess || countdown === null) return;
+
+    if (countdown <= 0) {
+      // Redirect when countdown reaches 0
+      if (typeof window !== 'undefined') {
+        window.location.href = 'https://www.skool.com/masterzone';
+      }
+      return;
+    }
+
+    // Decrement countdown every second
+    const timer = setTimeout(() => {
+      setCountdown(countdown - 1);
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, [isSuccess, countdown]);
 
   // Manual redirect function
   const handleManualRedirect = () => {
@@ -162,12 +177,18 @@ export default function EmailGateModal({ isOpen, onClose, onSuccess }: EmailGate
                 🚀 Przejdź do MasterZone TERAZ →
               </button>
 
-              {/* Auto-redirect info */}
-              <div className="bg-orange-100 border border-orange-300 rounded-lg p-3 mt-3">
-                <p className="text-sm font-bold text-orange-900">
-                  ⏱️ Lub poczekaj - przekierujemy Cię za 15 sekund
+              {/* Auto-redirect info with countdown */}
+              <div className="bg-orange-100 border border-orange-300 rounded-lg p-4 mt-3">
+                <p className="text-base font-bold text-orange-900">
+                  ⏱️ Lub poczekaj - automatyczne przekierowanie za{' '}
+                  {countdown !== null && (
+                    <span className="inline-block min-w-[2.5rem] text-center text-2xl font-black text-orange-600">
+                      {countdown}
+                    </span>
+                  )}
+                  {countdown !== null && (countdown === 1 ? ' sekundę' : ' sekund')}
                 </p>
-                <p className="text-xs text-orange-700 mt-1">
+                <p className="text-xs text-orange-700 mt-2">
                   Do zobaczenia w skupieniu! 🎯
                 </p>
               </div>
