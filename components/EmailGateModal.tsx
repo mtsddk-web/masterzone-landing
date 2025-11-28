@@ -139,13 +139,25 @@ export default function EmailGateModal({ isOpen, onClose, onSuccess }: EmailGate
                 </div>
               </div>
 
-              {/* What's next */}
-              <div className="text-left bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
-                <p className="text-sm font-semibold text-blue-900 mb-2">📋 Co dalej?</p>
-                <ol className="text-sm text-blue-800 space-y-1">
-                  <li>1️⃣ Załóż konto na Skool (zajmie 30 sekund)</li>
-                  <li>2️⃣ Pierwszy blok pracy: pon-pt o 9:00</li>
-                  <li>3️⃣ 7 dni FREE → potem $14/mies</li>
+              {/* What's next - wyróżniona sekcja */}
+              <div className="text-left bg-gradient-to-br from-blue-100 to-indigo-100 border-2 border-blue-400 rounded-lg p-5 mb-4 shadow-md">
+                <p className="text-base font-bold text-blue-900 mb-3 flex items-center gap-2">
+                  <span className="text-xl">📋</span>
+                  <span>Co dalej?</span>
+                </p>
+                <ol className="text-base text-blue-900 space-y-2 font-medium">
+                  <li className="flex items-start gap-2">
+                    <span className="text-lg">1️⃣</span>
+                    <span>Załóż konto na Skool (zajmie 30 sekund)</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-lg">2️⃣</span>
+                    <span>Pierwszy blok pracy: pon-pt o 9:00</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-lg">3️⃣</span>
+                    <span><strong className="text-green-700">7 dni FREE</strong> → potem $14/mies</span>
+                  </li>
                 </ol>
               </div>
 
