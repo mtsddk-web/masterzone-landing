@@ -37,15 +37,15 @@ export default function VideoTestimonial({
           )}
         </div>
 
-        {/* Videos Grid - 2 columns */}
-        <div className="grid md:grid-cols-2 gap-6 md:gap-8">
+        {/* Videos Grid - 3 columns on larger screens */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {videos.map((video, index) => (
             <div key={index} className="bg-white rounded-xl shadow-xl p-4 md:p-6 border border-blue-100">
               {/* Video Player */}
               <div className="mb-4">
                 <video
                   controls
-                  className="w-full rounded-lg shadow-lg"
+                  className="w-full max-w-md mx-auto rounded-lg shadow-lg"
                   preload="metadata"
                 >
                   <source src={video.videoUrl} type="video/mp4" />
