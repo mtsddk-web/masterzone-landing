@@ -1,5 +1,57 @@
 # Work Log - MasterZone Landing Page
 
+## 2025-12-01 (Poniedziałek)
+
+### ✅ Wykonane zadania:
+
+1. **Dodanie testimonial wideo - Bart z Dubai**
+   - Skopiowano wideo z `/Users/mateuszdudek/Downloads/Testimonial_Barta_z_Dubaju.mp4`
+   - Dodano do `public/videos/testimonial-bart-dubai.mp4` (26MB)
+   - Zaktualizowano `content/video-testimonial.md`:
+     - Nazwa: "Bart"
+     - Rola: "Uczestnik Bloków Pracy | Dubai"
+     - URL: `/videos/testimonial-bart-dubai.mp4`
+   - Testimonial umieszczony jako drugi film (między Dominikiem Homa a "Uczestnikiem Bloków Pracy")
+
+2. **Optymalizacja rozmiaru filmów testimonial**
+   - Zmieniono layout z 2 na 3 kolumny na dużych ekranach (`lg:grid-cols-3`)
+   - Dodano ograniczenie szerokości filmów: `max-w-md` (~448px)
+   - Wycentrowano filmy w kontenerach (`mx-auto`)
+   - Poprawiono responsywność:
+     - Mobile: 1 film w rzędzie
+     - Tablet: 2 filmy w rzędzie
+     - Desktop: 3 filmy w rzędzie
+
+3. **Rozwiązanie problemu z domeną**
+   - Zdiagnozowano błąd DNS: `DNS_PROBE_FINISHED_NXDOMAIN`
+   - Odkryto że domena `masterzone.edu.pl` miała zakończony okres rozliczeniowy
+   - Użytkownik opłacił domenę
+   - Potwierdzono że DNS zacznie działać w ciągu 24-48h
+   - Veryfikacja: strona działa poprawnie na domyślnej domenie Vercel: `https://masterzone-landing.vercel.app`
+
+### 🔧 Commits:
+
+1. `0ca2bf7` - Dodaj testimonial wideo Barta z Dubai
+2. `db863b8` - Zmniejsz rozmiar filmów testimonial
+
+### 📊 Status:
+
+- **Domena produkcyjna:** https://rozproszenie.masterzone.edu.pl (DNS w trakcie propagacji)
+- **Domena Vercel (działa):** https://masterzone-landing.vercel.app
+- **Rejestratar:** cyber_Folks S.A. (cyberfolks.pl)
+- **Wygaśnięcie domeny:** 2025-12-28
+- **Liczba video testimoniali:** 3 (Dominik Homa, Bart z Dubai, Uczestnik Bloków Pracy)
+
+### 🎬 Video Testimonials:
+
+| Kolejność | Nazwa | Rola | Rozmiar |
+|-----------|-------|------|---------|
+| 1 | Dominik Homa | Przedsiębiorca \| Członek MasterZone | 41MB |
+| 2 | Bart | Uczestnik Bloków Pracy \| Dubai | 26MB |
+| 3 | Uczestnik Bloków Pracy | Członek MasterZone | 34MB |
+
+---
+
 ## 2025-11-05 (Środa)
 
 ### ✅ Wykonane zadania:
