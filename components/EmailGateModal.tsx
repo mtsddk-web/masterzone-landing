@@ -65,16 +65,9 @@ export default function EmailGateModal({ isOpen, onClose, onSuccess }: EmailGate
         });
       }
 
-      // Success - show success message
+      // Success - show success message (no redirect - user must click link in email)
       setIsSuccess(true);
       setIsSubmitting(false);
-
-      // Auto-redirect after 20 seconds
-      setTimeout(() => {
-        if (typeof window !== 'undefined') {
-          window.location.href = 'https://www.skool.com/masterzone';
-        }
-      }, 20000);
 
     } catch (err) {
       console.error('Email gate error:', err);
@@ -83,12 +76,6 @@ export default function EmailGateModal({ isOpen, onClose, onSuccess }: EmailGate
     }
   };
 
-  // Manual redirect function
-  const handleManualRedirect = () => {
-    if (typeof window !== 'undefined') {
-      window.location.href = 'https://www.skool.com/masterzone';
-    }
-  };
 
   return (
     <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 backdrop-blur-sm animate-fade-in">
@@ -109,86 +96,58 @@ export default function EmailGateModal({ isOpen, onClose, onSuccess }: EmailGate
         {/* Content */}
         <div className="text-center">
           {isSuccess ? (
-            // SUCCESS VIEW
+            // SUCCESS VIEW - Check email message
             <>
               {/* Success Icon */}
-              <div className="text-6xl mb-4">🎉</div>
+              <div className="text-6xl mb-4">📬</div>
 
               {/* Success Headline */}
               <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3">
-                Dzięki za zapis!
+                Sprawdź swoją skrzynkę!
               </h2>
 
-              {/* Success Message */}
+              {/* Main Message */}
               <div className="bg-gradient-to-br from-green-50 to-blue-50 border-2 border-green-300 rounded-lg p-6 mb-4">
-                <p className="text-base text-gray-800 mb-3">
-                  <strong>Twoje miejsce zostało zarezerwowane</strong> — możesz już wejść do społeczności <strong>MasterZone</strong> ZA DARMO przez 7 dni i zacząć w 90 min robić 2 razy więcej! 🚀
-                </p>
-                <p className="text-sm text-gray-700 mb-4">
-                  Nie wiem jak ty ale <strong>MY jesteśmy podekscytowani!</strong> 😊
+                <p className="text-lg text-gray-800 mb-4">
+                  Wysłaliśmy Ci <strong>email z zaproszeniem</strong> do społeczności MasterZone.
                 </p>
 
-                {/* CTA Box */}
-                <div className="bg-white border-2 border-orange-400 rounded-lg p-4 text-center">
-                  <p className="text-sm font-semibold text-gray-800 mb-2">
-                    ➡️ Za chwilę przekierujemy Cię do MasterZone
+                {/* Email CTA Box */}
+                <div className="bg-white border-2 border-blue-400 rounded-lg p-4 text-center">
+                  <p className="text-base font-bold text-gray-900 mb-2">
+                    Kliknij link w emailu, żeby dołączyć
                   </p>
-                  <p className="text-xs text-gray-600">
-                    Wszystko działa bezpiecznie przez platformę Skool
+                  <p className="text-sm text-gray-600">
+                    7 dni za darmo, potem $14/mies
                   </p>
                 </div>
               </div>
 
-              {/* What's next - wyróżniona sekcja */}
-              <div className="text-left bg-gradient-to-br from-blue-100 to-indigo-100 border-2 border-blue-400 rounded-lg p-5 mb-4 shadow-md">
-                <p className="text-base font-bold text-blue-900 mb-3 flex items-center gap-2">
-                  <span className="text-xl">📋</span>
-                  <span>Co dalej?</span>
+              {/* SPAM Warning */}
+              <div className="bg-yellow-50 border-2 border-yellow-400 rounded-lg p-4 mb-4">
+                <p className="text-base font-bold text-yellow-800 flex items-center gap-2">
+                  <span className="text-xl">⚠️</span>
+                  <span>Nie widzisz emaila?</span>
                 </p>
-                <ol className="text-base text-blue-900 space-y-2 font-medium">
-                  <li className="flex items-start gap-2">
-                    <span className="text-lg">1️⃣</span>
-                    <span>Załóż konto na Skool (zajmie 30 sekund)</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-lg">2️⃣</span>
-                    <span>Pierwszy blok pracy: pon-pt o 9:00</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-lg">3️⃣</span>
-                    <span><strong className="text-green-700">7 dni FREE</strong> → potem $14/mies</span>
-                  </li>
-                </ol>
+                <p className="text-sm text-yellow-700 mt-2">
+                  Sprawdź folder <strong>SPAM</strong> lub <strong>Oferty</strong> - czasem trafiamy tam przez pomyłkę!
+                </p>
               </div>
 
               {/* Footer */}
-              <p className="text-xs text-gray-600 italic mb-2">
-                ps. Jeśli masz jakieś pytania - napisz do nas! 💬
+              <p className="text-sm text-gray-600 mb-4">
+                Email powinien dotrzeć w ciągu kilku minut. Masz pytania? Napisz do nas!
               </p>
 
-              {/* Manual redirect button - primary CTA */}
+              {/* Close button */}
               <button
-                onClick={handleManualRedirect}
-                className="w-full mt-4 bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white font-bold py-4 px-8 rounded-lg transition-all duration-300 text-lg shadow-xl hover:shadow-2xl transform hover:-translate-y-1 border-2 border-yellow-300"
+                onClick={onClose}
+                className="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold py-3 px-6 rounded-lg transition-all duration-300"
               >
-                🚀 Przejdź do MasterZone TERAZ →
+                Rozumiem, sprawdzam email
               </button>
 
-              {/* Auto-redirect info */}
-              <div className="bg-orange-100 border border-orange-300 rounded-lg p-4 mt-3">
-                <p className="text-base font-bold text-orange-900">
-                  ⏱️ Lub poczekaj - automatyczne przekierowanie za{' '}
-                  <span className="inline-block min-w-[3rem] text-center text-2xl font-black text-orange-600">
-                    20
-                  </span>
-                  {' sekund'}
-                </p>
-                <p className="text-xs text-orange-700 mt-2">
-                  Do zobaczenia w skupieniu! 🎯
-                </p>
-              </div>
-
-              <p className="text-xs text-gray-500 mt-3">
+              <p className="text-xs text-gray-500 mt-4">
                 <strong>Radek Pustelnik & Mateusz Dudek</strong><br/>
                 MasterZone – Strefa Skupienia
               </p>
