@@ -10,6 +10,7 @@ interface EmailGateModalProps {
 }
 
 export default function EmailGateModal({ isOpen, onClose, onSuccess }: EmailGateModalProps) {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
@@ -23,6 +24,11 @@ export default function EmailGateModal({ isOpen, onClose, onSuccess }: EmailGate
     setIsSubmitting(true);
 
     // Basic validation
+    if (!name || name.trim().length < 2) {
+      setError("Podaj swoje imię");
+      setIsSubmitting(false);
+      return;
+    }
     if (!email || !email.includes('@')) {
       setError("Podaj prawidłowy adres email");
       setIsSubmitting(false);
@@ -30,7 +36,7 @@ export default function EmailGateModal({ isOpen, onClose, onSuccess }: EmailGate
     }
 
     try {
-      console.log('🚀 Sending email to API:', email);
+      console.log('🚀 Sending to API:', { name, email });
 
       // Send to MailerLite
       const response = await fetch('/api/subscribe-trial', {
@@ -39,6 +45,7 @@ export default function EmailGateModal({ isOpen, onClose, onSuccess }: EmailGate
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
+          name: name.trim(),
           email: email,
           source: 'Email Gate - Skool Trial'
         }),
@@ -170,6 +177,19 @@ export default function EmailGateModal({ isOpen, onClose, onSuccess }: EmailGate
 
               {/* Form */}
               <form onSubmit={handleSubmit} className="space-y-4">
+            {/* Name Input */}
+            <div>
+              <input
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Twoje imię"
+                disabled={isSubmitting}
+                className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none text-base disabled:bg-gray-100 disabled:cursor-not-allowed"
+                required
+              />
+            </div>
+
             {/* Email Input */}
             <div>
               <input

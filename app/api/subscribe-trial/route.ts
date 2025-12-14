@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 
 export async function POST(request: Request) {
   try {
-    const { email, source } = await request.json();
+    const { name, email, source } = await request.json();
 
     if (!email || !email.includes('@')) {
       return NextResponse.json({
@@ -29,6 +29,7 @@ export async function POST(request: Request) {
     const requestBody: any = {
       email: email,
       fields: {
+        name: name || '',
         source: source || 'Landing - rozproszenie.masterzone.edu.pl',
         last_interest: new Date().toISOString(),
         signup_date: new Date().toISOString(),
@@ -98,6 +99,7 @@ export async function POST(request: Request) {
               },
               body: JSON.stringify({
                 fields: {
+                  name: name || '',
                   source: source || 'Landing - rozproszenie.masterzone.edu.pl',
                   last_interest: new Date().toISOString(),
                   trial_status: 'pending',
