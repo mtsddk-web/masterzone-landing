@@ -121,11 +121,8 @@ export default function EmailGateModal({ isOpen, onClose, onSuccess }: EmailGate
 
                 {/* Email CTA Box */}
                 <div className="bg-white border-2 border-blue-400 rounded-lg p-4 text-center">
-                  <p className="text-base font-bold text-gray-900 mb-2">
+                  <p className="text-base font-bold text-gray-900">
                     Kliknij link w emailu, żeby dołączyć
-                  </p>
-                  <p className="text-sm text-gray-600">
-                    7 dni za darmo, potem $14/mies
                   </p>
                 </div>
               </div>
