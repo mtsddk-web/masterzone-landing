@@ -1,41 +1,41 @@
 ---
-sectionTitle: "WIEMY CO CIĘ OGRANICZA"
-headline: "Nie brakuje Ci ambicji. Brakuje Ci przestrzeni."
-subheadline: "Rozproszenie stało się Twoim domyślnym trybem pracy."
+sectionTitle: "WIEMY CO CIĘ BLOKUJE"
+headline: "Nie brakuje Ci ambicji. Brakuje Ci ludzi obok."
+subheadline: "Pracujesz z domu. Sam. I to właśnie jest problem."
 description: |
-  Codziennie przeskakujesz między Slackiem, mailem, kalendarzem i ClickUpem.
+  Wstajesz z planem na cały dzień. O 17:00 patrzysz — i znowu nic nie zrobiłeś.
 
-  Każde powiadomienie zrywa Cię z toru jak alarm.
+  Nie dlatego, że jesteś leniwy. Dlatego, że pracujesz w pustym mieszkaniu, gdzie nikt nie widzi, czy pracujesz, czy scrollujesz.
 
-  Otwierasz jedno zadanie, kończysz w trzecim — a piątą przypomina o sobie w weekend.
+  Otwierasz laptopa i zamiast najważniejszego zadania — sprawdzasz maile. Potem Slacka. Potem „jeszcze tylko jedno" na YouTube.
 
-  Projekty zaczynają się z energią i... zostają rozczebrane.
+  A te naprawdę ważne rzeczy? Przesuwasz na jutro. Znowu.
 
-  Mówisz sobie: "muszę to w końcu uporządkować".
+  I najgorsze? Nikt tego nie widzi. Nikt nie pyta „hej, jak Ci idzie?". Nikt nie siedzi obok.
 
-  Ale zanim to zrobisz — ktoś już coś chce, coś się psuwa.
-
-  I znów gasisz pożary.
-
-  I znów działasz w biznesie, zamiast nad nim.
+  Bo pracujesz sam. I ta samotność zabija Twoją produktywność.
 
 sections:
-  - title: "Czy to brzmi znajomo?"
+  - title: "Brzmi znajomo?"
     items:
-      - "Każdy dzień to setki mikrodecyzji i zerowa jasność, co jest naprawdę ważne"
-      - "Niekończące się projekty, które ciągną się tygodniami"
-      - "Brak przestrzeni, by pomyśleć strategicznie — bo zawsze 'coś się dzieje'"
-      - "Plan tygodnia istnieje tylko w teorii"
-      - "Multitasking udaje produktywność, ale tylko rozprasza uwagę"
-      - "Znasz to uczucie, gdy kończą się dzień i nie wiesz, co tak naprawdę zrobiłeś?"
+      - "Odkładasz najtrudniejsze zadania na 'po obiedzie' — ale po obiedzie przychodzi kolejne 'jutro'"
+      - "Skaczysz między 5 zadaniami naraz i żadnego nie kończysz do końca"
+      - "Całymi dniami nie rozmawiasz z nikim o pracy — bo kto ma to zrozumieć?"
+      - "Próbowałeś Pomodoro, aplikacji, blokowania stron — nic nie działa na dłużej"
+      - "Czujesz, że mógłbyś robić 2x więcej — ale coś Cię ciągle hamuje"
+      - "Weekend zaczyna się z poczuciem winy, bo znowu nie dowieźliście tego, co planowaliście"
 
-mainHeadline: "To nie Twoja wina."
+mainHeadline: "To nie Twoja wina. To brak środowiska."
 mainContent: |
-  Twój mózg po prostu nigdy nie dostał warunków do skupienia.
+  Badania pokazują: **82% osób pracujących zdalnie czuje izolację**, a **78% doświadcza wypalenia**. To nie kwestia dyscypliny — to kwestia biologii.
 
-  Dlatego stworzyliśmy **MasterZone** — środowisko, które pozwala Ci wreszcie:
+  Twój mózg potrzebuje **obecności innych ludzi**, żeby się skupić. To zjawisko nazywa się **body doubling** — i działa nawet przez kamerę.
 
-  • kończyć to, co zaczynasz,
-  • planować tydzień z jasnością,
-  • i pracować **nad** biznesem, nie tylko w nim.
+  Dlatego w kawiarni pracujesz lepiej niż w domu. Nie magia — nauka.
+
+  **MasterZone** daje Ci to codziennie — bez wychodzenia z domu:
+
+  • koniec prokrastynacji — pracujesz z ludźmi, nie sam,
+  • koniec samotności — otaczasz się przedsiębiorcami, którzy rozumieją,
+  • koniec chaosu — planujesz tydzień raz, z jasnością.
 ---

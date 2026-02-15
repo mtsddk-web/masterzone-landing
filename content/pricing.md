@@ -1,13 +1,13 @@
 ---
 sectionTitle: "Prosty, Przejrzysty Cennik"
-sectionSubtitle: "Wszystko w jednej cenie — bez ukrytych kosztów"
+sectionSubtitle: "Wszystko w jednej cenie — bez ukrytych kosztów, bez umów"
 plans:
   - name: "MasterZone Community"
-    price: "7 DNI ZA DARMO"
-    period: "potem $14/msc"
-    description: "Natychmiastowy start: Planowanie + Bloki Pracy + Społeczność"
+    price: "97 PLN"
+    period: "/miesiąc"
+    description: "Pełen dostęp od pierwszego dnia: Bloki Pracy + Planowanie + Społeczność"
     features:
-      - "Codzienne bloki pracy głębokiej na żywo"
+      - "Codzienne bloki pracy na żywo (body doubling)"
       - "4 wspólne sesje planowania miesięcznie"
       - "Kurs Pracy Głębokiej"
       - "System planowania BLS"
@@ -19,8 +19,8 @@ plans:
       - "Dostęp do społeczności 24/7"
       - "Networking z przedsiębiorcami"
       - "Accountability partnerzy"
-    ctaText: "Testuję 7 dni za darmo"
+    ctaText: "Dołącz do MasterZone"
     ctaUrl: "https://www.skool.com/masterzone"
     featured: true
-    guarantee: "7 dni za darmo, potem $14/miesiąc. Możesz anulować w każdej chwili."
+    guarantee: "97 PLN/miesiąc. Bez umów. Anulujesz kiedy chcesz."
 ---
