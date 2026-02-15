@@ -117,9 +117,9 @@ export default function ThankYouPage() {
           )}
 
           <p className="text-xs text-blue-400">
-            💡 <strong>Pamiętaj:</strong> Masz 7 dni ZA DARMO, potem $14/miesiąc.
+            💡 <strong>Pamiętaj:</strong> 97 PLN/miesiąc. 30-dniowa gwarancja zwrotu pieniędzy.
             <br />
-            Możesz anulować w każdej chwili bez pytań.
+            Bez umów — anulujesz kiedy chcesz.
           </p>
         </div>
       </div>

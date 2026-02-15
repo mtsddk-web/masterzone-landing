@@ -138,7 +138,7 @@ export default function ExitIntentPopup() {
                 onChange={(e) => setSelectedReason(e.target.value)}
                 className="mt-1 mr-3"
               />
-              <span className="text-gray-800">Za drogo - $14/msc to za dużo</span>
+              <span className="text-gray-800">Za drogo - 97 PLN/msc to za dużo</span>
             </label>
 
             <label className="flex items-start p-3 bg-gray-50 rounded-lg hover:bg-gray-100 cursor-pointer transition-colors border-2 border-transparent has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50">
@@ -214,7 +214,7 @@ export default function ExitIntentPopup() {
               onClick={handleCTA}
               className="block w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white text-center font-bold py-3 px-6 rounded-lg transition-all cursor-pointer"
             >
-              Jednak chcę spróbować 7 dni ZA DARMO →
+              Jednak chcę dołączyć do MasterZone →
             </button>
           </div>
 
