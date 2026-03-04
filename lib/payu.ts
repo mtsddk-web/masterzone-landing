@@ -36,6 +36,12 @@ interface PayUOrder {
       value?: string; // token dla recurring
     };
   };
+  recurring?: 'STANDARD'; // Włącza recurring payments
+  recurringPayment?: {
+    firstPayment?: string; // Data pierwszej płatności w formacie YYYY-MM-DD
+    frequency?: 'DAILY' | 'WEEKLY' | 'MONTHLY' | 'QUARTERLY' | 'YEARLY';
+    expirationDate?: string; // Data zakończenia subskrypcji (opcjonalne)
+  };
 }
 
 interface PayUOrderResponse {

@@ -20,6 +20,16 @@ export async function POST(request: Request) {
     const forwardedFor = request.headers.get('x-forwarded-for');
     const customerIp = forwardedFor ? forwardedFor.split(',')[0].trim() : '127.0.0.1';
 
+    // Oblicz daty dla recurring (pierwsza płatność za 30 dni, potem co miesiąc)
+    const now = new Date();
+    const firstRecurringDate = new Date(now);
+
+    // Jeśli trial - pierwsza recurring płatność za `trial` dni, inaczej za 30 dni
+    const daysUntilFirstRecurring = trial && trial > 0 ? trial : 30;
+    firstRecurringDate.setDate(firstRecurringDate.getDate() + daysUntilFirstRecurring);
+
+    const firstRecurringDateStr = firstRecurringDate.toISOString().split('T')[0]; // YYYY-MM-DD
+
     // Przygotuj zamówienie PayU
     const order: PayUOrder = {
       notifyUrl: `${origin}/api/payu/webhook`,
@@ -38,6 +48,12 @@ export async function POST(request: Request) {
           quantity: '1',
         },
       ],
+      // Recurring payments - PayU automatycznie pobiera 97 PLN co miesiąc
+      recurring: 'STANDARD',
+      recurringPayment: {
+        firstPayment: firstRecurringDateStr,
+        frequency: 'MONTHLY',
+      },
     };
 
     // Dodaj dane kupującego jeśli podano email

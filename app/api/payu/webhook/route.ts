@@ -61,7 +61,9 @@ async function upsertSubscription(
   email: string,
   status: string,
   totalAmount: string,
-  metadata: Record<string, any>
+  metadata: Record<string, any>,
+  cardToken?: string,
+  isRecurring: boolean = false
 ) {
   if (!supabaseAdmin) {
     console.warn('Supabase not configured - skipping subscription upsert');
@@ -71,31 +73,45 @@ async function upsertSubscription(
   // PayU orderId jako customer_id (PayU nie ma stałego customer ID jak Stripe)
   const customerId = `payu_${orderId}`;
 
+  const subscriptionData: any = {
+    stripe_customer_id: customerId, // używamy tego pola dla PayU order ID
+    stripe_subscription_id: null, // PayU nie ma subscription ID
+    email,
+    status: status === 'COMPLETED' ? 'active' : status === 'PENDING' ? 'trialing' : 'canceled',
+    price_id: 'payu_masterzone_97pln', // custom ID dla PayU
+    currency: 'pln',
+    amount: parseInt(totalAmount, 10),
+    payment_provider: 'payu',
+    payu_order_id: orderId,
+    updated_at: new Date().toISOString(),
+  };
+
+  // Dla pierwszej płatności (nie recurring) - ustaw period start/end i trial
+  if (!isRecurring) {
+    subscriptionData.current_period_start = new Date().toISOString();
+    subscriptionData.current_period_end = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(); // +30 dni
+    subscriptionData.trial_start = metadata.trial_days > 0 ? new Date().toISOString() : null;
+    subscriptionData.trial_end = metadata.trial_days > 0
+      ? new Date(Date.now() + metadata.trial_days * 24 * 60 * 60 * 1000).toISOString()
+      : null;
+    subscriptionData.checkout_session_id = orderId;
+    subscriptionData.utm_source = metadata.utm_source || null;
+    subscriptionData.utm_medium = metadata.utm_medium || null;
+    subscriptionData.utm_campaign = metadata.utm_campaign || null;
+  } else {
+    // Recurring payment - extend period
+    subscriptionData.current_period_start = new Date().toISOString();
+    subscriptionData.current_period_end = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString();
+  }
+
+  // Zapisz card token (jeśli dostępny)
+  if (cardToken) {
+    subscriptionData.payu_card_token = cardToken;
+  }
+
   const { error } = await supabaseAdmin
     .from('subscriptions')
-    .upsert(
-      {
-        stripe_customer_id: customerId, // używamy tego pola dla PayU order ID
-        stripe_subscription_id: null, // PayU nie ma subscription ID
-        email,
-        status: status === 'COMPLETED' ? 'active' : status === 'PENDING' ? 'trialing' : 'canceled',
-        price_id: 'payu_masterzone_97pln', // custom ID dla PayU
-        currency: 'pln',
-        amount: parseInt(totalAmount, 10),
-        current_period_start: new Date().toISOString(),
-        current_period_end: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(), // +30 dni
-        trial_start: metadata.trial_days > 0 ? new Date().toISOString() : null,
-        trial_end: metadata.trial_days > 0
-          ? new Date(Date.now() + metadata.trial_days * 24 * 60 * 60 * 1000).toISOString()
-          : null,
-        checkout_session_id: orderId,
-        utm_source: metadata.utm_source || null,
-        utm_medium: metadata.utm_medium || null,
-        utm_campaign: metadata.utm_campaign || null,
-        updated_at: new Date().toISOString(),
-      },
-      { onConflict: 'stripe_customer_id' }
-    );
+    .upsert(subscriptionData, { onConflict: 'stripe_customer_id' });
 
   if (error) {
     console.error('Supabase upsert error:', error);
@@ -133,9 +149,21 @@ export async function POST(request: Request) {
   const status = order.status; // COMPLETED, PENDING, CANCELED
   const totalAmount = order.totalAmount;
 
-  console.log(`PayU webhook: order ${orderId}, status: ${status}, email: ${email}`);
+  // Wyciągnij card token (dla recurring payments)
+  let cardToken: string | undefined;
+  if (order.payMethod?.type === 'CARD_TOKEN') {
+    cardToken = order.payMethod.value; // masked card number lub token
+  }
 
-  // Dekoduj metadata z extOrderId
+  // Rozróżnij: first payment vs recurring payment
+  // Recurring payment NIE ma extOrderId (metadata)
+  const isRecurring = !order.extOrderId;
+
+  console.log(
+    `PayU webhook: order ${orderId}, status: ${status}, email: ${email}, recurring: ${isRecurring}, cardToken: ${cardToken || 'none'}`
+  );
+
+  // Dekoduj metadata z extOrderId (tylko dla first payment)
   let metadata: any = {
     utm_source: null,
     utm_medium: null,
@@ -153,11 +181,11 @@ export async function POST(request: Request) {
   }
 
   // Zapisz w Supabase
-  await upsertSubscription(orderId, email, status, totalAmount, metadata);
+  await upsertSubscription(orderId, email, status, totalAmount, metadata, cardToken, isRecurring);
 
   // Tag w MailerLite tylko dla COMPLETED
   if (status === 'COMPLETED') {
-    await tagMailerLite(email, 'paid');
+    await tagMailerLite(email, isRecurring ? 'renewed' : 'paid');
   }
 
   // PayU wymaga odpowiedzi 200 OK
