@@ -1,7 +1,6 @@
 "use client";
 
-import { useEmailGate } from "@/hooks/useEmailGate";
-import EmailGateModal from "./EmailGateModal";
+import { useCheckout } from "@/hooks/useCheckout";
 
 interface Plan {
   name: string;
@@ -29,17 +28,11 @@ export default function Pricing({
   urgencyAlert,
   plans
 }: PricingProps) {
-  const { isEmailGateOpen, openEmailGate, closeEmailGate, handleEmailSuccess } = useEmailGate();
+  const { goToCheckout } = useCheckout();
 
   return (
-    <>
-      <EmailGateModal
-        isOpen={isEmailGateOpen}
-        onClose={closeEmailGate}
-        onSuccess={handleEmailSuccess}
-      />
-      <section className="section-padding bg-white">
-        <div className="container-custom">
+    <section className="section-padding bg-white">
+      <div className="container-custom">
         {/* Section Header */}
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-4 text-gray-900">
@@ -105,7 +98,7 @@ export default function Pricing({
 
                 {/* CTA Button */}
                 <button
-                  onClick={() => openEmailGate(`pricing_${plan.name.toLowerCase().replace(/\s/g, '_')}`)}
+                  onClick={() => goToCheckout(`pricing_${plan.name.toLowerCase().replace(/\s/g, '_')}`)}
                   className="block w-full bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white text-center font-bold py-4 px-8 rounded-lg transition-all duration-300 text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 border-2 border-yellow-300 cursor-pointer"
                 >
                   {plan.ctaText}
@@ -130,6 +123,5 @@ export default function Pricing({
         </div>
       </div>
     </section>
-    </>
   );
 }

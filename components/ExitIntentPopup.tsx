@@ -1,15 +1,23 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { useEmailGate } from "@/hooks/useEmailGate";
 import { trackEvent } from "./FacebookPixel";
 import EmailGateModal from "./EmailGateModal";
 
 export default function ExitIntentPopup() {
-  const { isEmailGateOpen, openEmailGate, closeEmailGate, handleEmailSuccess } = useEmailGate();
+  const router = useRouter();
+  const { isEmailGateOpen, openEmailGate, closeEmailGate } = useEmailGate();
   const [isVisible, setIsVisible] = useState(false);
   const [hasShown, setHasShown] = useState(false);
   const [isReady, setIsReady] = useState(false);
+
+  // Custom success handler: after email captured, redirect to checkout
+  const handleEmailSuccess = () => {
+    closeEmailGate();
+    router.push('/checkout');
+  };
 
   useEffect(() => {
     // Check if popup was already shown in this session
@@ -78,7 +86,6 @@ export default function ExitIntentPopup() {
       });
     } catch (error) {
       console.error('Failed to send exit survey:', error);
-      // Nie blokuj UI nawet jeśli webhook nie działa
     }
 
     setIsVisible(false);

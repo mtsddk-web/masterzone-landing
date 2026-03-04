@@ -1,7 +1,6 @@
 "use client";
 
-import { useEmailGate } from "@/hooks/useEmailGate";
-import EmailGateModal from "./EmailGateModal";
+import { useCheckout } from "@/hooks/useCheckout";
 
 interface ContentBlock {
   icon: string;
@@ -30,16 +29,10 @@ export default function JoinSection({
   guarantee,
   stats
 }: JoinSectionProps) {
-  const { isEmailGateOpen, openEmailGate, closeEmailGate, handleEmailSuccess } = useEmailGate();
+  const { goToCheckout } = useCheckout();
 
   return (
-    <>
-      <EmailGateModal
-        isOpen={isEmailGateOpen}
-        onClose={closeEmailGate}
-        onSuccess={handleEmailSuccess}
-      />
-      <section className="section-padding bg-gradient-to-br from-navy via-blue-700 to-blue-900 text-white">
+    <section className="section-padding bg-gradient-to-br from-navy via-blue-700 to-blue-900 text-white">
       <div className="container-custom">
         {/* Header */}
         <div className="text-center mb-16">
@@ -74,10 +67,10 @@ export default function JoinSection({
           </p>
         </div>
 
-        {/* CTA - Direct to Skool */}
+        {/* CTA - Direct to Checkout */}
         <div className="text-center mb-8">
           <button
-            onClick={() => openEmailGate("join_section_cta_button")}
+            onClick={() => goToCheckout("join_section_cta_button")}
             className="inline-block bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white font-bold py-4 px-12 rounded-lg transition-all duration-300 text-lg shadow-xl hover:shadow-2xl transform hover:-translate-y-1 border-2 border-yellow-300 cursor-pointer"
           >
             {ctaText}
@@ -101,6 +94,5 @@ export default function JoinSection({
         )}
       </div>
     </section>
-    </>
   );
 }

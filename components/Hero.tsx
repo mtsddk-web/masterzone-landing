@@ -1,8 +1,7 @@
 "use client";
 
 import Script from "next/script";
-import { useEmailGate } from "@/hooks/useEmailGate";
-import EmailGateModal from "./EmailGateModal";
+import { useCheckout } from "@/hooks/useCheckout";
 
 interface HeroProps {
   preheadline?: string;
@@ -29,7 +28,7 @@ export default function Hero({
   securityInfo,
   skoolInfo
 }: HeroProps) {
-  const { isEmailGateOpen, openEmailGate, closeEmailGate, handleEmailSuccess } = useEmailGate(ctaUrl);
+  const { goToCheckout } = useCheckout();
 
   // Render headline with highlighted key numbers
   const renderHighlightedHeadline = () => {
@@ -51,12 +50,6 @@ export default function Hero({
   };
 
   return (
-    <>
-      <EmailGateModal
-        isOpen={isEmailGateOpen}
-        onClose={closeEmailGate}
-        onSuccess={handleEmailSuccess}
-      />
     <section className="bg-gradient-to-br from-navy via-blue-700 to-blue-900 text-white py-8 md:py-16 lg:py-20 flex items-center relative">
       {/* Logo - lewy górny róg (tylko desktop) */}
       <div className="hidden md:block absolute top-6 left-6 z-10">
@@ -130,10 +123,10 @@ export default function Hero({
           </div>
         )}
 
-        {/* CTA Button - Opens Email Gate */}
+        {/* CTA Button - Goes to Checkout */}
         <div className="mb-6 md:mb-8">
           <button
-            onClick={() => openEmailGate("hero_primary_button")}
+            onClick={() => goToCheckout("hero_primary_button")}
             id="skool-cta"
             className="inline-block bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white font-bold py-3 px-8 md:py-4 md:px-12 rounded-lg transition-all duration-300 text-base md:text-lg shadow-xl hover:shadow-2xl transform hover:-translate-y-1 border-2 border-yellow-300 cursor-pointer"
           >
@@ -176,6 +169,5 @@ export default function Hero({
         )}
       </div>
     </section>
-    </>
   );
 }
