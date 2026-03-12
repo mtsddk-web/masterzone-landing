@@ -66,8 +66,41 @@ export async function POST(request: NextRequest) {
 
     if (!response.ok) {
       if (response.status === 422 || response.status === 409) {
+        // Subscriber exists — try to reactivate and add to group
+        const existingRes = await fetch(
+          `https://connect.mailerlite.com/api/subscribers/${email}`,
+          {
+            headers: {
+              Authorization: `Bearer ${apiKey}`,
+              Accept: "application/json",
+            },
+          }
+        );
+        if (existingRes.ok) {
+          const existing = await existingRes.json();
+          const subId = existing.data?.id;
+          if (subId) {
+            await fetch(
+              `https://connect.mailerlite.com/api/subscribers/${subId}`,
+              {
+                method: "PUT",
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${apiKey}`,
+                  Accept: "application/json",
+                },
+                body: JSON.stringify({
+                  status: "active",
+                  groups: [WORKSHOP_GROUP_ID],
+                  fields: { name: name },
+                }),
+              }
+            );
+            console.log("Workshop re-signup:", email);
+          }
+        }
         return NextResponse.json(
-          { success: true, message: "Ten email jest już zapisany" },
+          { success: true, message: "Zapisano pomyślnie" },
           { status: 200, headers: corsHeaders }
         );
       }
