@@ -15,7 +15,8 @@ export async function OPTIONS() {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { name, email } = body;
+    const { name, email, ref } = body;
+    const source = ref || "direct";
 
     if (!name || !email) {
       return NextResponse.json(
@@ -46,7 +47,7 @@ export async function POST(request: NextRequest) {
       groups: [WORKSHOP_GROUP_ID],
       fields: {
         name: name,
-        source: "Landing - Warsztat Sabotazysci Mentalni",
+        source: `Warsztat Sabotazysci - ref:${source}`,
         signup_date: new Date().toISOString(),
       },
     };
