@@ -2,22 +2,13 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useEmailGate } from "@/hooks/useEmailGate";
 import { trackEvent } from "./FacebookPixel";
-import EmailGateModal from "./EmailGateModal";
 
 export default function ExitIntentPopup() {
   const router = useRouter();
-  const { isEmailGateOpen, openEmailGate, closeEmailGate } = useEmailGate();
   const [isVisible, setIsVisible] = useState(false);
   const [hasShown, setHasShown] = useState(false);
   const [isReady, setIsReady] = useState(false);
-
-  // Custom success handler: after email captured, redirect to checkout
-  const handleEmailSuccess = () => {
-    closeEmailGate();
-    router.push('/checkout');
-  };
 
   useEffect(() => {
     // Check if popup was already shown in this session
@@ -93,18 +84,14 @@ export default function ExitIntentPopup() {
 
   const handleCTA = () => {
     setIsVisible(false);
-    openEmailGate("exit_intent_popup_cta_after_survey");
+    trackEvent("InitiateCheckout", { source: "exit_intent_popup_cta" });
+    router.push("/checkout");
   };
 
   if (!isVisible) return null;
 
   return (
     <>
-      <EmailGateModal
-        isOpen={isEmailGateOpen}
-        onClose={closeEmailGate}
-        onSuccess={handleEmailSuccess}
-      />
       <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/70 backdrop-blur-sm animate-fade-in">
       {/* Popup Container */}
       <div className="relative bg-white rounded-2xl shadow-2xl max-w-lg mx-4 p-8 md:p-10 animate-scale-in">

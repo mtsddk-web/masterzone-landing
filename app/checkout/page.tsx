@@ -17,10 +17,12 @@ function CheckoutContent() {
 
   const [isLoading, setIsLoading] = useState(false);
   const [selectedProvider, setSelectedProvider] = useState<"stripe" | "payu" | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   const handleCheckout = async (provider: "stripe" | "payu") => {
     setIsLoading(true);
     setSelectedProvider(provider);
+    setError(null);
 
     trackEvent("InitiateCheckout", {
       value: 97,
@@ -51,12 +53,14 @@ function CheckoutContent() {
       if (data.url) {
         window.location.href = data.url;
       } else {
-        console.error("No checkout URL returned");
+        console.error("No checkout URL returned:", data);
+        setError("Nie udało się utworzyć płatności. Spróbuj ponownie lub wybierz inną metodę.");
         setIsLoading(false);
         setSelectedProvider(null);
       }
-    } catch (error) {
-      console.error("Checkout error:", error);
+    } catch (err) {
+      console.error("Checkout error:", err);
+      setError("Wystąpił błąd połączenia. Sprawdź internet i spróbuj ponownie.");
       setIsLoading(false);
       setSelectedProvider(null);
     }
@@ -137,6 +141,13 @@ function CheckoutContent() {
             </ul>
           </div>
 
+          {/* Error message */}
+          {error && (
+            <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+              <p className="text-sm text-red-700 text-center">{error}</p>
+            </div>
+          )}
+
           {/* Payment method selection */}
           <div className="mb-6">
             <h3 className="text-sm font-semibold text-gray-700 mb-3 text-center">Wybierz metodę płatności:</h3>
@@ -167,14 +178,17 @@ function CheckoutContent() {
               {/* PayU - BLIK/Przelewy24 */}
               <button
                 onClick={() => handleCheckout("payu")}
-                disabled={isLoading}
+                disabled={isLoading || trialDays > 0}
+                title={trialDays > 0 ? "Darmowy trial dostępny tylko z kartą" : undefined}
                 className={`
                   flex flex-col items-center justify-center p-4 border-2 rounded-xl transition-all duration-200
-                  ${isLoading && selectedProvider === "payu"
-                    ? "border-green-500 bg-green-50"
-                    : "border-gray-200 hover:border-green-400 hover:bg-green-50"
+                  ${trialDays > 0
+                    ? "border-gray-200 bg-gray-50 opacity-60 cursor-not-allowed"
+                    : isLoading && selectedProvider === "payu"
+                      ? "border-green-500 bg-green-50"
+                      : "border-gray-200 hover:border-green-400 hover:bg-green-50"
                   }
-                  disabled:opacity-50 disabled:cursor-not-allowed
+                  disabled:cursor-not-allowed
                 `}
               >
                 <svg className="w-8 h-8 mb-2 text-green-600" fill="currentColor" viewBox="0 0 24 24">
@@ -182,6 +196,9 @@ function CheckoutContent() {
                 </svg>
                 <span className="font-semibold text-sm text-gray-800">BLIK / Przelew</span>
                 <span className="text-xs text-gray-500 mt-1">Przelewy24, mBank</span>
+                {trialDays > 0 && (
+                  <span className="text-xs text-gray-500 mt-2">Niedostępne z trial</span>
+                )}
                 {isLoading && selectedProvider === "payu" && (
                   <span className="text-xs text-green-600 mt-2">Przekierowuję...</span>
                 )}

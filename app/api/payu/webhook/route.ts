@@ -1,30 +1,51 @@
 import { NextResponse } from 'next/server';
+import { createHash } from 'crypto';
 import { supabaseAdmin } from '@/lib/supabase-server';
 import { getPayU } from '@/lib/payu';
 
 /**
  * PayU Webhook - odbiera notyfikacje o statusie płatności
  *
- * PayU wysyła POST z JSON body:
- * {
- *   "order": {
- *     "orderId": "...",
- *     "extOrderId": "...",
- *     "orderCreateDate": "...",
- *     "notifyUrl": "...",
- *     "customerIp": "...",
- *     "merchantPosId": "...",
- *     "description": "...",
- *     "currencyCode": "PLN",
- *     "totalAmount": "9700",
- *     "buyer": { "email": "...", ... },
- *     "products": [...],
- *     "status": "COMPLETED" | "PENDING" | "CANCELED"
- *   },
- *   "localReceiptDateTime": "...",
- *   "properties": [...]
- * }
+ * Weryfikacja podpisu: PayU wysyła header OpenPayu-Signature
+ * Format: sender=checkout;signature=HASH;algorithm=MD5;content=DOCUMENT
+ * Signature = MD5(body + secondKey)
+ * secondKey = PAYU_CLIENT_SECRET
  */
+
+function verifyPayUSignature(body: string, signatureHeader: string | null): boolean {
+  const secondKey = process.env.PAYU_CLIENT_SECRET;
+  if (!secondKey) {
+    console.warn('PAYU_CLIENT_SECRET not set - skipping signature verification');
+    return true;
+  }
+
+  if (!signatureHeader) {
+    console.error('Missing OpenPayu-Signature header');
+    return false;
+  }
+
+  // Parse header: sender=checkout;signature=abc123;algorithm=MD5;content=DOCUMENT
+  const parts: Record<string, string> = {};
+  signatureHeader.split(';').forEach(part => {
+    const [key, value] = part.split('=');
+    if (key && value) parts[key.trim()] = value.trim();
+  });
+
+  const expectedSignature = parts['signature'];
+  const algorithm = parts['algorithm'] || 'MD5';
+
+  if (!expectedSignature) {
+    console.error('No signature found in OpenPayu-Signature header');
+    return false;
+  }
+
+  // Calculate: MD5(body + secondKey)
+  const calculated = createHash(algorithm.toLowerCase())
+    .update(body + secondKey)
+    .digest('hex');
+
+  return calculated === expectedSignature;
+}
 
 async function tagMailerLite(email: string, status: string) {
   const apiKey = process.env.MAILERLITE_API_KEY;
@@ -120,6 +141,13 @@ async function upsertSubscription(
 
 export async function POST(request: Request) {
   const body = await request.text();
+
+  // Verify PayU signature (MD5 of body + secondKey)
+  const signatureHeader = request.headers.get('openpayu-signature');
+  if (!verifyPayUSignature(body, signatureHeader)) {
+    console.error('PayU webhook signature verification failed');
+    return NextResponse.json({ error: 'Invalid signature' }, { status: 401 });
+  }
 
   // PayU wysyła notyfikacje jako application/x-www-form-urlencoded z polem "order"
   // lub jako JSON - sprawdzamy Content-Type

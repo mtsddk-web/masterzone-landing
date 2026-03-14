@@ -8,6 +8,7 @@ import Hotjar from "@/components/Hotjar";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://rozproszenie.masterzone.edu.pl"),
   title: "MasterZone - Koniec z Rozproszeniem",
   description: "Program pomoże Ci odzyskać fokus, produktywność i kontrolę nad czasem. Dołącz do społeczności MasterZone i zacznij pracować głęboko.",
   keywords: "fokus, produktywność, rozproszenie, koncentracja, deep work, praca głęboka",

@@ -83,3 +83,19 @@ collections:
           - {label: "Podtytuł", name: "subheadline", widget: "text"}
           - {label: "Tekst Przycisku", name: "buttonText", widget: "string"}
           - {label: "Link Przycisku", name: "buttonUrl", widget: "string"}
+
+  - name: "blog"
+    label: "Blog"
+    folder: "content/blog"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Tytul", name: "title", widget: "string"}
+      - {label: "Slug", name: "slug", widget: "string"}
+      - {label: "Data publikacji", name: "publishedAt", widget: "datetime", format: "YYYY-MM-DD"}
+      - {label: "Autor", name: "author", widget: "string", default: "Mateusz Dudek"}
+      - {label: "Obrazek", name: "image", widget: "image", required: false}
+      - {label: "Opis SEO", name: "description", widget: "text"}
+      - {label: "Kategoria", name: "category", widget: "select", options: ["Produktywnosc", "Deep Work", "Praca Zdalna", "Nawyki", "MasterZone"]}
+      - {label: "Tagi", name: "tags", widget: "list"}
+      - {label: "Tresc", name: "body", widget: "markdown"}
