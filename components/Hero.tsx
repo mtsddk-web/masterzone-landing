@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Script from "next/script";
 import { useCheckout } from "@/hooks/useCheckout";
 
@@ -11,6 +12,7 @@ interface HeroProps {
   ctaUrl: string;
   videoMediaId?: string;
   videoAspectRatio?: string;
+  videoFallbackImage?: string;
   trialInfo?: string;
   securityInfo?: string;
   skoolInfo?: string;
@@ -24,11 +26,25 @@ export default function Hero({
   ctaUrl,
   videoMediaId,
   videoAspectRatio = "1.6",
+  videoFallbackImage = "/images/hero-fallback.jpg",
   trialInfo,
   securityInfo,
   skoolInfo
 }: HeroProps) {
   const { goToCheckout } = useCheckout();
+  const [videoFailed, setVideoFailed] = useState(false);
+
+  useEffect(() => {
+    if (!videoMediaId) return;
+    // Check if Wistia player loaded after 6 seconds
+    const timer = setTimeout(() => {
+      const player = document.querySelector(`wistia-player[media-id='${videoMediaId}']`);
+      if (!player || !player.shadowRoot?.querySelector("video")) {
+        setVideoFailed(true);
+      }
+    }, 6000);
+    return () => clearTimeout(timer);
+  }, [videoMediaId]);
 
   // Render headline with highlighted key numbers
   const renderHighlightedHeadline = () => {
@@ -81,39 +97,63 @@ export default function Hero({
           </p>
         )}
 
-        {/* Video Player */}
+        {/* Video Player with fallback */}
         {videoMediaId && (
-          <>
-            {/* Preload Wistia scripts for faster LCP */}
-            <link rel="preconnect" href="https://fast.wistia.com" />
-            <link rel="dns-prefetch" href="https://fast.wistia.com" />
-            <Script
-              src="https://fast.wistia.com/player.js"
-              strategy="beforeInteractive"
-            />
-            <Script
-              src={`https://fast.wistia.com/embed/${videoMediaId}.js`}
-              strategy="beforeInteractive"
-              type="module"
-            />
-            <div className="max-w-4xl mx-auto mb-4 md:mb-8 px-4">
-              <div className="rounded-lg md:rounded-2xl overflow-hidden shadow-2xl">
-                <div dangerouslySetInnerHTML={{
-                  __html: `
-                    <style>
-                      wistia-player[media-id='${videoMediaId}']:not(:defined) {
-                        background: center / contain no-repeat url('https://fast.wistia.com/embed/medias/${videoMediaId}/swatch');
-                        display: block;
-                        filter: blur(5px);
-                        padding-top: ${(100 / parseFloat(videoAspectRatio)).toFixed(2)}%;
-                      }
-                    </style>
-                    <wistia-player media-id="${videoMediaId}" aspect="${videoAspectRatio}" preload="metadata"></wistia-player>
-                  `
-                }} />
-              </div>
+          <div className="max-w-4xl mx-auto mb-4 md:mb-8 px-4">
+            <div className="rounded-lg md:rounded-2xl overflow-hidden shadow-2xl">
+              {videoFailed ? (
+                /* Fallback image when Wistia video fails to load */
+                <div className="relative" style={{ paddingTop: `${(100 / parseFloat(videoAspectRatio)).toFixed(2)}%` }}>
+                  <img
+                    src={videoFallbackImage}
+                    alt="MasterZone — wspólna praca online"
+                    className="absolute inset-0 w-full h-full object-cover"
+                    onError={(e) => {
+                      // If fallback image also fails, show gradient placeholder
+                      const target = e.target as HTMLImageElement;
+                      target.style.display = "none";
+                      target.parentElement!.classList.add("bg-gradient-to-br", "from-blue-800", "to-blue-950");
+                      target.parentElement!.innerHTML = `
+                        <div class="absolute inset-0 flex items-center justify-center text-white/60">
+                          <div class="text-center">
+                            <div class="text-6xl mb-4">🎯</div>
+                            <p class="text-lg font-semibold">MasterZone — wspólna praca online</p>
+                          </div>
+                        </div>
+                      `;
+                    }}
+                  />
+                </div>
+              ) : (
+                <>
+                  <link rel="preconnect" href="https://fast.wistia.com" />
+                  <link rel="dns-prefetch" href="https://fast.wistia.com" />
+                  <Script
+                    src="https://fast.wistia.com/player.js"
+                    strategy="beforeInteractive"
+                  />
+                  <Script
+                    src={`https://fast.wistia.com/embed/${videoMediaId}.js`}
+                    strategy="beforeInteractive"
+                    type="module"
+                  />
+                  <div dangerouslySetInnerHTML={{
+                    __html: `
+                      <style>
+                        wistia-player[media-id='${videoMediaId}']:not(:defined) {
+                          background: center / contain no-repeat url('https://fast.wistia.com/embed/medias/${videoMediaId}/swatch');
+                          display: block;
+                          filter: blur(5px);
+                          padding-top: ${(100 / parseFloat(videoAspectRatio)).toFixed(2)}%;
+                        }
+                      </style>
+                      <wistia-player media-id="${videoMediaId}" aspect="${videoAspectRatio}" preload="metadata"></wistia-player>
+                    `
+                  }} />
+                </>
+              )}
             </div>
-          </>
+          </div>
         )}
 
         {/* Trial Info */}

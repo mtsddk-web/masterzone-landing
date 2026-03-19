@@ -148,62 +148,29 @@ function CheckoutContent() {
             </div>
           )}
 
-          {/* Payment method selection */}
+          {/* Payment */}
           <div className="mb-6">
-            <h3 className="text-sm font-semibold text-gray-700 mb-3 text-center">Wybierz metodę płatności:</h3>
-            <div className="grid grid-cols-2 gap-4">
-              {/* Stripe - Karty */}
-              <button
-                onClick={() => handleCheckout("stripe")}
-                disabled={isLoading}
-                className={`
-                  flex flex-col items-center justify-center p-4 border-2 rounded-xl transition-all duration-200
-                  ${isLoading && selectedProvider === "stripe"
-                    ? "border-orange-500 bg-orange-50"
-                    : "border-gray-200 hover:border-orange-400 hover:bg-orange-50"
-                  }
-                  disabled:opacity-50 disabled:cursor-not-allowed
-                `}
-              >
-                <svg className="w-8 h-8 mb-2 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M0 8v8c0 1.1.9 2 2 2h20c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2H2c-1.1 0-2 .9-2 2zm2 0h20v2H2V8zm0 8h20v-4H2v4z"/>
-                </svg>
-                <span className="font-semibold text-sm text-gray-800">Karta płatnicza</span>
-                <span className="text-xs text-gray-500 mt-1">Visa, Mastercard</span>
-                {isLoading && selectedProvider === "stripe" && (
-                  <span className="text-xs text-orange-600 mt-2">Przekierowuję...</span>
-                )}
-              </button>
-
-              {/* PayU - BLIK/Przelewy24 */}
-              <button
-                onClick={() => handleCheckout("payu")}
-                disabled={isLoading || trialDays > 0}
-                title={trialDays > 0 ? "Darmowy trial dostępny tylko z kartą" : undefined}
-                className={`
-                  flex flex-col items-center justify-center p-4 border-2 rounded-xl transition-all duration-200
-                  ${trialDays > 0
-                    ? "border-gray-200 bg-gray-50 opacity-60 cursor-not-allowed"
-                    : isLoading && selectedProvider === "payu"
-                      ? "border-green-500 bg-green-50"
-                      : "border-gray-200 hover:border-green-400 hover:bg-green-50"
-                  }
-                  disabled:cursor-not-allowed
-                `}
-              >
-                <svg className="w-8 h-8 mb-2 text-green-600" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-5-9h10v2H7z"/>
-                </svg>
-                <span className="font-semibold text-sm text-gray-800">BLIK / Przelew</span>
-                <span className="text-xs text-gray-500 mt-1">Przelewy24, mBank</span>
-                {trialDays > 0 && (
-                  <span className="text-xs text-gray-500 mt-2">Niedostępne z trial</span>
-                )}
-                {isLoading && selectedProvider === "payu" && (
-                  <span className="text-xs text-green-600 mt-2">Przekierowuję...</span>
-                )}
-              </button>
-            </div>
+            <button
+              onClick={() => handleCheckout("stripe")}
+              disabled={isLoading}
+              className={`
+                w-full flex flex-col items-center justify-center p-5 border-2 rounded-xl transition-all duration-200
+                ${isLoading && selectedProvider === "stripe"
+                  ? "border-orange-500 bg-orange-50"
+                  : "border-gray-200 hover:border-orange-400 hover:bg-orange-50"
+                }
+                disabled:opacity-50 disabled:cursor-not-allowed
+              `}
+            >
+              <svg className="w-8 h-8 mb-2 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M0 8v8c0 1.1.9 2 2 2h20c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2H2c-1.1 0-2 .9-2 2zm2 0h20v2H2V8zm0 8h20v-4H2v4z"/>
+              </svg>
+              <span className="font-semibold text-sm text-gray-800">Zapłać kartą</span>
+              <span className="text-xs text-gray-500 mt-1">Visa, Mastercard</span>
+              {isLoading && selectedProvider === "stripe" && (
+                <span className="text-xs text-orange-600 mt-2">Przekierowuję...</span>
+              )}
+            </button>
           </div>
 
           {/* Trust signals */}
