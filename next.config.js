@@ -1,6 +1,18 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  async rewrites() {
+    return [
+      {
+        source: '/sabotazysci-mentalni/co-dalej',
+        destination: '/sabotazysci-mentalni/co-dalej/index.html',
+      },
+      {
+        source: '/sabotazysci-mentalni/co-dalej/',
+        destination: '/sabotazysci-mentalni/co-dalej/index.html',
+      },
+    ];
+  },
   images: {
     remotePatterns: [
       {
