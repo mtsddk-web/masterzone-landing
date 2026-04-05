@@ -11,6 +11,6 @@ blocks:
 contrastText: "Jutro możesz znów siedzieć sam, scrollować telefon i obiecywać sobie że 'od poniedziałku się ogarnę'. Albo możesz dołączyć do ludzi, którzy już to zrobili."
 ctaText: "Dołącz do MasterZone — 97 PLN/miesiąc"
 ctaUrl: "https://www.skool.com/masterzone"
-guarantee: "Bez umów. Anulujesz kiedy chcesz. 92% członków zostaje — bo to działa."
-stats: "40+ freelancerów i soloprzedsiębiorców pracuje razem codziennie. Dołącz i sprawdź, jak to jest nie pracować sam."
+guarantee: "97 PLN/miesiąc. Bez umów. Anulujesz kiedy chcesz. 30-dniowa gwarancja zwrotu. 92% członków zostaje — bo to działa."
+stats: "39 freelancerów i soloprzedsiębiorców pracuje razem codziennie. Dołącz i sprawdź, jak to jest nie pracować sam."
 ---

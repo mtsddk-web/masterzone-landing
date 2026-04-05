@@ -1,7 +1,7 @@
 ---
 sectionTitle: "Społeczność, Która Naprawdę Pracuje Razem"
 stats:
-  - number: "40+"
+  - number: "39"
     label: "Freelancerów i Soloprzedsiębiorców"
     icon: "👥"
   - number: "2,400+"
@@ -14,10 +14,10 @@ stats:
     label: "Miesięcznie — Mniej Niż Coworking"
     icon: "💰"
 highlights:
-  - "40+ osób pracuje razem codziennie — koniec samotności pracy z domu"
+  - "39 osób pracuje razem codziennie — koniec samotności pracy z domu"
   - "20+ bloków pracy na żywo każdego miesiąca (body doubling)"
   - "92% retention — ludzie zostają, bo to naprawdę działa"
   - "82% pracujących zdalnie czuje izolację — tu jej nie ma"
 footer: "To nie kolejna grupa na Facebooku. To ludzie, którzy codziennie włączają kamerę i pracują razem."
-note: "40+ aktywnych członków | Codzienne bloki pracy | 92% retention | Body doubling na żywo"
+note: "39 aktywnych członków | Codzienne bloki pracy | 92% retention | Body doubling na żywo"
 ---
