@@ -24,13 +24,24 @@ export const metadata: Metadata = {
     apple: '/apple-touch-icon.png',
     shortcut: '/favicon.ico',
   },
+  alternates: {
+    canonical: "https://rozproszenie.masterzone.edu.pl",
+  },
   openGraph: {
     title: "MasterZone - Koniec z Rozproszeniem",
     description: "Odzyskaj fokus i produktywność",
-    url: "https://masterzone.edu.pl",
+    url: "https://rozproszenie.masterzone.edu.pl",
     siteName: "MasterZone",
     locale: "pl_PL",
     type: "website",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "MasterZone - Koniec z Rozproszeniem",
+      },
+    ],
   },
 };
 
