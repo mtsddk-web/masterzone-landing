@@ -1,9 +1,73 @@
 import { NextResponse } from 'next/server';
+import { createHash } from 'crypto';
 import { getStripe } from '@/lib/stripe';
 import { supabaseAdmin } from '@/lib/supabase-server';
 import Stripe from 'stripe';
 
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!;
+
+async function sendMetaCAPIPurchase(params: {
+  email: string;
+  amount: number;
+  currency: string;
+  eventId: string;
+  sourceUrl?: string;
+  fbp?: string | null;
+  fbc?: string | null;
+}) {
+  const pixelId = process.env.META_PIXEL_ID;
+  const accessToken = process.env.META_CAPI_ACCESS_TOKEN;
+  if (!pixelId || !accessToken) {
+    console.warn('Meta CAPI not configured (META_PIXEL_ID / META_CAPI_ACCESS_TOKEN missing)');
+    return;
+  }
+
+  const hashedEmail = createHash('sha256')
+    .update(params.email.trim().toLowerCase())
+    .digest('hex');
+
+  const payload = {
+    data: [
+      {
+        event_name: 'Purchase',
+        event_time: Math.floor(Date.now() / 1000),
+        event_id: params.eventId,
+        event_source_url: params.sourceUrl || 'https://rozproszenie.masterzone.edu.pl/',
+        action_source: 'website',
+        user_data: {
+          em: [hashedEmail],
+          ...(params.fbp ? { fbp: params.fbp } : {}),
+          ...(params.fbc ? { fbc: params.fbc } : {}),
+        },
+        custom_data: {
+          currency: params.currency.toUpperCase(),
+          value: params.amount / 100,
+          content_name: 'MasterZone Strefa Skupienia',
+          content_category: 'subscription',
+        },
+      },
+    ],
+  };
+
+  try {
+    const res = await fetch(
+      `https://graph.facebook.com/v25.0/${pixelId}/events?access_token=${accessToken}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      }
+    );
+    const data = await res.json();
+    if (!res.ok) {
+      console.error('Meta CAPI error:', res.status, data);
+    } else {
+      console.log('Meta CAPI Purchase sent:', params.email, data);
+    }
+  } catch (error) {
+    console.error('Meta CAPI fetch error:', error);
+  }
+}
 
 async function upsertSubscription(
   customerId: string,
@@ -128,6 +192,17 @@ export async function POST(request: Request) {
 
         // Tag in MailerLite
         await tagMailerLite(email, 'paid');
+
+        // Send Meta CAPI Purchase (server-side, closes the attribution loop)
+        await sendMetaCAPIPurchase({
+          email,
+          amount: item?.price.unit_amount || 9700,
+          currency: item?.price.currency || 'pln',
+          eventId: session.id,
+          sourceUrl: 'https://rozproszenie.masterzone.edu.pl/',
+          fbp: (session.metadata?.fbp as string) || null,
+          fbc: (session.metadata?.fbc as string) || null,
+        });
 
         console.log(`Checkout completed: ${email}, subscription: ${subscriptionId}`);
         break;
