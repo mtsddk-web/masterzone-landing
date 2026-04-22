@@ -47,7 +47,7 @@ function SuccessContent() {
           </h1>
 
           <p className="text-xl text-blue-200 mb-2">
-            Witaj w MasterZone! Zaproszenie do społeczności leci na Twój email.
+            Witaj w MasterZone! Kliknij przycisk poniżej, żeby dołączyć do społeczności.
           </p>
         </div>
 
@@ -62,11 +62,11 @@ function SuccessContent() {
             </p>
           </div>
 
-          <div className="relative rounded-xl overflow-hidden bg-black" style={{ paddingTop: '62.5%' }}>
+          <div className="relative rounded-xl overflow-hidden bg-black" style={{ paddingTop: '56.25%' }}>
             <iframe
-              src="https://fast.wistia.net/embed/iframe/65js2p406n?seo=true&videoFoam=true&autoPlay=true&volume=1&silentAutoPlay=false"
+              src="https://www.youtube.com/embed/N5vxoKmNVos?autoplay=1&rel=0"
               title="Jak poruszać się po MasterZone"
-              allow="autoplay; fullscreen"
+              allow="autoplay; fullscreen; accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
               className="absolute top-0 left-0 w-full h-full"
               style={{ border: 'none' }}
@@ -80,11 +80,11 @@ function SuccessContent() {
           <ol className="space-y-3 text-blue-100">
             <li className="flex items-start gap-3">
               <span className="bg-yellow-400 text-gray-900 font-bold w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 text-sm">1</span>
-              <span>Sprawdź email - wysłaliśmy zaproszenie do społeczności Skool</span>
+              <span>Kliknij przycisk poniżej i załóż darmowe konto na Skool</span>
             </li>
             <li className="flex items-start gap-3">
               <span className="bg-yellow-400 text-gray-900 font-bold w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 text-sm">2</span>
-              <span>Kliknij link w mailu i załóż konto na Skool (darmowe)</span>
+              <span>Przedstaw się w sekcji powitalnej społeczności</span>
             </li>
             <li className="flex items-start gap-3">
               <span className="bg-yellow-400 text-gray-900 font-bold w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 text-sm">3</span>
@@ -104,17 +104,8 @@ function SuccessContent() {
             Przejdź do MasterZone (Skool)
           </a>
 
-          <div>
-            <a
-              href="https://tydzien.masterzone.edu.pl"
-              className="text-blue-300 hover:text-white text-sm transition-colors"
-            >
-              Lub przejdź do aplikacji tydzien-app
-            </a>
-          </div>
-
           <p className="text-xs text-blue-400">
-            Masz pytania? Napisz do nas na biuro@masterzone.edu.pl
+            Masz pytania? Napisz do nas na kontakt@masterzone.edu.pl
           </p>
         </div>
       </div>
