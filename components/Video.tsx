@@ -1,8 +1,7 @@
 "use client";
 
 import Script from "next/script";
-import { useEmailGate } from "@/hooks/useEmailGate";
-import EmailGateModal from "./EmailGateModal";
+import { useCheckout } from "@/hooks/useCheckout";
 
 interface VideoProps {
   sectionTitle?: string;
@@ -21,16 +20,10 @@ export default function Video({
   ctaText,
   ctaUrl
 }: VideoProps) {
-  const { isEmailGateOpen, openEmailGate, closeEmailGate, handleEmailSuccess } = useEmailGate(ctaUrl);
+  const { goToCheckout } = useCheckout();
 
   return (
-    <>
-      <EmailGateModal
-        isOpen={isEmailGateOpen}
-        onClose={closeEmailGate}
-        onSuccess={handleEmailSuccess}
-      />
-      <section className="section-padding bg-gray-50">
+    <section className="section-padding bg-gray-50">
       <div className="container-custom">
         {/* Section Header */}
         {sectionTitle && (
@@ -77,7 +70,7 @@ export default function Video({
           {ctaText && (
             <div className="text-center mt-8">
               <button
-                onClick={() => openEmailGate("video_cta_button")}
+                onClick={() => goToCheckout("video_cta_button")}
                 className="inline-block bg-red-600 hover:bg-red-700 text-white font-bold py-4 px-12 rounded-lg transition-all duration-300 text-lg shadow-xl hover:shadow-2xl transform hover:-translate-y-1 cursor-pointer"
               >
                 {ctaText}
@@ -87,6 +80,5 @@ export default function Video({
         </div>
       </div>
     </section>
-    </>
   );
 }

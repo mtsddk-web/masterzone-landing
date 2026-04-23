@@ -1,8 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useEmailGate } from "@/hooks/useEmailGate";
-import EmailGateModal from "./EmailGateModal";
+import { useCheckout } from "@/hooks/useCheckout";
 
 interface Testimonial {
   name: string;
@@ -19,7 +18,7 @@ interface TestimonialsProps {
 
 export default function Testimonials({ sectionTitle, testimonials }: TestimonialsProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const { isEmailGateOpen, openEmailGate, closeEmailGate, handleEmailSuccess } = useEmailGate();
+  const { goToCheckout } = useCheckout();
 
   const goToPrevious = () => {
     setCurrentIndex((prev) => (prev === 0 ? testimonials.length - 1 : prev - 1));
@@ -32,13 +31,7 @@ export default function Testimonials({ sectionTitle, testimonials }: Testimonial
   const currentTestimonial = testimonials[currentIndex];
 
   return (
-    <>
-      <EmailGateModal
-        isOpen={isEmailGateOpen}
-        onClose={closeEmailGate}
-        onSuccess={handleEmailSuccess}
-      />
-      <section className="section-padding bg-white">
+    <section className="section-padding bg-white">
       <div className="container-custom">
         {/* Section Header */}
         <h2 className="text-4xl md:text-5xl font-bold mb-16 text-center text-gray-900">
@@ -159,7 +152,7 @@ export default function Testimonials({ sectionTitle, testimonials }: Testimonial
         {/* CTA Button */}
         <div className="text-center">
           <button
-            onClick={() => openEmailGate("testimonials_cta_button")}
+            onClick={() => goToCheckout("testimonials_cta_button")}
             className="inline-block bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white font-bold py-4 px-12 rounded-lg transition-all duration-300 text-lg shadow-xl hover:shadow-2xl transform hover:-translate-y-1 border-2 border-yellow-300 cursor-pointer"
           >
             Dołącz do MasterZone — 97 PLN/mies
@@ -167,6 +160,5 @@ export default function Testimonials({ sectionTitle, testimonials }: Testimonial
         </div>
       </div>
     </section>
-    </>
   );
 }

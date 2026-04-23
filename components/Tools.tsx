@@ -1,7 +1,6 @@
 "use client";
 
-import { useEmailGate } from "@/hooks/useEmailGate";
-import EmailGateModal from "./EmailGateModal";
+import { useCheckout } from "@/hooks/useCheckout";
 
 interface Tool {
   icon: string;
@@ -27,7 +26,7 @@ export default function Tools({
   support,
   community
 }: ToolsProps) {
-  const { isEmailGateOpen, openEmailGate, closeEmailGate, handleEmailSuccess } = useEmailGate();
+  const { goToCheckout } = useCheckout();
 
   // Use whichever array is provided
   const items = tools || support || community || [];
@@ -52,13 +51,7 @@ export default function Tools({
     : "community_cta_button";
 
   return (
-    <>
-      <EmailGateModal
-        isOpen={isEmailGateOpen}
-        onClose={closeEmailGate}
-        onSuccess={handleEmailSuccess}
-      />
-      <section className={`section-padding ${bgColor}`}>
+    <section className={`section-padding ${bgColor}`}>
       <div className="container-custom">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-5xl font-bold mb-4 text-gray-900">
@@ -166,7 +159,7 @@ export default function Tools({
         {/* CTA Button - for all sections */}
         <div className="text-center">
           <button
-            onClick={() => openEmailGate(ctaSource)}
+            onClick={() => goToCheckout(ctaSource)}
             className="inline-block bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white font-bold py-4 px-12 rounded-lg transition-all duration-300 text-lg shadow-xl hover:shadow-2xl transform hover:-translate-y-1 border-2 border-yellow-300 cursor-pointer"
           >
             Dołącz do MasterZone — 97 PLN/mies
@@ -174,6 +167,5 @@ export default function Tools({
         </div>
       </div>
     </section>
-    </>
   );
 }
