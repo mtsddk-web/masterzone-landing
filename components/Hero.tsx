@@ -33,9 +33,10 @@ export default function Hero({
 }: HeroProps) {
   const { goToCheckout } = useCheckout();
   const [videoFailed, setVideoFailed] = useState(false);
+  const [videoLoaded, setVideoLoaded] = useState(false);
 
   useEffect(() => {
-    if (!videoMediaId) return;
+    if (!videoMediaId || !videoLoaded) return;
 
     const checkVideo = () => {
       const player = document.querySelector(`wistia-player[media-id='${videoMediaId}']`);
@@ -43,13 +44,11 @@ export default function Hero({
         setVideoFailed(true);
         return;
       }
-      // Check for "Media not found" in both light DOM and shadow DOM
       const textContent = (player.textContent || "") + (player.shadowRoot?.textContent || "");
       if (textContent.includes("Media not found")) {
         setVideoFailed(true);
         return;
       }
-      // No video element at all
       if (!player.shadowRoot?.querySelector("video")) {
         setVideoFailed(true);
       }
@@ -58,7 +57,7 @@ export default function Hero({
     const timer1 = setTimeout(checkVideo, 3000);
     const timer2 = setTimeout(checkVideo, 6000);
     return () => { clearTimeout(timer1); clearTimeout(timer2); };
-  }, [videoMediaId]);
+  }, [videoMediaId, videoLoaded]);
 
   // Render headline with highlighted key numbers
   const renderHighlightedHeadline = () => {
@@ -91,11 +90,11 @@ export default function Hero({
       </div>
 
       <div className="container-custom text-center">
-        {/* Preheadline - wyróżniony tekst nad nagłówkiem */}
+        {/* Preheadline - eyebrow/tagline (NIE button — usunieto border/rounded/pill styling) */}
         {preheadline && (
-          <div className="inline-block mb-3 md:mb-6 bg-yellow-400/20 backdrop-blur-sm border-2 border-yellow-400 rounded-full px-6 py-2 md:px-8 md:py-3 text-sm md:text-base lg:text-lg font-bold text-yellow-300">
+          <p className="mb-3 md:mb-6 text-sm md:text-base lg:text-lg font-medium text-yellow-300/90 uppercase tracking-wider">
             {preheadline}
-          </div>
+          </p>
         )}
 
         {/* Main Headline */}
@@ -133,17 +132,45 @@ export default function Hero({
                     </div>
                   </div>
                 </div>
+              ) : !videoLoaded ? (
+                /* Poster + play button — Wistia scripts ladowane dopiero po kliknieciu */
+                <button
+                  type="button"
+                  onClick={() => setVideoLoaded(true)}
+                  aria-label="Odtworz wideo"
+                  className="group relative block w-full cursor-pointer bg-black"
+                  style={{ paddingTop: `${(100 / parseFloat(videoAspectRatio)).toFixed(2)}%` }}
+                >
+                  <img
+                    src={`https://fast.wistia.com/embed/medias/${videoMediaId}/swatch`}
+                    alt="Zobacz jak dzialaja bloki pracy gl\u0119bokiej"
+                    loading="eager"
+                    decoding="async"
+                    fetchPriority="high"
+                    className="absolute inset-0 w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors" />
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="w-20 h-20 md:w-28 md:h-28 rounded-full bg-white/95 shadow-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                      <svg viewBox="0 0 24 24" className="w-10 h-10 md:w-14 md:h-14 text-red-600 ml-1" fill="currentColor">
+                        <path d="M8 5v14l11-7z" />
+                      </svg>
+                    </div>
+                  </div>
+                  <div className="absolute bottom-3 left-3 md:bottom-4 md:left-4 bg-black/60 text-white text-xs md:text-sm px-2 py-1 md:px-3 md:py-1.5 rounded font-semibold">
+                    Zobacz jak to dziala
+                  </div>
+                </button>
               ) : (
                 <>
                   <link rel="preconnect" href="https://fast.wistia.com" />
-                  <link rel="dns-prefetch" href="https://fast.wistia.com" />
                   <Script
                     src="https://fast.wistia.com/player.js"
-                    strategy="beforeInteractive"
+                    strategy="afterInteractive"
                   />
                   <Script
                     src={`https://fast.wistia.com/embed/${videoMediaId}.js`}
-                    strategy="beforeInteractive"
+                    strategy="afterInteractive"
                     type="module"
                   />
                   <div dangerouslySetInnerHTML={{
@@ -152,11 +179,10 @@ export default function Hero({
                         wistia-player[media-id='${videoMediaId}']:not(:defined) {
                           background: center / contain no-repeat url('https://fast.wistia.com/embed/medias/${videoMediaId}/swatch');
                           display: block;
-                          filter: blur(5px);
                           padding-top: ${(100 / parseFloat(videoAspectRatio)).toFixed(2)}%;
                         }
                       </style>
-                      <wistia-player media-id="${videoMediaId}" aspect="${videoAspectRatio}" preload="metadata"></wistia-player>
+                      <wistia-player media-id="${videoMediaId}" aspect="${videoAspectRatio}" autoplay="true"></wistia-player>
                     `
                   }} />
                 </>
