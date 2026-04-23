@@ -74,6 +74,7 @@ export default async function Home() {
     preheadline: c.hero?.preheadline,
     headline: c.hero?.headline || '',
     description: c.hero?.description,
+    descriptionShort: c.hero?.descriptionShort,
     ctaText: c.hero?.ctaText || 'Dołącz do MasterZone',
     ctaUrl: 'https://www.skool.com/masterzone',
     videoMediaId: videoData.mediaId,

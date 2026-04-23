@@ -8,6 +8,7 @@ interface HeroProps {
   preheadline?: string;
   headline: string;
   description?: string;
+  descriptionShort?: string;
   ctaText: string;
   ctaUrl: string;
   videoMediaId?: string;
@@ -22,6 +23,7 @@ export default function Hero({
   preheadline,
   headline,
   description,
+  descriptionShort,
   ctaText,
   ctaUrl,
   videoMediaId,
@@ -103,9 +105,14 @@ export default function Hero({
           dangerouslySetInnerHTML={renderHighlightedHeadline()}
         />
 
-        {/* Description */}
+        {/* Description — mobile: short (2 lines), desktop: full */}
+        {descriptionShort && (
+          <p className="md:hidden text-sm mb-4 max-w-2xl mx-auto text-white/80 px-4">
+            {descriptionShort}
+          </p>
+        )}
         {description && (
-          <p className="text-base md:text-lg lg:text-xl mb-4 md:mb-8 max-w-4xl mx-auto text-white/80 px-4">
+          <p className={`${descriptionShort ? "hidden md:block" : ""} text-base md:text-lg lg:text-xl mb-4 md:mb-8 max-w-4xl mx-auto text-white/80 px-4`}>
             {description}
           </p>
         )}

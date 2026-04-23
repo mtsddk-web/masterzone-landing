@@ -1,10 +1,18 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { trackEvent } from "./FacebookPixel";
 
 export default function FloatingHelpButton() {
   const [isExpanded, setIsExpanded] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setIsVisible(window.scrollY > 100);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   const handleToggle = () => {
     setIsExpanded(!isExpanded);
@@ -20,7 +28,7 @@ export default function FloatingHelpButton() {
   return (
     <>
       {/* Floating Button Container */}
-      <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3">
+      <div className={`fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3 transition-opacity duration-300 ${isVisible ? "opacity-100" : "opacity-0 pointer-events-none"}`}>
         {/* Expanded Options */}
         {isExpanded && (
           <div className="flex flex-col gap-2 animate-slide-up">
