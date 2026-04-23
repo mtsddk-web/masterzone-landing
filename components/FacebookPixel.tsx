@@ -1,29 +1,10 @@
 "use client";
 
-import { useEffect } from "react";
 import Script from "next/script";
 
+const PIXEL_ID = "1203345207633415";
+
 export default function FacebookPixel() {
-  const pixelId = "1203345207633415";
-
-  useEffect(() => {
-    // Initialize Facebook Pixel
-    if (typeof window !== "undefined") {
-      (window as any).fbq =
-        (window as any).fbq ||
-        function () {
-          ((window as any).fbq.q = (window as any).fbq.q || []).push(arguments);
-        };
-      (window as any).fbq.loaded = true;
-      (window as any).fbq.version = "2.0";
-      (window as any).fbq.queue = [];
-
-      // Track PageView
-      (window as any).fbq("init", pixelId);
-      (window as any).fbq("track", "PageView");
-    }
-  }, []);
-
   return (
     <>
       <Script
@@ -39,7 +20,7 @@ export default function FacebookPixel() {
             t.src=v;s=b.getElementsByTagName(e)[0];
             s.parentNode.insertBefore(t,s)}(window, document,'script',
             'https://connect.facebook.net/en_US/fbevents.js');
-            fbq('init', '${pixelId}');
+            fbq('init', '${PIXEL_ID}');
             fbq('track', 'PageView');
           `,
         }}
@@ -49,7 +30,7 @@ export default function FacebookPixel() {
           height="1"
           width="1"
           style={{ display: "none" }}
-          src={`https://www.facebook.com/tr?id=${pixelId}&ev=PageView&noscript=1`}
+          src={`https://www.facebook.com/tr?id=${PIXEL_ID}&ev=PageView&noscript=1`}
           alt=""
         />
       </noscript>
@@ -57,9 +38,13 @@ export default function FacebookPixel() {
   );
 }
 
-// Helper function to track custom events
+// Helper: ensures events fire even before fbevents.js finishes loading.
+// The stub created by the init snippet has a `.queue` array that fbevents
+// drains once it loads. Calling fbq() before load is safe — it queues.
 export const trackEvent = (eventName: string, data?: Record<string, any>) => {
-  if (typeof window !== "undefined" && (window as any).fbq) {
-    (window as any).fbq("track", eventName, data);
+  if (typeof window === "undefined") return;
+  const fbq = (window as any).fbq;
+  if (typeof fbq === "function") {
+    fbq("track", eventName, data);
   }
 };
