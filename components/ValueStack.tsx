@@ -1,5 +1,7 @@
 "use client";
 
+import { useCheckout } from "@/hooks/useCheckout";
+
 interface AlternativeItem {
   name: string;
   description: string;
@@ -39,6 +41,8 @@ export default function ValueStack({
   savingsText,
   ctaText
 }: ValueStackProps) {
+  const { goToCheckout } = useCheckout();
+
   return (
     <section className="section-padding bg-gradient-to-br from-indigo-50 to-blue-50">
       <div className="container-custom max-w-5xl">
@@ -157,9 +161,12 @@ export default function ValueStack({
         {/* Bottom CTA */}
         {ctaText && (
           <div className="text-center">
-            <p className="text-xl md:text-2xl font-bold text-indigo-900 bg-white rounded-xl p-6 shadow-lg border-2 border-indigo-200">
+            <button
+              onClick={() => goToCheckout("valuestack_cta_button")}
+              className="inline-block bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white text-xl md:text-2xl font-bold py-5 px-10 rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 border-2 border-yellow-300 cursor-pointer"
+            >
               👉 {ctaText}
-            </p>
+            </button>
           </div>
         )}
       </div>
