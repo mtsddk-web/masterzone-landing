@@ -81,6 +81,15 @@ export default function Hero({
   };
 
   return (
+    <>
+      {videoMediaId && !videoLoaded && (
+        <link
+          rel="preload"
+          as="image"
+          href={`https://fast.wistia.com/embed/medias/${videoMediaId}/swatch`}
+          fetchPriority="high"
+        />
+      )}
     <section className="bg-gradient-to-br from-navy via-blue-700 to-blue-900 text-white py-8 md:py-16 lg:py-20 flex items-center relative">
       {/* Logo - lewy górny róg (tylko desktop) */}
       <div className="hidden md:block absolute top-6 left-6 z-10">
@@ -251,5 +260,6 @@ export default function Hero({
         )}
       </div>
     </section>
+    </>
   );
 }

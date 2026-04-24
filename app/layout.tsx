@@ -3,7 +3,6 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import FacebookPixel from "@/components/FacebookPixel";
 import MicrosoftClarity from "@/components/MicrosoftClarity";
-import Hotjar from "@/components/Hotjar";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -64,12 +63,10 @@ export default function RootLayout({
         <link rel="preconnect" href="https://www.clarity.ms" />
         <link rel="preconnect" href="https://www.facebook.com" />
         <link rel="dns-prefetch" href="https://www.skool.com" />
-        <link rel="dns-prefetch" href="https://static.hotjar.com" />
       </head>
       <body className={inter.className}>
         <FacebookPixel />
         <MicrosoftClarity />
-        <Hotjar />
         {children}
       </body>
     </html>
