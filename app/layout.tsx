@@ -5,7 +5,12 @@ import FacebookPixel from "@/components/FacebookPixel";
 import MicrosoftClarity from "@/components/MicrosoftClarity";
 import Hotjar from "@/components/Hotjar";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
+  preload: true,
+  variable: "--font-inter",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://rozproszenie.masterzone.edu.pl"),
@@ -52,6 +57,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="pl">
+      <head>
+        <link rel="preconnect" href="https://fast.wistia.com" />
+        <link rel="preconnect" href="https://fast.wistia.net" />
+        <link rel="preconnect" href="https://connect.facebook.net" />
+        <link rel="preconnect" href="https://www.clarity.ms" />
+        <link rel="preconnect" href="https://www.facebook.com" />
+        <link rel="dns-prefetch" href="https://www.skool.com" />
+        <link rel="dns-prefetch" href="https://static.hotjar.com" />
+      </head>
       <body className={inter.className}>
         <FacebookPixel />
         <MicrosoftClarity />

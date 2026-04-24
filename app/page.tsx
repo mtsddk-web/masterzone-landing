@@ -1,3 +1,4 @@
+import dynamic from "next/dynamic";
 import AnnouncementBar from "@/components/AnnouncementBar";
 import Hero from "@/components/Hero";
 import Stats from "@/components/Stats";
@@ -14,9 +15,10 @@ import FAQ from "@/components/FAQ";
 import JoinSection from "@/components/JoinSection";
 import CTA from "@/components/CTA";
 import PriceComparison from "@/components/PriceComparison";
-import ExitIntentPopup from "@/components/ExitIntentPopup";
-import FloatingHelpButton from "@/components/FloatingHelpButton";
 import Footer from "@/components/Footer";
+
+const ExitIntentPopup = dynamic(() => import("@/components/ExitIntentPopup"));
+const FloatingHelpButton = dynamic(() => import("@/components/FloatingHelpButton"));
 
 import fs from "fs";
 import path from "path";
