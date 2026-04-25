@@ -86,7 +86,7 @@ export default function Hero({
         <link
           rel="preload"
           as="image"
-          href={`https://fast.wistia.com/embed/medias/${videoMediaId}/swatch`}
+          href="/images/hero-poster.jpg"
           fetchPriority="high"
         />
       )}
@@ -158,7 +158,7 @@ export default function Hero({
                   style={{ paddingTop: `${(100 / parseFloat(videoAspectRatio)).toFixed(2)}%` }}
                 >
                   <img
-                    src={`https://fast.wistia.com/embed/medias/${videoMediaId}/swatch`}
+                    src="/images/hero-poster.jpg"
                     alt="Zobacz jak dzialaja bloki pracy gl\u0119bokiej"
                     loading="eager"
                     decoding="async"
@@ -193,7 +193,7 @@ export default function Hero({
                     __html: `
                       <style>
                         wistia-player[media-id='${videoMediaId}']:not(:defined) {
-                          background: center / contain no-repeat url('https://fast.wistia.com/embed/medias/${videoMediaId}/swatch');
+                          background: center / contain no-repeat url('/images/hero-poster.jpg');
                           display: block;
                           padding-top: ${(100 / parseFloat(videoAspectRatio)).toFixed(2)}%;
                         }
