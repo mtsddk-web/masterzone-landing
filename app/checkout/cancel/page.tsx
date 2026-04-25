@@ -53,7 +53,7 @@ export default function CheckoutCancelPage() {
         </div>
 
         <p className="text-xs text-blue-400 mt-8">
-          Masz pytania? biuro@masterzone.edu.pl
+          Masz pytania? kontakt@masterzone.edu.pl
         </p>
       </div>
     </div>

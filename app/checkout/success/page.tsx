@@ -80,32 +80,29 @@ function SuccessContent() {
           <ol className="space-y-3 text-blue-100">
             <li className="flex items-start gap-3">
               <span className="bg-yellow-400 text-gray-900 font-bold w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 text-sm">1</span>
-              <span>Kliknij przycisk poniżej i załóż darmowe konto na Skool</span>
+              <span><strong className="text-white">Sprawdź skrzynkę email</strong> — w ciągu kilku minut otrzymasz osobiste zaproszenie od Skool z przyciskiem &bdquo;JOIN NOW&rdquo;. Sprawdź też folder SPAM.</span>
             </li>
             <li className="flex items-start gap-3">
               <span className="bg-yellow-400 text-gray-900 font-bold w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 text-sm">2</span>
-              <span>Przedstaw się w sekcji powitalnej społeczności</span>
+              <span>Kliknij <strong className="text-white">JOIN NOW</strong> w mailu i załóż darmowe konto na Skool (lub zaloguj się, jeśli już masz). <strong className="text-yellow-300">Użyj tego samego adresu email</strong>, na który dostałeś zaproszenie.</span>
             </li>
             <li className="flex items-start gap-3">
               <span className="bg-yellow-400 text-gray-900 font-bold w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 text-sm">3</span>
-              <span>Dołącz do pierwszego bloku pracy głębokiej!</span>
+              <span>Witaj w MasterZone! Przedstaw się w sekcji powitalnej i dołącz do pierwszego bloku pracy głębokiej.</span>
             </li>
           </ol>
+
+          <div className="mt-6 p-4 bg-yellow-500/10 border border-yellow-500/30 rounded-lg">
+            <p className="text-sm text-yellow-200">
+              <strong>⚠️ Ważne:</strong> Dostęp aktywujesz przez link w mailu od Skool — <strong>nie wchodź</strong> na publiczną stronę skool.com/masterzone, bo zobaczysz tam standardową cenę i będziesz musiał płacić ponownie.
+            </p>
+          </div>
         </div>
 
         {/* CTA buttons */}
         <div className="text-center space-y-4">
-          <a
-            href="https://www.skool.com/masterzone"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-block w-full md:w-auto bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-400 hover:to-emerald-500 text-white font-bold py-5 px-12 rounded-xl transition-all duration-300 text-lg shadow-2xl hover:shadow-green-500/50 transform hover:scale-105"
-          >
-            Przejdź do MasterZone (Skool)
-          </a>
-
-          <p className="text-xs text-blue-400">
-            Masz pytania? Napisz do nas na kontakt@masterzone.edu.pl
+          <p className="text-blue-200 text-base">
+            Mail nie przyszedł w ciągu 10 minut? Napisz na <a href="mailto:kontakt@masterzone.edu.pl" className="text-yellow-300 underline font-semibold">kontakt@masterzone.edu.pl</a> — ręcznie wyślemy zaproszenie.
           </p>
         </div>
       </div>
