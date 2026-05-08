@@ -5,7 +5,7 @@ description: "Nie potrzebujesz więcej dyscypliny. Potrzebujesz body doubling �
 descriptionShort: "Body doubling — pracuj w obecności innych na żywo. Skupienie bez walki z sobą."
 ctaText: "Dołącz do MasterZone"
 ctaUrl: "https://www.skool.com/masterzone"
-trialInfo: "97 PLN/miesiąc • Bez umów • Anulujesz kiedy chcesz"
+trialInfo: "7 dni za darmo • potem 97 PLN/miesiąc • Anulujesz kiedy chcesz"
 securityInfo: "🔒 Bezpieczne płatności – ten sam system co Netflix i Spotify"
 skoolInfo: "Po kliknięciu zostaniesz przekierowany do platformy Skool, gdzie odbywają się wszystkie bloki pracy, lekcje i spotkania społeczności MasterZone."
 ---

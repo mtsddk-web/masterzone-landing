@@ -22,5 +22,5 @@ plans:
     ctaText: "Dołącz do MasterZone"
     ctaUrl: "https://www.skool.com/masterzone"
     featured: true
-    guarantee: "97 PLN/miesiąc. Bez umów. Anulujesz kiedy chcesz. 30-dniowa gwarancja zwrotu — jeśli nie zrobisz więcej w 90 min, oddajemy pieniądze."
+    guarantee: "7 dni za darmo, potem 97 PLN/miesiąc. Bez umów. Anulujesz kiedy chcesz. 30-dniowa gwarancja zwrotu — jeśli nie zrobisz więcej w 90 min, oddajemy pieniądze."
 ---

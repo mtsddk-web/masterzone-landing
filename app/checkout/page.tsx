@@ -13,7 +13,7 @@ function CheckoutContent() {
   const utmMedium = searchParams.get("utm_medium");
   const utmCampaign = searchParams.get("utm_campaign");
 
-  const trialDays = trial ? parseInt(trial, 10) : 0;
+  const trialDays = trial !== null ? parseInt(trial, 10) : 7;
 
   const [isLoading, setIsLoading] = useState(false);
   const [selectedProvider, setSelectedProvider] = useState<"stripe" | "payu" | null>(null);

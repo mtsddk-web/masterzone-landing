@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import { trackEvent } from "./FacebookPixel";
+import { useCheckout } from "@/hooks/useCheckout";
 
 export default function ExitIntentPopup() {
-  const router = useRouter();
+  const { goToCheckout } = useCheckout();
   const [isVisible, setIsVisible] = useState(false);
   const [hasShown, setHasShown] = useState(false);
   const [isReady, setIsReady] = useState(false);
@@ -84,8 +84,7 @@ export default function ExitIntentPopup() {
 
   const handleCTA = () => {
     setIsVisible(false);
-    trackEvent("InitiateCheckout", { source: "exit_intent_popup_cta" });
-    router.push("/checkout");
+    goToCheckout("exit_intent_popup_cta");
   };
 
   if (!isVisible) return null;

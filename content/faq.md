@@ -1,8 +1,10 @@
 ---
 sectionTitle: "Najczęściej Zadawane Pytania"
 questions:
+  - question: "Pierwsze 7 dni za darmo — co to oznacza?"
+    answer: "Wchodzisz na bloki pracy, planowanie, do społeczności i sprawdzasz na własnej skórze czy to dla Ciebie. Pełen dostęp od pierwszego dnia. Jeśli w ciągu 7 dni anulujesz, nie płacisz nic. Jeśli zostajesz — automatycznie przechodzisz na 97 PLN/miesiąc i nadal możesz anulować w każdej chwili."
   - question: "97 PLN/miesiąc — czy to nie za dużo?"
-    answer: "To mniej niż 5 kaw w kawiarni, gdzie idziesz żeby 'mieć ludzi obok'. Albo mniej niż 1 godzina z coachem produktywności. W MasterZone dostajesz codzienne wsparcie, 20+ bloków pracy na żywo i społeczność. Większość członków mówi, że to najlepsza inwestycja w ich produktywność."
+    answer: "To mniej niż 5 kaw w kawiarni, gdzie idziesz żeby 'mieć ludzi obok'. Albo mniej niż 1 godzina z coachem produktywności. W MasterZone dostajesz codzienne wsparcie, 20+ bloków pracy na żywo i społeczność. Pierwsze 7 dni za darmo, więc testujesz bez ryzyka. Większość członków mówi, że to najlepsza inwestycja w ich produktywność."
   - question: "Próbowałem już wszystkiego — Pomodoro, aplikacje, kursy. Nic nie działa."
     answer: "Bo te narzędzia wymagają od Ciebie dyscypliny, której brakuje. MasterZone działa inaczej — bazuje na body doubling, czyli obecności innych ludzi. Nie musisz się zmuszać. Logujesz się, widzisz ludzi przy pracy, i Twój mózg automatycznie przełącza się w tryb skupienia. To biologia, nie silna wola."
   - question: "Nie chcę włączać kamery. Czy muszę?"
