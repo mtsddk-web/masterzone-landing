@@ -165,8 +165,12 @@ function CheckoutContent() {
               <svg className="w-8 h-8 mb-2 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M0 8v8c0 1.1.9 2 2 2h20c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2H2c-1.1 0-2 .9-2 2zm2 0h20v2H2V8zm0 8h20v-4H2v4z"/>
               </svg>
-              <span className="font-semibold text-sm text-gray-800">Zapłać kartą</span>
-              <span className="text-xs text-gray-500 mt-1">Visa, Mastercard</span>
+              <span className="font-semibold text-base text-gray-800">Dołącz do MasterZone</span>
+              <span className="text-xs text-gray-500 mt-1">
+                {trialDays > 0
+                  ? `Bez opłaty dzisiaj. Karta tylko zabezpieczająca, pierwsza płatność za ${trialDays} dni.`
+                  : "Visa, Mastercard"}
+              </span>
               {isLoading && selectedProvider === "stripe" && (
                 <span className="text-xs text-orange-600 mt-2">Przekierowuję...</span>
               )}
