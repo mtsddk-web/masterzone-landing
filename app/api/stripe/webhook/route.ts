@@ -81,37 +81,39 @@ async function upsertSubscription(
     return;
   }
 
+  const row: Record<string, any> = {
+    stripe_customer_id: customerId,
+    stripe_subscription_id: subscriptionId,
+    email,
+    status,
+    price_id: sessionOrSub.price_id || null,
+    currency: 'pln',
+    amount: sessionOrSub.amount || 9700,
+    current_period_start: sessionOrSub.current_period_start
+      ? new Date(sessionOrSub.current_period_start * 1000).toISOString()
+      : null,
+    current_period_end: sessionOrSub.current_period_end
+      ? new Date(sessionOrSub.current_period_end * 1000).toISOString()
+      : null,
+    trial_start: sessionOrSub.trial_start
+      ? new Date(sessionOrSub.trial_start * 1000).toISOString()
+      : null,
+    trial_end: sessionOrSub.trial_end
+      ? new Date(sessionOrSub.trial_end * 1000).toISOString()
+      : null,
+    checkout_session_id: sessionOrSub.checkout_session_id || null,
+    updated_at: new Date().toISOString(),
+  };
+
+  // UTM zapisujemy TYLKO jak ma sens - nigdy nie nadpisuj istniejacej atrybucji nullem
+  // (np. gdy customer.subscription.updated przyjdzie po checkout.session.completed).
+  if (sessionOrSub.utm_source) row.utm_source = sessionOrSub.utm_source;
+  if (sessionOrSub.utm_medium) row.utm_medium = sessionOrSub.utm_medium;
+  if (sessionOrSub.utm_campaign) row.utm_campaign = sessionOrSub.utm_campaign;
+
   const { error } = await supabaseAdmin
     .from('subscriptions')
-    .upsert(
-      {
-        stripe_customer_id: customerId,
-        stripe_subscription_id: subscriptionId,
-        email,
-        status,
-        price_id: sessionOrSub.price_id || null,
-        currency: 'pln',
-        amount: sessionOrSub.amount || 9700,
-        current_period_start: sessionOrSub.current_period_start
-          ? new Date(sessionOrSub.current_period_start * 1000).toISOString()
-          : null,
-        current_period_end: sessionOrSub.current_period_end
-          ? new Date(sessionOrSub.current_period_end * 1000).toISOString()
-          : null,
-        trial_start: sessionOrSub.trial_start
-          ? new Date(sessionOrSub.trial_start * 1000).toISOString()
-          : null,
-        trial_end: sessionOrSub.trial_end
-          ? new Date(sessionOrSub.trial_end * 1000).toISOString()
-          : null,
-        checkout_session_id: sessionOrSub.checkout_session_id || null,
-        utm_source: sessionOrSub.utm_source || null,
-        utm_medium: sessionOrSub.utm_medium || null,
-        utm_campaign: sessionOrSub.utm_campaign || null,
-        updated_at: new Date().toISOString(),
-      },
-      { onConflict: 'stripe_customer_id' }
-    );
+    .upsert(row, { onConflict: 'stripe_customer_id' });
 
   if (error) {
     console.error('Supabase upsert error:', error);
@@ -193,13 +195,16 @@ export async function POST(request: Request) {
         // Tag in MailerLite
         await tagMailerLite(email, 'paid');
 
-        // Send Meta CAPI Purchase (server-side, closes the attribution loop)
+        // Send Meta CAPI Purchase (server-side, closes the attribution loop).
+        // fbc/fbp z metadata sesji => Meta dopina Purchase do kliku w reklame.
         await sendMetaCAPIPurchase({
           email,
           amount: item?.price.unit_amount || 9700,
           currency: item?.price.currency || 'pln',
           eventId: session.id,
-          sourceUrl: 'https://rozproszenie.masterzone.edu.pl/',
+          sourceUrl:
+            (session.metadata?.landing_url as string) ||
+            'https://rozproszenie.masterzone.edu.pl/',
           fbp: (session.metadata?.fbp as string) || null,
           fbc: (session.metadata?.fbc as string) || null,
         });
@@ -222,6 +227,9 @@ export async function POST(request: Request) {
           current_period_end: subItem?.current_period_end,
           trial_start: subscription.trial_start,
           trial_end: subscription.trial_end,
+          utm_source: subscription.metadata?.utm_source || undefined,
+          utm_medium: subscription.metadata?.utm_medium || undefined,
+          utm_campaign: subscription.metadata?.utm_campaign || undefined,
         });
 
         console.log(`Subscription updated: ${subscription.id}, status: ${subscription.status}`);

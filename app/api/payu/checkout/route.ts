@@ -2,11 +2,17 @@ import { NextResponse } from 'next/server';
 import { getPayU } from '@/lib/payu';
 import type { PayUOrder } from '@/lib/payu';
 
+/**
+ * PayU checkout - jednorazowa płatność (BLIK / szybki przelew / karta) za pierwszy miesiąc.
+ *
+ * Świadomie BEZ `recurring` - recurring przez PayU wymaga osobnej konfiguracji POS
+ * i tokenizacji; tu chodzi o najprostszą, niezawodną ścieżkę bez karty na evencie.
+ * Odnowienie po miesiącu obsługujemy mailowo. Stripe (karta) nadal robi pełną subskrypcję.
+ */
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { trial, email, utm } = body as {
-      trial?: number;
+    const { email, utm } = body as {
       email?: string;
       utm?: { source?: string; medium?: string; campaign?: string };
     };
@@ -20,43 +26,36 @@ export async function POST(request: Request) {
     const forwardedFor = request.headers.get('x-forwarded-for');
     const customerIp = forwardedFor ? forwardedFor.split(',')[0].trim() : '127.0.0.1';
 
-    // Oblicz daty dla recurring (pierwsza płatność za 30 dni, potem co miesiąc)
-    const now = new Date();
-    const firstRecurringDate = new Date(now);
+    // extOrderId MUSI być unikalny w obrębie sklepu (PayU odrzuca duplikaty).
+    // Zaszywamy w nim metadane UTM (base64 JSON) + znacznik czasu/losowy sufiks dla unikalności.
+    const metadata = {
+      utm_source: utm?.source || '',
+      utm_medium: utm?.medium || '',
+      utm_campaign: utm?.campaign || '',
+      trial_days: 0,
+      ts: Date.now(),
+      rnd: Math.random().toString(36).slice(2, 8),
+    };
+    const extOrderId = Buffer.from(JSON.stringify(metadata)).toString('base64').slice(0, 255);
 
-    // Jeśli trial - pierwsza recurring płatność za `trial` dni, inaczej za 30 dni
-    const daysUntilFirstRecurring = trial && trial > 0 ? trial : 30;
-    firstRecurringDate.setDate(firstRecurringDate.getDate() + daysUntilFirstRecurring);
-
-    const firstRecurringDateStr = firstRecurringDate.toISOString().split('T')[0]; // YYYY-MM-DD
-
-    // Przygotuj zamówienie PayU
     const order: PayUOrder = {
       notifyUrl: `${origin}/api/payu/webhook`,
       continueUrl: `${origin}/checkout/success?provider=payu`,
       customerIp,
       merchantPosId: process.env.PAYU_POS_ID!,
-      description: trial && trial > 0
-        ? `MasterZone Community - ${trial} dni trial + 97 PLN/msc`
-        : 'MasterZone Community - 97 PLN/msc',
+      description: 'MasterZone Community - 97 PLN (pierwszy miesiac)',
       currencyCode: 'PLN',
       totalAmount,
       products: [
         {
-          name: 'MasterZone Community - miesięczna subskrypcja',
+          name: 'MasterZone Community - miesieczny dostep',
           unitPrice: totalAmount,
           quantity: '1',
         },
       ],
-      // Recurring payments - PayU automatycznie pobiera 97 PLN co miesiąc
-      recurring: 'STANDARD',
-      recurringPayment: {
-        firstPayment: firstRecurringDateStr,
-        frequency: 'MONTHLY',
-      },
     };
+    (order as { extOrderId?: string }).extOrderId = extOrderId;
 
-    // Dodaj dane kupującego jeśli podano email
     if (email) {
       order.buyer = {
         email,
@@ -64,20 +63,6 @@ export async function POST(request: Request) {
       };
     }
 
-    // Metadata UTM zapisujemy w extOrderId (PayU pozwala na custom ID)
-    if (utm?.source || utm?.medium || utm?.campaign) {
-      const metadata = {
-        utm_source: utm.source || '',
-        utm_medium: utm.medium || '',
-        utm_campaign: utm.campaign || '',
-        trial_days: trial || 0,
-      };
-      // extOrderId może zawierać JSON (max 255 znaków)
-      const extOrderId = Buffer.from(JSON.stringify(metadata)).toString('base64').substring(0, 255);
-      (order as any).extOrderId = extOrderId;
-    }
-
-    // Utwórz zamówienie w PayU
     const payu = getPayU();
     const response = await payu.createOrder(order);
 
@@ -89,7 +74,6 @@ export async function POST(request: Request) {
       );
     }
 
-    // Zwróć URL do przekierowania (PayU payment page)
     return NextResponse.json({
       url: response.redirectUri,
       orderId: response.orderId,

@@ -6,7 +6,7 @@ export type HomepageContent = Record<string, Record<string, string>>;
 /**
  * Fetch all site_content from Supabase, merge with defaults.
  * If Supabase is down or empty → returns pure defaults.
- * Called at build time (SSR) — cached by Next.js.
+ * Called at build time (SSR) - cached by Next.js.
  */
 export async function getHomepageContent(): Promise<HomepageContent> {
   // Start with defaults (deep copy)

@@ -13,7 +13,7 @@ interface ContentRow {
   field_order: number;
 }
 
-// Simple password gate (no auth needed — Monika gets the password)
+// Simple password gate (no auth needed - Monika gets the password)
 const ADMIN_PASSWORD = 'masterzone2026';
 
 export default function AdminPage() {

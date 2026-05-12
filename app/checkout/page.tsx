@@ -5,6 +5,12 @@ import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 import { trackEvent } from "@/components/FacebookPixel";
 
+function readCookie(name: string): string | undefined {
+  if (typeof document === "undefined") return undefined;
+  const match = document.cookie.match(new RegExp(`(?:^|; )${name}=([^;]*)`));
+  return match ? decodeURIComponent(match[1]) : undefined;
+}
+
 function CheckoutContent() {
   const searchParams = useSearchParams();
   const trial = searchParams.get("trial");
@@ -12,8 +18,13 @@ function CheckoutContent() {
   const utmSource = searchParams.get("utm_source");
   const utmMedium = searchParams.get("utm_medium");
   const utmCampaign = searchParams.get("utm_campaign");
+  const fbclid = searchParams.get("fbclid");
 
   const trialDays = trial !== null ? parseInt(trial, 10) : 7;
+
+  // BLIK / PayU - włącz dopiero po naprawieniu OAuth POS w panelu PayU
+  // (PAYU_CLIENT_ID / PAYU_CLIENT_SECRET) i udanym teście transakcji.
+  const PAYU_ENABLED = false;
 
   const [isLoading, setIsLoading] = useState(false);
   const [selectedProvider, setSelectedProvider] = useState<"stripe" | "payu" | null>(null);
@@ -34,6 +45,11 @@ function CheckoutContent() {
     try {
       const endpoint = provider === "stripe" ? "/api/stripe/checkout" : "/api/payu/checkout";
 
+      // Meta click identifiers - kluczowe dla atrybucji Purchase z reklamy.
+      // _fbc nadawany przez pixel z fbclid; jak go nie ma, budujemy z fbclid w URL.
+      const fbp = readCookie("_fbp");
+      const fbc = readCookie("_fbc") || (fbclid ? `fb.1.${Date.now()}.${fbclid}` : undefined);
+
       const response = await fetch(endpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -45,6 +61,9 @@ function CheckoutContent() {
             medium: utmMedium || undefined,
             campaign: utmCampaign || undefined,
           },
+          fbp,
+          fbc,
+          landingUrl: typeof document !== "undefined" ? document.referrer || undefined : undefined,
         }),
       });
 
@@ -149,7 +168,41 @@ function CheckoutContent() {
           )}
 
           {/* Payment */}
-          <div className="mb-6">
+          <div className="mb-6 space-y-3">
+            {PAYU_ENABLED && (
+              <>
+                {/* BLIK / szybki przelew (PayU) - bez karty */}
+                <button
+                  onClick={() => handleCheckout("payu")}
+                  disabled={isLoading}
+                  className={`
+                    w-full flex flex-col items-center justify-center p-5 border-2 rounded-xl transition-all duration-200
+                    ${isLoading && selectedProvider === "payu"
+                      ? "border-green-600 bg-green-100"
+                      : "border-green-500 bg-green-50 hover:border-green-600 hover:bg-green-100"
+                    }
+                    disabled:opacity-50 disabled:cursor-not-allowed
+                  `}
+                >
+                  <span className="text-2xl mb-1">📲</span>
+                  <span className="font-bold text-base text-gray-900">Zapłać BLIKiem - 97 zł</span>
+                  <span className="text-xs text-gray-600 mt-1 text-center">
+                    Bez karty. Płacisz z apki bankowej (BLIK lub szybki przelew). Pierwszy miesiąc - 30 dni gwarancji zwrotu.
+                  </span>
+                  {isLoading && selectedProvider === "payu" && (
+                    <span className="text-xs text-green-700 mt-2">Przekierowuję do płatności...</span>
+                  )}
+                </button>
+
+                <div className="flex items-center gap-3 text-xs text-gray-400">
+                  <span className="h-px bg-gray-200 flex-1" />
+                  albo
+                  <span className="h-px bg-gray-200 flex-1" />
+                </div>
+              </>
+            )}
+
+            {/* Karta (Stripe) - zachowuje darmowy okres próbny */}
             <button
               onClick={() => handleCheckout("stripe")}
               disabled={isLoading}
@@ -162,14 +215,16 @@ function CheckoutContent() {
                 disabled:opacity-50 disabled:cursor-not-allowed
               `}
             >
-              <svg className="w-8 h-8 mb-2 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
+              <svg className="w-7 h-7 mb-2 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M0 8v8c0 1.1.9 2 2 2h20c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2H2c-1.1 0-2 .9-2 2zm2 0h20v2H2V8zm0 8h20v-4H2v4z"/>
               </svg>
-              <span className="font-semibold text-base text-gray-800">Dołącz do MasterZone</span>
-              <span className="text-xs text-gray-500 mt-1">
+              <span className="font-semibold text-base text-gray-800">
+                {trialDays > 0 ? `Kartą - ${trialDays} dni za darmo` : "Kartą"}
+              </span>
+              <span className="text-xs text-gray-500 mt-1 text-center">
                 {trialDays > 0
-                  ? `Bez opłaty dzisiaj. Karta tylko zabezpieczająca, pierwsza płatność za ${trialDays} dni.`
-                  : "Visa, Mastercard"}
+                  ? `0 zł dzisiaj. Karta tylko zabezpieczająca, pierwsza płatność za ${trialDays} dni. Subskrypcja odnawia się automatycznie.`
+                  : "Visa, Mastercard. Subskrypcja odnawia się automatycznie."}
               </span>
               {isLoading && selectedProvider === "stripe" && (
                 <span className="text-xs text-orange-600 mt-2">Przekierowuję...</span>

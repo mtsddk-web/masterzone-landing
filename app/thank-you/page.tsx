@@ -119,7 +119,7 @@ export default function ThankYouPage() {
           <p className="text-xs text-blue-400">
             💡 <strong>Pamiętaj:</strong> 97 PLN/miesiąc. 30-dniowa gwarancja zwrotu pieniędzy.
             <br />
-            Bez umów — anulujesz kiedy chcesz.
+            Bez umów - anulujesz kiedy chcesz.
           </p>
         </div>
       </div>

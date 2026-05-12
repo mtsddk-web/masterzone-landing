@@ -1,6 +1,7 @@
 "use client";
 
 import { useCheckout } from "@/hooks/useCheckout";
+import Icon from "./Icon";
 
 interface Tool {
   icon: string;
@@ -73,8 +74,8 @@ export default function Tools({
                 key={index}
                 className="flex items-start gap-6 p-8 bg-white border-l-8 border-green-500 rounded-r-2xl shadow-lg hover:shadow-2xl hover:border-green-600 transition-all duration-300 hover:translate-x-2"
               >
-                <div className="flex-shrink-0 w-20 h-20 flex items-center justify-center bg-green-50 rounded-2xl">
-                  <span className="text-5xl">{tool.icon}</span>
+                <div className="flex-shrink-0 w-20 h-20 flex items-center justify-center bg-green-50 rounded-2xl text-green-600">
+                  <Icon name={tool.icon} size={40} strokeWidth={2} />
                 </div>
                 <div className="flex-1">
                   <h3 className="font-bold text-2xl mb-3 text-gray-900">
@@ -110,7 +111,9 @@ export default function Tools({
                 {/* Content */}
                 <div className="flex-1 bg-gradient-to-r from-amber-50 to-orange-50 p-6 rounded-2xl border-2 border-orange-200 shadow-md hover:shadow-xl hover:border-orange-300 transition-all duration-300">
                   <div className="flex items-start gap-3 mb-2">
-                    <span className="text-3xl">{tool.icon}</span>
+                    <span className="text-orange-500 mt-1">
+                      <Icon name={tool.icon} size={28} strokeWidth={2} />
+                    </span>
                     <h3 className="font-bold text-xl text-gray-900 mt-1">
                       {tool.title}
                     </h3>
@@ -139,8 +142,8 @@ export default function Tools({
                   {/* Card content */}
                   <div className="relative bg-gradient-to-br from-blue-50 via-white to-indigo-50 p-8 rounded-3xl border-2 border-blue-300 shadow-xl group-hover:shadow-2xl transition-all duration-300 hover:scale-[1.02]">
                     <div className="flex items-center gap-4 mb-4">
-                      <div className="w-16 h-16 flex items-center justify-center bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl shadow-lg">
-                        <span className="text-4xl filter drop-shadow-md">{tool.icon}</span>
+                      <div className="w-16 h-16 flex items-center justify-center bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl shadow-lg text-white">
+                        <Icon name={tool.icon} size={32} strokeWidth={2} />
                       </div>
                       <h3 className="font-bold text-xl text-gray-900 flex-1">
                         {tool.title}
@@ -162,7 +165,7 @@ export default function Tools({
             onClick={() => goToCheckout(ctaSource)}
             className="inline-block bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white font-bold py-4 px-12 rounded-lg transition-all duration-300 text-lg shadow-xl hover:shadow-2xl transform hover:-translate-y-1 border-2 border-yellow-300 cursor-pointer"
           >
-            Dołącz do MasterZone — 97 PLN/mies
+            Dołącz do MasterZone: 97 PLN/mies
           </button>
         </div>
       </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useCheckout } from "@/hooks/useCheckout";
+import Icon from "./Icon";
 
 interface ContentBlock {
   icon: string;
@@ -51,7 +52,9 @@ export default function JoinSection({
               key={index}
               className="bg-white/10 backdrop-blur-sm rounded-xl p-8 hover:bg-white/20 transition-all duration-300"
             >
-              <div className="text-4xl mb-4">{block.icon}</div>
+              <div className="mb-4 text-orange-300">
+                <Icon name={block.icon} size={40} strokeWidth={1.5} />
+              </div>
               <h3 className="text-2xl font-bold mb-4">{block.title}</h3>
               <p className="text-blue-100 leading-relaxed">
                 {block.description}

@@ -1,6 +1,7 @@
 "use client";
 
 import { useCheckout } from "@/hooks/useCheckout";
+import Icon from "./Icon";
 
 interface Step {
   icon: string;
@@ -46,7 +47,9 @@ export default function HowItWorks({
               className="bg-white rounded-xl p-8 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col"
             >
               {/* Icon */}
-              <div className="text-5xl mb-4">{step.icon}</div>
+              <div className="mb-4 text-orange-500">
+                <Icon name={step.icon} size={48} strokeWidth={1.5} />
+              </div>
 
               {/* Title */}
               <h3 className="text-xl font-bold mb-4 text-navy">
@@ -83,7 +86,7 @@ export default function HowItWorks({
             onClick={() => goToCheckout("how_it_works_cta_button")}
             className="inline-block bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white font-bold py-4 px-12 rounded-lg transition-all duration-300 text-lg shadow-xl hover:shadow-2xl transform hover:-translate-y-1 border-2 border-yellow-300 cursor-pointer"
           >
-            Dołącz do MasterZone — 97 PLN/mies
+            Dołącz do MasterZone: 97 PLN/mies
           </button>
         </div>
       </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useCheckout } from "@/hooks/useCheckout";
+import Icon from "./Icon";
 
 interface Benefit {
   icon: string;
@@ -45,8 +46,8 @@ export default function Benefits({ sectionTitle, sectionSubtitle, description, b
               className="flex items-start p-6 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors"
             >
               {/* Icon/Checkmark */}
-              <div className="text-3xl mr-4 flex-shrink-0 text-green-500">
-                {benefit.icon}
+              <div className="mr-4 flex-shrink-0 text-green-500">
+                <Icon name={benefit.icon} size={32} strokeWidth={2} />
               </div>
 
               <div>
@@ -70,7 +71,7 @@ export default function Benefits({ sectionTitle, sectionSubtitle, description, b
             onClick={() => goToCheckout("benefits_cta_button")}
             className="inline-block bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white font-bold py-4 px-12 rounded-lg transition-all duration-300 text-lg shadow-xl hover:shadow-2xl transform hover:-translate-y-1 border-2 border-yellow-300 cursor-pointer"
           >
-            Dołącz do MasterZone — 97 PLN/mies
+            Dołącz do MasterZone: 97 PLN/mies
           </button>
         </div>
       </div>

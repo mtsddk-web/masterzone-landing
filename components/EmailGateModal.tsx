@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { trackEvent } from "./FacebookPixel";
+import Icon from "./Icon";
 
 interface EmailGateModalProps {
   isOpen: boolean;
@@ -106,7 +107,9 @@ export default function EmailGateModal({ isOpen, onClose, onSuccess }: EmailGate
             // SUCCESS VIEW - Check email message
             <>
               {/* Success Icon */}
-              <div className="text-6xl mb-4">📬</div>
+              <div className="flex justify-center mb-4 text-blue-500">
+                <Icon name="Mail" size={64} strokeWidth={1.5} />
+              </div>
 
               {/* Success Headline */}
               <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3">
@@ -130,7 +133,7 @@ export default function EmailGateModal({ isOpen, onClose, onSuccess }: EmailGate
               {/* SPAM Warning */}
               <div className="bg-yellow-50 border-2 border-yellow-400 rounded-lg p-4 mb-4">
                 <p className="text-base font-bold text-yellow-800 flex items-center gap-2">
-                  <span className="text-xl">⚠️</span>
+                  <Icon name="AlertTriangle" size={20} className="text-yellow-600" />
                   <span>Nie widzisz emaila?</span>
                 </p>
                 <p className="text-sm text-yellow-700 mt-2">
@@ -153,14 +156,16 @@ export default function EmailGateModal({ isOpen, onClose, onSuccess }: EmailGate
 
               <p className="text-xs text-gray-500 mt-4">
                 <strong>Radek Pustelnik & Mateusz Dudek</strong><br/>
-                MasterZone – Strefa Skupienia
+                MasterZone, Strefa Skupienia
               </p>
             </>
           ) : (
             // FORM VIEW
             <>
               {/* Icon */}
-              <div className="text-5xl mb-4">🎁</div>
+              <div className="flex justify-center mb-4 text-orange-500">
+                <Icon name="Gift" size={48} strokeWidth={1.5} />
+              </div>
 
               {/* Headline */}
               <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3">

@@ -67,7 +67,7 @@ export async function POST(request: NextRequest) {
 
     if (!response.ok) {
       if (response.status === 422 || response.status === 409) {
-        // Subscriber exists — try to reactivate and add to group
+        // Subscriber exists - try to reactivate and add to group
         const existingRes = await fetch(
           `https://connect.mailerlite.com/api/subscribers/${email}`,
           {

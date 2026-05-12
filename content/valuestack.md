@@ -1,6 +1,6 @@
 ---
 sectionTitle: "Co Dostajesz Każdego Miesiąca w MasterZone"
-sectionSubtitle: "Porównaj z kosztami alternatyw — i zobacz dlaczego 97 PLN/msc to inwestycja, nie koszt"
+sectionSubtitle: "Porównaj z kosztami alternatyw i zobacz dlaczego 97 PLN/msc to inwestycja, nie koszt"
 comparisonTitle: "ZAMIAST płacić osobno:"
 alternativeItems:
   - name: "Coworking / kawiarnia (20 dni × kawa + dojazd)"
@@ -19,7 +19,7 @@ alternativeTotalMin: "1800 PLN"
 alternativeTotalMax: "6600 PLN"
 items:
   - name: "20+ bloków pracy na żywo (body doubling)"
-    description: "Codziennie pracujesz z innymi — koniec prokrastynacji"
+    description: "Codziennie pracujesz z innymi. Koniec prokrastynacji"
     included: true
   - name: "4 sesje planowania z grupą"
     description: "Koniec z chaotycznymi poniedziałkami"
@@ -28,10 +28,10 @@ items:
     description: "Praca głęboka, BLS, ClickUp, onboarding 1:1"
     included: true
   - name: "Społeczność 24/7 + eksperci co miesiąc"
-    description: "Koniec samotności — ludzie, którzy rozumieją Twój tryb pracy"
+    description: "Koniec samotności. Ludzie, którzy rozumieją Twój tryb pracy"
     included: true
 actualPrice: "97 PLN"
 monthlyPrice: "/miesiąc"
-savingsText: "To mniej niż 5 wizyt w kawiarni — a dostajesz codzienne wsparcie, skupienie i społeczność"
+savingsText: "To mniej niż 5 wizyt w kawiarni, a dostajesz codzienne wsparcie, skupienie i społeczność"
 ctaText: "Dołącz do MasterZone"
 ---

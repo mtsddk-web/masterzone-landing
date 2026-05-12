@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export const metadata = {
   title: "Polityka prywatności | MasterZone",
-  description: "Polityka prywatności MasterZone — zasady przetwarzania danych osobowych (RODO).",
+  description: "Polityka prywatności MasterZone - zasady przetwarzania danych osobowych (RODO).",
 };
 
 export default function PrivacyPage() {
@@ -31,21 +31,21 @@ export default function PrivacyPage() {
           <div>
             <h2 className="text-xl font-bold mb-3 text-yellow-300">2. Jakie dane zbieramy</h2>
             <ul className="list-disc list-inside space-y-1">
-              <li>Imię i adres e-mail — przy zapisie do trialu, newsletera lub zakupie</li>
-              <li>Dane z formularzy kontaktowych — gdy piszesz do nas</li>
-              <li>Dane płatnicze (obsługiwane wyłącznie przez Stripe/PayU — my ich nie przechowujemy)</li>
-              <li>Dane techniczne — adres IP, typ przeglądarki, czas wizyty (w celach analitycznych)</li>
-              <li>Identyfikatory reklamowe (piksel Meta/Facebook) — w celu dopasowania reklam</li>
+              <li>Imię i adres e-mail - przy zapisie do trialu, newsletera lub zakupie</li>
+              <li>Dane z formularzy kontaktowych - gdy piszesz do nas</li>
+              <li>Dane płatnicze (obsługiwane wyłącznie przez Stripe/PayU - my ich nie przechowujemy)</li>
+              <li>Dane techniczne - adres IP, typ przeglądarki, czas wizyty (w celach analitycznych)</li>
+              <li>Identyfikatory reklamowe (piksel Meta/Facebook) - w celu dopasowania reklam</li>
             </ul>
           </div>
 
           <div>
             <h2 className="text-xl font-bold mb-3 text-yellow-300">3. Cel i podstawa przetwarzania</h2>
             <ul className="list-disc list-inside space-y-1">
-              <li><strong>Realizacja umowy</strong> (art. 6 ust. 1 lit. b RODO) — dostarczenie dostępu do MasterZone</li>
-              <li><strong>Zgoda</strong> (art. 6 ust. 1 lit. a RODO) — newsletter, marketing, ciasteczka analityczne</li>
-              <li><strong>Prawnie uzasadniony interes</strong> (art. 6 ust. 1 lit. f RODO) — obsługa zapytań, bezpieczeństwo, analityka</li>
-              <li><strong>Obowiązek prawny</strong> (art. 6 ust. 1 lit. c RODO) — księgowość, podatki</li>
+              <li><strong>Realizacja umowy</strong> (art. 6 ust. 1 lit. b RODO) - dostarczenie dostępu do MasterZone</li>
+              <li><strong>Zgoda</strong> (art. 6 ust. 1 lit. a RODO) - newsletter, marketing, ciasteczka analityczne</li>
+              <li><strong>Prawnie uzasadniony interes</strong> (art. 6 ust. 1 lit. f RODO) - obsługa zapytań, bezpieczeństwo, analityka</li>
+              <li><strong>Obowiązek prawny</strong> (art. 6 ust. 1 lit. c RODO) - księgowość, podatki</li>
             </ul>
           </div>
 
@@ -53,21 +53,21 @@ export default function PrivacyPage() {
             <h2 className="text-xl font-bold mb-3 text-yellow-300">4. Odbiorcy danych</h2>
             <p>Dane przekazujemy wyłącznie zaufanym dostawcom usług:</p>
             <ul className="list-disc list-inside space-y-1 mt-2">
-              <li>Stripe, PayU — obsługa płatności</li>
-              <li>Skool — dostarczenie społeczności</li>
-              <li>Meta (Facebook) — reklamy i piksel konwersji</li>
-              <li>Microsoft Clarity, Vercel Analytics — analityka strony</li>
-              <li>Sender.net / MailerLite — wysyłka e-maili</li>
-              <li>Biuro rachunkowe — rozliczenia księgowe</li>
+              <li>Stripe, PayU - obsługa płatności</li>
+              <li>Skool - dostarczenie społeczności</li>
+              <li>Meta (Facebook) - reklamy i piksel konwersji</li>
+              <li>Microsoft Clarity, Vercel Analytics - analityka strony</li>
+              <li>Sender.net / MailerLite - wysyłka e-maili</li>
+              <li>Biuro rachunkowe - rozliczenia księgowe</li>
             </ul>
           </div>
 
           <div>
             <h2 className="text-xl font-bold mb-3 text-yellow-300">5. Okres przechowywania</h2>
             <ul className="list-disc list-inside space-y-1">
-              <li>Dane subskrybentów — do czasu wycofania zgody</li>
-              <li>Dane klientów (zakupy) — 5 lat od końca roku podatkowego (obowiązek księgowy)</li>
-              <li>Logi techniczne — do 12 miesięcy</li>
+              <li>Dane subskrybentów - do czasu wycofania zgody</li>
+              <li>Dane klientów (zakupy) - 5 lat od końca roku podatkowego (obowiązek księgowy)</li>
+              <li>Logi techniczne - do 12 miesięcy</li>
             </ul>
           </div>
 
