@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { revalidatePath } from 'next/cache';
 import { supabaseAdmin } from '@/lib/supabase-server';
 
-// GET — return all content rows
+// GET - return all content rows
 export async function GET() {
   if (!supabaseAdmin) {
     return NextResponse.json({ error: 'Supabase not configured' }, { status: 500 });
@@ -21,7 +21,7 @@ export async function GET() {
   return NextResponse.json(data);
 }
 
-// PUT — batch upsert per section
+// PUT - batch upsert per section
 export async function PUT(request: Request) {
   if (!supabaseAdmin) {
     return NextResponse.json({ error: 'Supabase not configured' }, { status: 500 });

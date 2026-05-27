@@ -1,5 +1,7 @@
 "use client";
 
+import { useState } from "react";
+
 interface VideoItem {
   videoUrl: string;
   name: string;
@@ -10,6 +12,46 @@ interface VideoTestimonialProps {
   sectionTitle?: string;
   description?: string;
   videos?: VideoItem[];
+}
+
+function VideoCard({ video }: { video: VideoItem }) {
+  const [failed, setFailed] = useState(false);
+
+  return (
+    <div className="bg-white rounded-xl shadow-xl p-4 md:p-6 border border-blue-100">
+      {/* Video Player z gracefull fallbackiem gdy plik się nie ładuje */}
+      <div className="mb-4">
+        {failed ? (
+          <div className="w-full max-w-md mx-auto rounded-lg shadow-lg bg-gradient-to-br from-blue-100 to-indigo-100 aspect-video flex items-center justify-center text-center px-6">
+            <p className="text-sm text-gray-600">
+              Wideo chwilowo niedostępne. Napisz na kontakt@masterzone.edu.pl, podeślemy link.
+            </p>
+          </div>
+        ) : (
+          <video
+            controls
+            className="w-full max-w-md mx-auto rounded-lg shadow-lg"
+            preload="metadata"
+            onError={() => setFailed(true)}
+          >
+            <source src={video.videoUrl} type="video/mp4" />
+            Twoja przeglądarka nie obsługuje odtwarzania wideo.
+          </video>
+        )}
+      </div>
+
+      {/* Author Info */}
+      <div className="flex items-center gap-3 pt-3 border-t border-gray-100">
+        <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-2xl shadow-lg">
+          🎥
+        </div>
+        <div>
+          <div className="font-bold text-base text-gray-900">{video.name}</div>
+          <div className="text-sm text-gray-600">{video.role}</div>
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default function VideoTestimonial({
@@ -40,30 +82,7 @@ export default function VideoTestimonial({
         {/* Videos Grid - 3 columns on larger screens */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {videos.map((video, index) => (
-            <div key={index} className="bg-white rounded-xl shadow-xl p-4 md:p-6 border border-blue-100">
-              {/* Video Player */}
-              <div className="mb-4">
-                <video
-                  controls
-                  className="w-full max-w-md mx-auto rounded-lg shadow-lg"
-                  preload="metadata"
-                >
-                  <source src={video.videoUrl} type="video/mp4" />
-                  Twoja przeglądarka nie obsługuje odtwarzania wideo.
-                </video>
-              </div>
-
-              {/* Author Info */}
-              <div className="flex items-center gap-3 pt-3 border-t border-gray-100">
-                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-2xl shadow-lg">
-                  🎥
-                </div>
-                <div>
-                  <div className="font-bold text-base text-gray-900">{video.name}</div>
-                  <div className="text-sm text-gray-600">{video.role}</div>
-                </div>
-              </div>
-            </div>
+            <VideoCard key={index} video={video} />
           ))}
         </div>
       </div>

@@ -23,12 +23,12 @@ Badania z zakresu psychologii spolecznej pokazuja, ze sama obecnosc innego czlow
 
 Kilka mechanizmow stoi za skutecznoscia body doubling:
 
-- **Spoleczna odpowiedzialnosc** — nie chcesz byc ta osoba, ktora marnuje czas, gdy inni pracuja
-- **Zarazanie skupieniem** — neurony lustrzane sprawiaja, ze nastroj i zachowanie innych osob nas "zarazaja"
-- **Struktura czasowa** — umowiony blok pracy ma poczatek i koniec, co zmusza do dzialania
-- **Redukcja izolacji** — praca zdalna bywa samotna, obecnosc innych ludzi poprawia samopoczucie
+- **Spoleczna odpowiedzialnosc** - nie chcesz byc ta osoba, ktora marnuje czas, gdy inni pracuja
+- **Zarazanie skupieniem** - neurony lustrzane sprawiaja, ze nastroj i zachowanie innych osob nas "zarazaja"
+- **Struktura czasowa** - umowiony blok pracy ma poczatek i koniec, co zmusza do dzialania
+- **Redukcja izolacji** - praca zdalna bywa samotna, obecnosc innych ludzi poprawia samopoczucie
 
-## Body doubling online — czy to mozliwe?
+## Body doubling online - czy to mozliwe?
 
 Tak. Badania z 2023 roku (Universitat Zurich) pokazuja, ze wirtualne body doubling dziala prawie tak samo dobrze jak fizyczne. Warunek: musi byc interakcja na poczatku (krotkie "czesc, co dzis robisz?") i na koncu ("jak poszlo?").
 
@@ -36,11 +36,11 @@ Wlasnie dlatego stworzylem MasterZone. Codziennie o stalych porach spotykamy sie
 
 ## Jak zaczac stosowac body doubling?
 
-1. **Znajdz partnera do pracy** — kolega, przyjaciol, spolecznosc online
-2. **Ustal stale godziny** — regularnosc jest kluczowa
-3. **Na poczatku powiedz co zrobisz** — publiczne zobowiazanie zwieksza szanse realizacji o 65%
-4. **Na koncu podsumuj** — zamkniecie petli daje satysfakcje i buduje nawyk
-5. **Nie gadaj w trakcie** — blok pracy to czas na cisza i fokus
+1. **Znajdz partnera do pracy** - kolega, przyjaciol, spolecznosc online
+2. **Ustal stale godziny** - regularnosc jest kluczowa
+3. **Na poczatku powiedz co zrobisz** - publiczne zobowiazanie zwieksza szanse realizacji o 65%
+4. **Na koncu podsumuj** - zamkniecie petli daje satysfakcje i buduje nawyk
+5. **Nie gadaj w trakcie** - blok pracy to czas na cisza i fokus
 
 ## Podsumowanie
 

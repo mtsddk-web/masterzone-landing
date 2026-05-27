@@ -4,11 +4,11 @@ import BlogCard from "@/components/BlogCard";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Blog — MasterZone | Produktywnosc, Deep Work, Praca Zdalna",
+  title: "Blog - MasterZone | Produktywnosc, Deep Work, Praca Zdalna",
   description:
     "Artykuly o produktywnosci, pracy glebokiej, nawykach i pracy zdalnej. Praktyczne techniki dla soloprzedsiebiorcow i freelancerow.",
   openGraph: {
-    title: "Blog — MasterZone",
+    title: "Blog - MasterZone",
     description: "Artykuly o produktywnosci, deep work i pracy zdalnej",
     url: "https://rozproszenie.masterzone.edu.pl/blog",
     siteName: "MasterZone",

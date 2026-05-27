@@ -25,7 +25,7 @@ import path from "path";
 import matter from "gray-matter";
 import { getHomepageContent } from "@/lib/content";
 
-// Markdown loader — used for sections NOT managed by admin CMS
+// Markdown loader - used for sections NOT managed by admin CMS
 // (video, video-testimonial, tools, support, community, valuestack)
 function getContentData(filename: string): any {
   const filePath = path.join(process.cwd(), "content", filename);
@@ -78,7 +78,7 @@ export default async function Home() {
     description: c.hero?.description,
     descriptionShort: c.hero?.descriptionShort,
     ctaText: c.hero?.ctaText || 'Dołącz do MasterZone',
-    ctaUrl: 'https://www.skool.com/masterzone',
+    ctaUrl: '/checkout',
     videoMediaId: videoData.mediaId,
     videoAspectRatio: videoData.aspectRatio,
     trialInfo: c.hero?.trialInfo,
@@ -172,8 +172,8 @@ export default async function Home() {
     subtitle: c.transformation?.subtitle || '',
     steps: transformSteps.length > 0 ? transformSteps : transformMarkdown.steps || [],
     closingText: c.transformation?.closingText || '',
-    ctaText: transformMarkdown.ctaText || 'Sprawdź to sam — dołącz do MasterZone',
-    ctaUrl: transformMarkdown.ctaUrl || 'https://www.skool.com/masterzone',
+    ctaText: transformMarkdown.ctaText || 'Sprawdź to sam - dołącz do MasterZone',
+    ctaUrl: '/checkout',
   };
 
   // Pricing
@@ -217,8 +217,8 @@ export default async function Home() {
         }))
       : joinMarkdown.blocks || [],
     contrastText: c.joinsection?.contrastText || '',
-    ctaText: joinMarkdown.ctaText || 'Dołącz do MasterZone — 97 PLN/miesiąc',
-    ctaUrl: joinMarkdown.ctaUrl || 'https://www.skool.com/masterzone',
+    ctaText: joinMarkdown.ctaText || 'Dołącz do MasterZone - 97 PLN/miesiąc',
+    ctaUrl: '/checkout',
     guarantee: joinMarkdown.guarantee,
     stats: joinMarkdown.stats,
   };
@@ -228,7 +228,7 @@ export default async function Home() {
     headline: c.cta?.headline || '',
     subheadline: c.cta?.subheadline || '',
     buttonText: c.cta?.buttonText || 'Dołącz do MasterZone',
-    buttonUrl: c.cta?.buttonUrl || 'https://www.skool.com/masterzone',
+    buttonUrl: '/checkout',
   };
 
   return (

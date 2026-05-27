@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (!post) return {};
 
   return {
-    title: `${post.title} — MasterZone Blog`,
+    title: `${post.title} - MasterZone Blog`,
     description: post.description,
     alternates: {
       canonical: `/blog/${post.slug}`,

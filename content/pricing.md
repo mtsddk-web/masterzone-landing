@@ -1,6 +1,6 @@
 ---
 sectionTitle: "Prosty, Przejrzysty Cennik"
-sectionSubtitle: "Wszystko w jednej cenie — bez ukrytych kosztów, bez umów"
+sectionSubtitle: "Wszystko w jednej cenie, bez ukrytych kosztów, bez umów"
 plans:
   - name: "MasterZone Community"
     price: "97 PLN"
@@ -20,7 +20,7 @@ plans:
       - "Networking z przedsiębiorcami"
       - "Accountability partnerzy"
     ctaText: "Dołącz do MasterZone"
-    ctaUrl: "https://www.skool.com/masterzone"
+    ctaUrl: "/checkout"
     featured: true
-    guarantee: "7 dni za darmo, potem 97 PLN/miesiąc. Bez umów. Anulujesz kiedy chcesz. 30-dniowa gwarancja zwrotu — jeśli nie zrobisz więcej w 90 min, oddajemy pieniądze."
+    guarantee: "7 dni za darmo, potem 97 PLN/miesiąc. Bez umów. Anulujesz kiedy chcesz. 30-dniowa gwarancja zwrotu. Jeśli nie zrobisz więcej w 90 min, oddajemy pieniądze."
 ---

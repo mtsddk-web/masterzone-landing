@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useCheckout } from "@/hooks/useCheckout";
+import Icon from "./Icon";
 
 interface Testimonial {
   name: string;
@@ -65,12 +66,12 @@ export default function Testimonials({ sectionTitle, testimonials }: Testimonial
                   {/* 5 Stars Rating */}
                   <div className="flex items-center gap-1 mb-4">
                     {[...Array(5)].map((_, i) => (
-                      <span key={i} className="text-yellow-400 text-2xl">⭐</span>
+                      <Icon key={i} name="Star" size={24} className="text-yellow-400 fill-yellow-400" />
                     ))}
                   </div>
 
                   {/* Quote Icon */}
-                  <div className="text-navy text-5xl mb-6">"</div>
+                  <div className="text-navy text-6xl leading-none mb-2 font-serif">&ldquo;</div>
 
                   {/* Content */}
                   <p className="text-gray-700 text-lg md:text-xl mb-8 leading-relaxed italic min-h-[120px]">
@@ -155,7 +156,7 @@ export default function Testimonials({ sectionTitle, testimonials }: Testimonial
             onClick={() => goToCheckout("testimonials_cta_button")}
             className="inline-block bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white font-bold py-4 px-12 rounded-lg transition-all duration-300 text-lg shadow-xl hover:shadow-2xl transform hover:-translate-y-1 border-2 border-yellow-300 cursor-pointer"
           >
-            Dołącz do MasterZone — 97 PLN/mies
+            Dołącz do MasterZone: 97 PLN/mies
           </button>
         </div>
       </div>

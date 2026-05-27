@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Script from "next/script";
 import { useCheckout } from "@/hooks/useCheckout";
+import Icon from "./Icon";
 
 interface HeroProps {
   preheadline?: string;
@@ -101,7 +102,7 @@ export default function Hero({
       </div>
 
       <div className="container-custom text-center">
-        {/* Preheadline - eyebrow/tagline (NIE button — usunieto border/rounded/pill styling) */}
+        {/* Preheadline - eyebrow/tagline (NIE button - usunieto border/rounded/pill styling) */}
         {preheadline && (
           <p className="mb-3 md:mb-6 text-sm md:text-base lg:text-lg font-medium text-yellow-300/90 uppercase tracking-wider">
             {preheadline}
@@ -114,7 +115,7 @@ export default function Hero({
           dangerouslySetInnerHTML={renderHighlightedHeadline()}
         />
 
-        {/* Description — mobile: short (2 lines), desktop: full */}
+        {/* Description - mobile: short (2 lines), desktop: full */}
         {descriptionShort && (
           <p className="md:hidden text-sm mb-4 max-w-2xl mx-auto text-white/80 px-4">
             {descriptionShort}
@@ -138,7 +139,9 @@ export default function Hero({
                 >
                   <div className="absolute inset-0 flex items-center justify-center">
                     <div className="text-center px-6">
-                      <div className="text-5xl md:text-6xl mb-4 opacity-80">🎯</div>
+                      <div className="mb-4 opacity-80 flex justify-center text-white/90">
+                        <Icon name="Target" size={64} strokeWidth={1.5} />
+                      </div>
                       <p className="text-lg md:text-xl font-semibold text-white/90 mb-2">
                         Wspólna praca w skupieniu
                       </p>
@@ -149,7 +152,7 @@ export default function Hero({
                   </div>
                 </div>
               ) : !videoLoaded ? (
-                /* Poster + play button — Wistia scripts ladowane dopiero po kliknieciu */
+                /* Poster + play button - Wistia scripts ladowane dopiero po kliknieciu */
                 <button
                   type="button"
                   onClick={() => setVideoLoaded(true)}
@@ -234,27 +237,28 @@ export default function Hero({
 
         {/* Social Proof Micro-Testimonial - Above the Fold */}
         <div className="mt-6 flex flex-col md:flex-row items-center justify-center gap-4 text-left max-w-2xl mx-auto bg-white/10 backdrop-blur-sm rounded-xl p-4 md:p-6 border-2 border-yellow-400/40 shadow-2xl">
-          <div className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center text-3xl md:text-4xl flex-shrink-0 shadow-lg">
-            👩‍💼
+          <div className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center text-2xl md:text-3xl font-black text-white flex-shrink-0 shadow-lg">
+            I
           </div>
           <div className="flex-1 text-center md:text-left">
-            <div className="flex justify-center md:justify-start mb-1">
+            <div className="flex justify-center md:justify-start mb-1 gap-0.5">
               {[...Array(5)].map((_, i) => (
-                <span key={i} className="text-yellow-400 text-base md:text-lg">⭐</span>
+                <Icon key={i} name="Star" size={18} className="text-yellow-400 fill-yellow-400" />
               ))}
             </div>
             <p className="text-sm md:text-base text-white/95 italic leading-relaxed mb-2">
               "W ciągu godziny robię więcej niż zwykle w cały dzień. To jak poranny zastrzyk energii!"
             </p>
-            <p className="text-xs md:text-sm text-yellow-300 font-semibold">— Iza, Wirtualna Asystentka</p>
+            <p className="text-xs md:text-sm text-yellow-300 font-semibold">Iza, Wirtualna Asystentka</p>
           </div>
         </div>
 
         {/* Skool Info */}
         {skoolInfo && (
           <div className="mt-6 md:mt-8 p-4 md:p-6 bg-white/10 backdrop-blur-sm rounded-lg max-w-3xl mx-auto border border-white/20">
-            <p className="text-sm md:text-base text-white/90">
-              ℹ️ {skoolInfo}
+            <p className="text-sm md:text-base text-white/90 flex items-start gap-2 justify-center">
+              <Icon name="Info" size={18} className="flex-shrink-0 mt-0.5 text-blue-300" />
+              <span>{skoolInfo}</span>
             </p>
           </div>
         )}

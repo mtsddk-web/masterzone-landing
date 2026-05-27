@@ -1,14 +1,15 @@
 "use client";
 
 import { useCheckout } from "@/hooks/useCheckout";
+import Icon from "./Icon";
 
 export default function PriceComparison() {
   const { goToCheckout } = useCheckout();
 
   const items = [
-    { icon: "🏢", name: "Coworking", price: "500–1500 zł", period: "/msc" },
-    { icon: "🧑‍🏫", name: "Personal coach", price: "2000+ zł", period: "/msc" },
-    { icon: "🎯", name: "MasterZone", price: "97 zł", period: "/msc", featured: true },
+    { icon: "Building2", name: "Coworking", price: "500-1500 zł", period: "/msc" },
+    { icon: "GraduationCap", name: "Personal coach", price: "2000+ zł", period: "/msc" },
+    { icon: "Target", name: "MasterZone", price: "97 zł", period: "/msc", featured: true },
   ];
 
   return (
@@ -30,7 +31,9 @@ export default function PriceComparison() {
                   : "border border-gray-200 bg-gray-50"
               }`}
             >
-              <div className="text-3xl mb-3">{item.icon}</div>
+              <div className={`mb-3 flex justify-center ${item.featured ? "text-blue-600" : "text-gray-500"}`}>
+                <Icon name={item.icon} size={32} strokeWidth={1.5} />
+              </div>
               <h3 className="font-bold text-gray-900 mb-2">{item.name}</h3>
               <p
                 className={`text-2xl font-bold ${
@@ -45,7 +48,7 @@ export default function PriceComparison() {
         </div>
 
         <p className="text-center text-gray-500 text-sm md:text-base">
-          Wszystko w jednej cenie — sesje, planowanie, społeczność, kursy.
+          Wszystko w jednej cenie: sesje, planowanie, społeczność, kursy.
         </p>
       </div>
     </section>

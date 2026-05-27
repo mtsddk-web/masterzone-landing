@@ -80,7 +80,7 @@ function SuccessContent() {
           <ol className="space-y-3 text-blue-100">
             <li className="flex items-start gap-3">
               <span className="bg-yellow-400 text-gray-900 font-bold w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 text-sm">1</span>
-              <span><strong className="text-white">Sprawdź skrzynkę email</strong> — w ciągu kilku minut otrzymasz osobiste zaproszenie od Skool z przyciskiem &bdquo;JOIN NOW&rdquo;. Sprawdź też folder SPAM.</span>
+              <span><strong className="text-white">Sprawdź skrzynkę email</strong> - w ciągu kilku minut otrzymasz osobiste zaproszenie od Skool z przyciskiem &bdquo;JOIN NOW&rdquo;. Sprawdź też folder SPAM.</span>
             </li>
             <li className="flex items-start gap-3">
               <span className="bg-yellow-400 text-gray-900 font-bold w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 text-sm">2</span>
@@ -94,7 +94,7 @@ function SuccessContent() {
 
           <div className="mt-6 p-4 bg-yellow-500/10 border border-yellow-500/30 rounded-lg">
             <p className="text-sm text-yellow-200">
-              <strong>⚠️ Ważne:</strong> Dostęp aktywujesz przez link w mailu od Skool — <strong>nie wchodź</strong> na publiczną stronę skool.com/masterzone, bo zobaczysz tam standardową cenę i będziesz musiał płacić ponownie.
+              <strong>⚠️ Ważne:</strong> Dostęp aktywujesz przez link w mailu od Skool - <strong>nie wchodź</strong> na publiczną stronę skool.com/masterzone, bo zobaczysz tam standardową cenę i będziesz musiał płacić ponownie.
             </p>
           </div>
         </div>
@@ -102,7 +102,7 @@ function SuccessContent() {
         {/* CTA buttons */}
         <div className="text-center space-y-4">
           <p className="text-blue-200 text-base">
-            Mail nie przyszedł w ciągu 10 minut? Napisz na <a href="mailto:kontakt@masterzone.edu.pl" className="text-yellow-300 underline font-semibold">kontakt@masterzone.edu.pl</a> — ręcznie wyślemy zaproszenie.
+            Mail nie przyszedł w ciągu 10 minut? Napisz na <a href="mailto:kontakt@masterzone.edu.pl" className="text-yellow-300 underline font-semibold">kontakt@masterzone.edu.pl</a> - ręcznie wyślemy zaproszenie.
           </p>
         </div>
       </div>

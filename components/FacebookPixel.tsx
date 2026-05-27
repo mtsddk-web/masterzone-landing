@@ -27,6 +27,21 @@ const buildFbcFromUrl = (): string | undefined => {
   return `fb.1.${Date.now()}.${fbclid}`;
 };
 
+const EXTERNAL_ID_KEY = "mz_external_id";
+
+const getOrCreateExternalId = (): string | undefined => {
+  if (typeof window === "undefined") return undefined;
+  try {
+    const existing = window.localStorage.getItem(EXTERNAL_ID_KEY);
+    if (existing) return existing;
+    const fresh = generateEventId();
+    window.localStorage.setItem(EXTERNAL_ID_KEY, fresh);
+    return fresh;
+  } catch {
+    return undefined;
+  }
+};
+
 const sendToCapi = (payload: Record<string, unknown>) => {
   if (typeof window === "undefined") return;
   try {
@@ -53,6 +68,7 @@ export default function FacebookPixel() {
     const fbq = (window as any).fbq;
     if (typeof fbq !== "function") return;
     const eventId = generateEventId();
+    const externalId = getOrCreateExternalId();
     fbq("track", "PageView", {}, { eventID: eventId });
     sendToCapi({
       eventName: "PageView",
@@ -60,6 +76,7 @@ export default function FacebookPixel() {
       eventSourceUrl: window.location.href,
       fbp: readCookie("_fbp"),
       fbc: readCookie("_fbc") || buildFbcFromUrl(),
+      externalId,
     });
   }, []);
 
@@ -112,6 +129,11 @@ export const trackEvent = (eventName: string, data?: Record<string, any>) => {
         customData[key] = value;
       }
     }
+  }
+
+  if (!userIdentifiers.externalId) {
+    const fallback = getOrCreateExternalId();
+    if (fallback) userIdentifiers.externalId = fallback;
   }
 
   fbq("track", eventName, customData, { eventID: eventId });

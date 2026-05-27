@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { createHash } from 'crypto';
 import { getStripe } from '@/lib/stripe';
 import { supabaseAdmin } from '@/lib/supabase-server';
+import { upsertSubscriber, legacyMailerLiteTag } from '@/lib/sender';
 import Stripe from 'stripe';
 
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!;
@@ -81,69 +82,80 @@ async function upsertSubscription(
     return;
   }
 
+  const row: Record<string, any> = {
+    stripe_customer_id: customerId,
+    stripe_subscription_id: subscriptionId,
+    email,
+    status,
+    price_id: sessionOrSub.price_id || null,
+    currency: 'pln',
+    amount: sessionOrSub.amount || 9700,
+    current_period_start: sessionOrSub.current_period_start
+      ? new Date(sessionOrSub.current_period_start * 1000).toISOString()
+      : null,
+    current_period_end: sessionOrSub.current_period_end
+      ? new Date(sessionOrSub.current_period_end * 1000).toISOString()
+      : null,
+    trial_start: sessionOrSub.trial_start
+      ? new Date(sessionOrSub.trial_start * 1000).toISOString()
+      : null,
+    trial_end: sessionOrSub.trial_end
+      ? new Date(sessionOrSub.trial_end * 1000).toISOString()
+      : null,
+    checkout_session_id: sessionOrSub.checkout_session_id || null,
+    updated_at: new Date().toISOString(),
+  };
+
+  // UTM zapisujemy TYLKO jak ma sens - nigdy nie nadpisuj istniejacej atrybucji nullem
+  // (np. gdy customer.subscription.updated przyjdzie po checkout.session.completed).
+  if (sessionOrSub.utm_source) row.utm_source = sessionOrSub.utm_source;
+  if (sessionOrSub.utm_medium) row.utm_medium = sessionOrSub.utm_medium;
+  if (sessionOrSub.utm_campaign) row.utm_campaign = sessionOrSub.utm_campaign;
+
   const { error } = await supabaseAdmin
     .from('subscriptions')
-    .upsert(
-      {
-        stripe_customer_id: customerId,
-        stripe_subscription_id: subscriptionId,
-        email,
-        status,
-        price_id: sessionOrSub.price_id || null,
-        currency: 'pln',
-        amount: sessionOrSub.amount || 9700,
-        current_period_start: sessionOrSub.current_period_start
-          ? new Date(sessionOrSub.current_period_start * 1000).toISOString()
-          : null,
-        current_period_end: sessionOrSub.current_period_end
-          ? new Date(sessionOrSub.current_period_end * 1000).toISOString()
-          : null,
-        trial_start: sessionOrSub.trial_start
-          ? new Date(sessionOrSub.trial_start * 1000).toISOString()
-          : null,
-        trial_end: sessionOrSub.trial_end
-          ? new Date(sessionOrSub.trial_end * 1000).toISOString()
-          : null,
-        checkout_session_id: sessionOrSub.checkout_session_id || null,
-        utm_source: sessionOrSub.utm_source || null,
-        utm_medium: sessionOrSub.utm_medium || null,
-        utm_campaign: sessionOrSub.utm_campaign || null,
-        updated_at: new Date().toISOString(),
-      },
-      { onConflict: 'stripe_customer_id' }
-    );
+    .upsert(row, { onConflict: 'stripe_customer_id' });
 
   if (error) {
     console.error('Supabase upsert error:', error);
   }
 }
 
-async function tagMailerLite(email: string, status: string) {
-  const apiKey = process.env.MAILERLITE_API_KEY;
-  if (!apiKey) return;
+/**
+ * Tag Paid Member po sukcesie płatności Stripe.
+ *
+ * PARALLEL MODE (od 27.05.2026, ~2 tyg do ~10.06.2026):
+ * - Sender.net = primary (env SENDER_PAID_GROUP_ID, default "e9jg23" Paid Members)
+ * - MailerLite = legacy (drugi call, jeśli MAILERLITE_API_KEY w env)
+ *
+ * Po potwierdzeniu że Sender łapie 100% — usunąć MAILERLITE_API_KEY z env.
+ */
+async function tagPaidMember(email: string, status: string) {
+  if (!email) return;
 
-  try {
-    const groupId = process.env.MAILERLITE_PAID_GROUP_ID;
+  const groupId = process.env.SENDER_PAID_GROUP_ID || 'e9jg23';
+  const fields = {
+    trial_status: status,
+    payment_date: new Date().toISOString(),
+  };
 
-    await fetch('https://connect.mailerlite.com/api/subscribers', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-      body: JSON.stringify({
-        email,
-        fields: {
-          trial_status: status,
-          payment_date: new Date().toISOString(),
-        },
-        groups: groupId ? [groupId] : [],
-        status: 'active',
-      }),
-    });
-  } catch (error) {
-    console.error('MailerLite tag error:', error);
+  const senderResult = await upsertSubscriber({
+    email,
+    groups: [groupId],
+    fields,
+  });
+  if (!senderResult.success) {
+    console.error('Sender.net paid tag error (stripe):', senderResult.error);
+  } else {
+    console.log('✅ Sender.net paid tag (stripe):', email, status);
+  }
+
+  const mlGroupId = process.env.MAILERLITE_PAID_GROUP_ID;
+  const mlResult = await legacyMailerLiteTag(email, fields, mlGroupId);
+  if (mlResult.ok) {
+    console.log('🟡 [parallel] MailerLite tag (stripe):', email);
+  } else if (mlResult.error !== 'no_key') {
+    console.warn('MailerLite legacy tag failed (stripe):', mlResult.error);
   }
 }
 
@@ -191,15 +203,18 @@ export async function POST(request: Request) {
         });
 
         // Tag in MailerLite
-        await tagMailerLite(email, 'paid');
+        await tagPaidMember(email, 'paid');
 
-        // Send Meta CAPI Purchase (server-side, closes the attribution loop)
+        // Send Meta CAPI Purchase (server-side, closes the attribution loop).
+        // fbc/fbp z metadata sesji => Meta dopina Purchase do kliku w reklame.
         await sendMetaCAPIPurchase({
           email,
           amount: item?.price.unit_amount || 9700,
           currency: item?.price.currency || 'pln',
           eventId: session.id,
-          sourceUrl: 'https://rozproszenie.masterzone.edu.pl/',
+          sourceUrl:
+            (session.metadata?.landing_url as string) ||
+            'https://rozproszenie.masterzone.edu.pl/',
           fbp: (session.metadata?.fbp as string) || null,
           fbc: (session.metadata?.fbc as string) || null,
         });
@@ -222,6 +237,9 @@ export async function POST(request: Request) {
           current_period_end: subItem?.current_period_end,
           trial_start: subscription.trial_start,
           trial_end: subscription.trial_end,
+          utm_source: subscription.metadata?.utm_source || undefined,
+          utm_medium: subscription.metadata?.utm_medium || undefined,
+          utm_campaign: subscription.metadata?.utm_campaign || undefined,
         });
 
         console.log(`Subscription updated: ${subscription.id}, status: ${subscription.status}`);
@@ -238,7 +256,7 @@ export async function POST(request: Request) {
           current_period_end: subscription.items.data[0]?.current_period_end,
         });
 
-        await tagMailerLite(email, 'canceled');
+        await tagPaidMember(email, 'canceled');
         console.log(`Subscription canceled: ${subscription.id}`);
         break;
       }
