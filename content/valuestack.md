@@ -32,6 +32,10 @@ items:
     included: true
 actualPrice: "97 PLN"
 monthlyPrice: "/miesiąc"
+trialBadge: "PIERWSZE 7 DNI ZA DARMO"
+earlyBirdPrice: "67 PLN"
+earlyBirdRegularPrice: "97 PLN"
+earlyBirdLabel: "PROMO ZAŁOŻYCIELSKA dla pierwszych 100 osób"
 savingsText: "To mniej niż 5 wizyt w kawiarni, a dostajesz codzienne wsparcie, skupienie i społeczność"
 ctaText: "Dołącz do MasterZone"
 ---

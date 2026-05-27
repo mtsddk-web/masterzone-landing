@@ -16,6 +16,13 @@ interface HeroProps {
   videoAspectRatio?: string;
   videoFallbackImage?: string;
   trialInfo?: string;
+  trialBadge?: string;
+  trialDetails?: string;
+  earlyBirdLabel?: string;
+  earlyBirdPrice?: string;
+  earlyBirdRegularPrice?: string;
+  earlyBirdPriceSuffix?: string;
+  ctaSubline?: string;
   securityInfo?: string;
   skoolInfo?: string;
 }
@@ -31,15 +38,21 @@ export default function Hero({
   videoAspectRatio = "1.6",
   videoFallbackImage = "/images/hero-fallback.jpg",
   trialInfo,
+  trialBadge,
+  trialDetails,
+  earlyBirdLabel,
+  earlyBirdPrice,
+  earlyBirdRegularPrice,
+  earlyBirdPriceSuffix,
+  ctaSubline,
   securityInfo,
   skoolInfo
 }: HeroProps) {
   const { goToCheckout } = useCheckout();
   const [videoFailed, setVideoFailed] = useState(false);
-  const [videoLoaded, setVideoLoaded] = useState(false);
 
   useEffect(() => {
-    if (!videoMediaId || !videoLoaded) return;
+    if (!videoMediaId) return;
 
     const checkVideo = () => {
       const player = document.querySelector(`wistia-player[media-id='${videoMediaId}']`);
@@ -60,7 +73,7 @@ export default function Hero({
     const timer1 = setTimeout(checkVideo, 3000);
     const timer2 = setTimeout(checkVideo, 6000);
     return () => { clearTimeout(timer1); clearTimeout(timer2); };
-  }, [videoMediaId, videoLoaded]);
+  }, [videoMediaId]);
 
   // Render headline with highlighted key numbers
   const renderHighlightedHeadline = () => {
@@ -83,7 +96,7 @@ export default function Hero({
 
   return (
     <>
-      {videoMediaId && !videoLoaded && (
+      {videoMediaId && (
         <link
           rel="preload"
           as="image"
@@ -151,36 +164,9 @@ export default function Hero({
                     </div>
                   </div>
                 </div>
-              ) : !videoLoaded ? (
-                /* Poster + play button - Wistia scripts ladowane dopiero po kliknieciu */
-                <button
-                  type="button"
-                  onClick={() => setVideoLoaded(true)}
-                  aria-label="Odtworz wideo"
-                  className="group relative block w-full cursor-pointer bg-black"
-                  style={{ paddingTop: `${(100 / parseFloat(videoAspectRatio)).toFixed(2)}%` }}
-                >
-                  <img
-                    src="/images/hero-poster.jpg"
-                    alt="Zobacz jak dzialaja bloki pracy gl\u0119bokiej"
-                    loading="eager"
-                    decoding="async"
-                    fetchPriority="high"
-                    className="absolute inset-0 w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors" />
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="w-20 h-20 md:w-28 md:h-28 rounded-full bg-white/95 shadow-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
-                      <svg viewBox="0 0 24 24" className="w-10 h-10 md:w-14 md:h-14 text-red-600 ml-1" fill="currentColor">
-                        <path d="M8 5v14l11-7z" />
-                      </svg>
-                    </div>
-                  </div>
-                  <div className="absolute bottom-3 left-3 md:bottom-4 md:left-4 bg-black/60 text-white text-xs md:text-sm px-2 py-1 md:px-3 md:py-1.5 rounded font-semibold">
-                    Zobacz jak to dziala
-                  </div>
-                </button>
               ) : (
+                /* Eager autoplay: muted + playsinline (browser policy requires muted).
+                   Poster background pokazuje sie przed :defined (przed zaladowaniem custom element). */
                 <>
                   <link rel="preconnect" href="https://fast.wistia.com" />
                   <Script
@@ -196,12 +182,12 @@ export default function Hero({
                     __html: `
                       <style>
                         wistia-player[media-id='${videoMediaId}']:not(:defined) {
-                          background: center / contain no-repeat url('/images/hero-poster.jpg');
+                          background: center / cover no-repeat url('/images/hero-poster.jpg');
                           display: block;
                           padding-top: ${(100 / parseFloat(videoAspectRatio)).toFixed(2)}%;
                         }
                       </style>
-                      <wistia-player media-id="${videoMediaId}" aspect="${videoAspectRatio}" autoplay="true"></wistia-player>
+                      <wistia-player media-id="${videoMediaId}" aspect="${videoAspectRatio}" autoplay="true" muted="true" playsinline="true"></wistia-player>
                     `
                   }} />
                 </>
@@ -210,15 +196,60 @@ export default function Hero({
           </div>
         )}
 
-        {/* Trial Info */}
-        {trialInfo && (
-          <div className="mb-4 text-lg md:text-xl font-semibold text-yellow-300">
-            {trialInfo}
+        {/* Trial Info - primary: 7 dni za darmo, secondary: early bird, tertiary: trust */}
+        {(trialBadge || trialDetails || trialInfo || earlyBirdPrice) && (
+          <div className="mb-5 flex flex-col items-center gap-2">
+            {trialBadge ? (
+              <>
+                {/* PRIMARY: free trial badge (zero risk hook) */}
+                <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-500 text-white text-base md:text-lg font-bold uppercase tracking-wide shadow-lg ring-2 ring-green-300/60">
+                  <span aria-hidden="true">🎁</span>
+                  {trialBadge}
+                </span>
+
+                {/* SECONDARY: early bird founder pricing (urgency + scarcity + anchoring) */}
+                {earlyBirdPrice && (
+                  <div className="mt-1 flex flex-col items-center gap-1">
+                    {earlyBirdLabel && (
+                      <span className="inline-block px-3 py-1 rounded-full bg-yellow-400 text-navy text-[11px] md:text-xs font-bold uppercase tracking-wide shadow">
+                        {earlyBirdLabel}
+                      </span>
+                    )}
+                    <div className="flex items-baseline gap-2 text-yellow-300">
+                      <span className="text-2xl md:text-3xl font-extrabold">
+                        {earlyBirdPrice}
+                        {earlyBirdPriceSuffix && (
+                          <span className="text-sm md:text-base font-semibold text-white/85 ml-0.5">
+                            {earlyBirdPriceSuffix}
+                          </span>
+                        )}
+                      </span>
+                      {earlyBirdRegularPrice && (
+                        <span className="text-base md:text-lg text-white/55 line-through">
+                          {earlyBirdRegularPrice}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                )}
+
+                {/* TERTIARY: trust signals */}
+                {trialDetails && (
+                  <span className="text-sm md:text-base text-white/80">
+                    {trialDetails}
+                  </span>
+                )}
+              </>
+            ) : (
+              <div className="text-lg md:text-xl font-semibold text-yellow-300">
+                {trialInfo}
+              </div>
+            )}
           </div>
         )}
 
         {/* CTA Button - Goes to Checkout */}
-        <div className="mb-6 md:mb-8">
+        <div className="mb-6 md:mb-8 flex flex-col items-center gap-2">
           <button
             onClick={() => goToCheckout("hero_primary_button")}
             id="skool-cta"
@@ -226,6 +257,11 @@ export default function Hero({
           >
             {ctaText}
           </button>
+          {ctaSubline && (
+            <p className="text-xs md:text-sm text-white/70">
+              {ctaSubline}
+            </p>
+          )}
         </div>
 
         {/* Security Info */}
