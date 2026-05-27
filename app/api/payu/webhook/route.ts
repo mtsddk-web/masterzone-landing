@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { createHash } from 'crypto';
 import { supabaseAdmin } from '@/lib/supabase-server';
 import { getPayU } from '@/lib/payu';
+import { upsertSubscriber, legacyMailerLiteTag } from '@/lib/sender';
 
 /**
  * PayU Webhook - odbiera notyfikacje o statusie płatności
@@ -47,33 +48,44 @@ function verifyPayUSignature(body: string, signatureHeader: string | null): bool
   return calculated === expectedSignature;
 }
 
-async function tagMailerLite(email: string, status: string) {
-  const apiKey = process.env.MAILERLITE_API_KEY;
-  if (!apiKey) return;
+/**
+ * Tag Paid Member po sukcesie płatności PayU.
+ *
+ * PARALLEL MODE (od 27.05.2026, ~2 tyg do ~10.06.2026):
+ * - Sender.net = primary (env SENDER_PAID_GROUP_ID, default "e9jg23" Paid Members)
+ * - MailerLite = legacy (drugi call, jeśli MAILERLITE_API_KEY w env)
+ *
+ * Cel parallel mode: rollback safety dla krytycznego flow płatności.
+ * Po potwierdzeniu że Sender łapie 100% (Supabase logging) → usunąć
+ * MAILERLITE_API_KEY z env i legacyMailerLiteTag wyłączy się auto.
+ */
+async function tagPaidMember(email: string, status: string) {
+  const groupId = process.env.SENDER_PAID_GROUP_ID || 'e9jg23';
+  const fields = {
+    payment_provider: 'payu',
+    payment_status: status,
+    payment_date: new Date().toISOString(),
+  };
 
-  try {
-    const groupId = process.env.MAILERLITE_PAID_GROUP_ID;
+  // PRIMARY: Sender.net
+  const senderResult = await upsertSubscriber({
+    email,
+    groups: [groupId],
+    fields,
+  });
+  if (!senderResult.success) {
+    console.error('Sender.net paid tag error:', senderResult.error);
+  } else {
+    console.log('✅ Sender.net paid tag:', email, status);
+  }
 
-    await fetch('https://connect.mailerlite.com/api/subscribers', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-      body: JSON.stringify({
-        email,
-        fields: {
-          payment_provider: 'payu',
-          payment_status: status,
-          payment_date: new Date().toISOString(),
-        },
-        groups: groupId ? [groupId] : [],
-        status: 'active',
-      }),
-    });
-  } catch (error) {
-    console.error('MailerLite tag error:', error);
+  // LEGACY: MailerLite (parallel mode, rollback safety)
+  const mlGroupId = process.env.MAILERLITE_PAID_GROUP_ID;
+  const mlResult = await legacyMailerLiteTag(email, fields, mlGroupId);
+  if (mlResult.ok) {
+    console.log('🟡 [parallel] MailerLite tag:', email);
+  } else if (mlResult.error !== 'no_key') {
+    console.warn('MailerLite legacy tag failed:', mlResult.error);
   }
 }
 
@@ -211,9 +223,9 @@ export async function POST(request: Request) {
   // Zapisz w Supabase
   await upsertSubscription(orderId, email, status, totalAmount, metadata, cardToken, isRecurring);
 
-  // Tag w MailerLite tylko dla COMPLETED
-  if (status === 'COMPLETED') {
-    await tagMailerLite(email, isRecurring ? 'renewed' : 'paid');
+  // Tag Paid Member tylko dla COMPLETED (Sender + MailerLite parallel)
+  if (status === 'COMPLETED' && email) {
+    await tagPaidMember(email, isRecurring ? 'renewed' : 'paid');
   }
 
   // PayU wymaga odpowiedzi 200 OK

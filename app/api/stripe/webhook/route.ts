@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { createHash } from 'crypto';
 import { getStripe } from '@/lib/stripe';
 import { supabaseAdmin } from '@/lib/supabase-server';
+import { upsertSubscriber, legacyMailerLiteTag } from '@/lib/sender';
 import Stripe from 'stripe';
 
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!;
@@ -120,32 +121,41 @@ async function upsertSubscription(
   }
 }
 
-async function tagMailerLite(email: string, status: string) {
-  const apiKey = process.env.MAILERLITE_API_KEY;
-  if (!apiKey) return;
+/**
+ * Tag Paid Member po sukcesie płatności Stripe.
+ *
+ * PARALLEL MODE (od 27.05.2026, ~2 tyg do ~10.06.2026):
+ * - Sender.net = primary (env SENDER_PAID_GROUP_ID, default "e9jg23" Paid Members)
+ * - MailerLite = legacy (drugi call, jeśli MAILERLITE_API_KEY w env)
+ *
+ * Po potwierdzeniu że Sender łapie 100% — usunąć MAILERLITE_API_KEY z env.
+ */
+async function tagPaidMember(email: string, status: string) {
+  if (!email) return;
 
-  try {
-    const groupId = process.env.MAILERLITE_PAID_GROUP_ID;
+  const groupId = process.env.SENDER_PAID_GROUP_ID || 'e9jg23';
+  const fields = {
+    trial_status: status,
+    payment_date: new Date().toISOString(),
+  };
 
-    await fetch('https://connect.mailerlite.com/api/subscribers', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-      body: JSON.stringify({
-        email,
-        fields: {
-          trial_status: status,
-          payment_date: new Date().toISOString(),
-        },
-        groups: groupId ? [groupId] : [],
-        status: 'active',
-      }),
-    });
-  } catch (error) {
-    console.error('MailerLite tag error:', error);
+  const senderResult = await upsertSubscriber({
+    email,
+    groups: [groupId],
+    fields,
+  });
+  if (!senderResult.success) {
+    console.error('Sender.net paid tag error (stripe):', senderResult.error);
+  } else {
+    console.log('✅ Sender.net paid tag (stripe):', email, status);
+  }
+
+  const mlGroupId = process.env.MAILERLITE_PAID_GROUP_ID;
+  const mlResult = await legacyMailerLiteTag(email, fields, mlGroupId);
+  if (mlResult.ok) {
+    console.log('🟡 [parallel] MailerLite tag (stripe):', email);
+  } else if (mlResult.error !== 'no_key') {
+    console.warn('MailerLite legacy tag failed (stripe):', mlResult.error);
   }
 }
 
@@ -193,7 +203,7 @@ export async function POST(request: Request) {
         });
 
         // Tag in MailerLite
-        await tagMailerLite(email, 'paid');
+        await tagPaidMember(email, 'paid');
 
         // Send Meta CAPI Purchase (server-side, closes the attribution loop).
         // fbc/fbp z metadata sesji => Meta dopina Purchase do kliku w reklame.
@@ -246,7 +256,7 @@ export async function POST(request: Request) {
           current_period_end: subscription.items.data[0]?.current_period_end,
         });
 
-        await tagMailerLite(email, 'canceled');
+        await tagPaidMember(email, 'canceled');
         console.log(`Subscription canceled: ${subscription.id}`);
         break;
       }
