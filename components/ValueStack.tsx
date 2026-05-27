@@ -27,6 +27,11 @@ interface ValueStackProps {
   monthlyPrice: string;
   savingsText: string;
   ctaText?: string;
+  // Trial + early-bird (spojnosc z hero)
+  trialBadge?: string;
+  earlyBirdPrice?: string;
+  earlyBirdRegularPrice?: string;
+  earlyBirdLabel?: string;
 }
 
 export default function ValueStack({
@@ -40,7 +45,11 @@ export default function ValueStack({
   actualPrice,
   monthlyPrice,
   savingsText,
-  ctaText
+  ctaText,
+  trialBadge,
+  earlyBirdPrice,
+  earlyBirdRegularPrice,
+  earlyBirdLabel,
 }: ValueStackProps) {
   const { goToCheckout } = useCheckout();
 
@@ -145,13 +154,48 @@ export default function ValueStack({
             {/* MasterZone Price */}
             <div className="border-t-4 border-green-400 pt-4 mb-4">
               <div className="text-center">
-                <span className="text-sm text-gray-700 block mb-1">TWOJA CENA:</span>
-                <span className="text-xl font-bold text-gray-800 block mb-2">
-                  {actualPrice}
-                </span>
-                <span className="text-3xl md:text-4xl font-black text-green-600">
-                  {monthlyPrice}
-                </span>
+                <span className="text-sm text-gray-700 block mb-2">TWOJA CENA:</span>
+
+                {/* PRIMARY: free trial badge (zero risk, spojny z hero) */}
+                {trialBadge && (
+                  <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-500 text-white text-sm md:text-base font-bold uppercase tracking-wide shadow-lg ring-2 ring-green-300/60 mb-3">
+                    <span aria-hidden="true">🎁</span>
+                    {trialBadge}
+                  </span>
+                )}
+
+                {/* Price block: early bird (jesli jest) lub fallback do actualPrice */}
+                {earlyBirdPrice ? (
+                  <>
+                    <div className="flex items-baseline justify-center gap-2 mb-1">
+                      <span className="text-3xl md:text-4xl font-black text-green-600">
+                        {earlyBirdPrice}
+                      </span>
+                      <span className="text-base md:text-lg font-semibold text-gray-700">
+                        {monthlyPrice}
+                      </span>
+                      {earlyBirdRegularPrice && (
+                        <span className="text-lg md:text-xl text-gray-400 line-through">
+                          {earlyBirdRegularPrice}
+                        </span>
+                      )}
+                    </div>
+                    {earlyBirdLabel && (
+                      <span className="inline-block px-3 py-1 rounded-full bg-yellow-400 text-navy text-[11px] md:text-xs font-bold uppercase tracking-wide shadow">
+                        {earlyBirdLabel}
+                      </span>
+                    )}
+                  </>
+                ) : (
+                  <>
+                    <span className="text-xl font-bold text-gray-800 block mb-2">
+                      {actualPrice}
+                    </span>
+                    <span className="text-3xl md:text-4xl font-black text-green-600">
+                      {monthlyPrice}
+                    </span>
+                  </>
+                )}
               </div>
             </div>
 
