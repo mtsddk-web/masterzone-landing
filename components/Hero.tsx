@@ -50,10 +50,9 @@ export default function Hero({
 }: HeroProps) {
   const { goToCheckout } = useCheckout();
   const [videoFailed, setVideoFailed] = useState(false);
-  const [videoLoaded, setVideoLoaded] = useState(false);
 
   useEffect(() => {
-    if (!videoMediaId || !videoLoaded) return;
+    if (!videoMediaId) return;
 
     const checkVideo = () => {
       const player = document.querySelector(`wistia-player[media-id='${videoMediaId}']`);
@@ -74,7 +73,7 @@ export default function Hero({
     const timer1 = setTimeout(checkVideo, 3000);
     const timer2 = setTimeout(checkVideo, 6000);
     return () => { clearTimeout(timer1); clearTimeout(timer2); };
-  }, [videoMediaId, videoLoaded]);
+  }, [videoMediaId]);
 
   // Render headline with highlighted key numbers
   const renderHighlightedHeadline = () => {
@@ -97,7 +96,7 @@ export default function Hero({
 
   return (
     <>
-      {videoMediaId && !videoLoaded && (
+      {videoMediaId && (
         <link
           rel="preload"
           as="image"
@@ -165,36 +164,9 @@ export default function Hero({
                     </div>
                   </div>
                 </div>
-              ) : !videoLoaded ? (
-                /* Poster + play button - Wistia scripts ladowane dopiero po kliknieciu */
-                <button
-                  type="button"
-                  onClick={() => setVideoLoaded(true)}
-                  aria-label="Odtworz wideo"
-                  className="group relative block w-full cursor-pointer bg-black"
-                  style={{ paddingTop: `${(100 / parseFloat(videoAspectRatio)).toFixed(2)}%` }}
-                >
-                  <img
-                    src="/images/hero-poster.jpg"
-                    alt="Zobacz jak dzialaja bloki pracy gl\u0119bokiej"
-                    loading="eager"
-                    decoding="async"
-                    fetchPriority="high"
-                    className="absolute inset-0 w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors" />
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="w-20 h-20 md:w-28 md:h-28 rounded-full bg-white/95 shadow-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
-                      <svg viewBox="0 0 24 24" className="w-10 h-10 md:w-14 md:h-14 text-red-600 ml-1" fill="currentColor">
-                        <path d="M8 5v14l11-7z" />
-                      </svg>
-                    </div>
-                  </div>
-                  <div className="absolute bottom-3 left-3 md:bottom-4 md:left-4 bg-black/60 text-white text-xs md:text-sm px-2 py-1 md:px-3 md:py-1.5 rounded font-semibold">
-                    Zobacz jak to dziala
-                  </div>
-                </button>
               ) : (
+                /* Eager autoplay: muted + playsinline (browser policy requires muted).
+                   Poster background pokazuje sie przed :defined (przed zaladowaniem custom element). */
                 <>
                   <link rel="preconnect" href="https://fast.wistia.com" />
                   <Script
@@ -210,12 +182,12 @@ export default function Hero({
                     __html: `
                       <style>
                         wistia-player[media-id='${videoMediaId}']:not(:defined) {
-                          background: center / contain no-repeat url('/images/hero-poster.jpg');
+                          background: center / cover no-repeat url('/images/hero-poster.jpg');
                           display: block;
                           padding-top: ${(100 / parseFloat(videoAspectRatio)).toFixed(2)}%;
                         }
                       </style>
-                      <wistia-player media-id="${videoMediaId}" aspect="${videoAspectRatio}" autoplay="true"></wistia-player>
+                      <wistia-player media-id="${videoMediaId}" aspect="${videoAspectRatio}" autoplay="true" muted="true" playsinline="true"></wistia-player>
                     `
                   }} />
                 </>
