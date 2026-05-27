@@ -16,6 +16,13 @@ interface HeroProps {
   videoAspectRatio?: string;
   videoFallbackImage?: string;
   trialInfo?: string;
+  trialBadge?: string;
+  trialDetails?: string;
+  earlyBirdLabel?: string;
+  earlyBirdPrice?: string;
+  earlyBirdRegularPrice?: string;
+  earlyBirdPriceSuffix?: string;
+  ctaSubline?: string;
   securityInfo?: string;
   skoolInfo?: string;
 }
@@ -31,6 +38,13 @@ export default function Hero({
   videoAspectRatio = "1.6",
   videoFallbackImage = "/images/hero-fallback.jpg",
   trialInfo,
+  trialBadge,
+  trialDetails,
+  earlyBirdLabel,
+  earlyBirdPrice,
+  earlyBirdRegularPrice,
+  earlyBirdPriceSuffix,
+  ctaSubline,
   securityInfo,
   skoolInfo
 }: HeroProps) {
@@ -210,15 +224,60 @@ export default function Hero({
           </div>
         )}
 
-        {/* Trial Info */}
-        {trialInfo && (
-          <div className="mb-4 text-lg md:text-xl font-semibold text-yellow-300">
-            {trialInfo}
+        {/* Trial Info - primary: 7 dni za darmo, secondary: early bird, tertiary: trust */}
+        {(trialBadge || trialDetails || trialInfo || earlyBirdPrice) && (
+          <div className="mb-5 flex flex-col items-center gap-2">
+            {trialBadge ? (
+              <>
+                {/* PRIMARY: free trial badge (zero risk hook) */}
+                <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-500 text-white text-base md:text-lg font-bold uppercase tracking-wide shadow-lg ring-2 ring-green-300/60">
+                  <span aria-hidden="true">🎁</span>
+                  {trialBadge}
+                </span>
+
+                {/* SECONDARY: early bird founder pricing (urgency + scarcity + anchoring) */}
+                {earlyBirdPrice && (
+                  <div className="mt-1 flex flex-col items-center gap-1">
+                    {earlyBirdLabel && (
+                      <span className="inline-block px-3 py-1 rounded-full bg-yellow-400 text-navy text-[11px] md:text-xs font-bold uppercase tracking-wide shadow">
+                        {earlyBirdLabel}
+                      </span>
+                    )}
+                    <div className="flex items-baseline gap-2 text-yellow-300">
+                      <span className="text-2xl md:text-3xl font-extrabold">
+                        {earlyBirdPrice}
+                        {earlyBirdPriceSuffix && (
+                          <span className="text-sm md:text-base font-semibold text-white/85 ml-0.5">
+                            {earlyBirdPriceSuffix}
+                          </span>
+                        )}
+                      </span>
+                      {earlyBirdRegularPrice && (
+                        <span className="text-base md:text-lg text-white/55 line-through">
+                          {earlyBirdRegularPrice}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                )}
+
+                {/* TERTIARY: trust signals */}
+                {trialDetails && (
+                  <span className="text-sm md:text-base text-white/80">
+                    {trialDetails}
+                  </span>
+                )}
+              </>
+            ) : (
+              <div className="text-lg md:text-xl font-semibold text-yellow-300">
+                {trialInfo}
+              </div>
+            )}
           </div>
         )}
 
         {/* CTA Button - Goes to Checkout */}
-        <div className="mb-6 md:mb-8">
+        <div className="mb-6 md:mb-8 flex flex-col items-center gap-2">
           <button
             onClick={() => goToCheckout("hero_primary_button")}
             id="skool-cta"
@@ -226,6 +285,11 @@ export default function Hero({
           >
             {ctaText}
           </button>
+          {ctaSubline && (
+            <p className="text-xs md:text-sm text-white/70">
+              {ctaSubline}
+            </p>
+          )}
         </div>
 
         {/* Security Info */}
