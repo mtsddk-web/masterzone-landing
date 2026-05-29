@@ -24,12 +24,10 @@ export default function Footer() {
             YouTube
           </a>
           <a
-            href="https://www.skool.com/masterzone"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="/privacy"
             className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
           >
-            Skool
+            Polityka prywatności
           </a>
           <a
             href="mailto:kontakt@masterzone.edu.pl"

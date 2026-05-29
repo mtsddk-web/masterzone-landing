@@ -8,17 +8,17 @@ export default function BlogCTA() {
   return (
     <section className="mt-12 bg-gradient-to-br from-primary to-blue-800 rounded-2xl p-8 md:p-12 text-center text-white">
       <h2 className="text-2xl md:text-3xl font-bold mb-4">
-        Chcesz pracowac w skupieniu kazdego dnia?
+        Chcesz pracować w skupieniu każdego dnia?
       </h2>
       <p className="text-lg text-blue-100 mb-8 max-w-2xl mx-auto">
-        Dolacz do MasterZone i pracuj w blokach glebokiej pracy razem z innymi.
-        Codziennie, o stalych godzinach, z kamera i zobowiazaniem.
+        Dołącz do MasterZone i pracuj w blokach głębokiej pracy razem z innymi.
+        Codziennie, o stałych godzinach, z kamerą i zobowiązaniem.
       </p>
       <button
         onClick={() => goToCheckout("blog_cta_button")}
         className="inline-block bg-gradient-to-r from-orange-600 to-red-700 hover:from-orange-700 hover:to-red-800 text-white font-bold py-4 px-12 rounded-lg transition-all duration-300 text-lg shadow-xl hover:shadow-2xl transform hover:-translate-y-1 border-2 border-yellow-300 cursor-pointer"
       >
-        Dolacz do MasterZone
+        Zacznij 7 dni za darmo
       </button>
     </section>
   );

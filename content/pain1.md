@@ -23,7 +23,7 @@ sections:
       - "Całymi dniami nie rozmawiasz z nikim o pracy. Bo kto ma to zrozumieć?"
       - "Próbowałeś Pomodoro, aplikacji, blokowania stron. Nic nie działa na dłużej"
       - "Czujesz, że mógłbyś robić 2x więcej, ale coś Cię ciągle hamuje"
-      - "Weekend zaczyna się z poczuciem winy, bo znowu nie dowieźliście tego, co planowaliście"
+      - "Weekend zaczyna się z poczuciem winy, bo znowu nie dowiozłeś tego, co planowałeś"
 
 mainHeadline: "To nie Twoja wina. To brak środowiska."
 mainContent: |

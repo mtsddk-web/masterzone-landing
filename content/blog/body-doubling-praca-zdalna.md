@@ -1,49 +1,49 @@
 ---
-title: "Dlaczego pracujesz lepiej w kawiarni niz w domu? Nauka o body doubling"
+title: "Dlaczego pracujesz lepiej w kawiarni niż w domu? Nauka o body doubling"
 slug: "body-doubling-praca-zdalna"
 publishedAt: "2026-03-13"
 author: "Mateusz Dudek"
 image: "/images/blog/body-doubling.jpg"
-description: "Body doubling to technika produktywnosci, w ktorej sama obecnosc drugiej osoby pomaga Ci sie skupic. Sprawdz jak wykorzystac to w pracy zdalnej."
-category: "Produktywnosc"
-tags: ["body doubling", "praca zdalna", "produktywnosc", "deep work"]
+description: "Body doubling to technika produktywności, w której sama obecność drugiej osoby pomaga Ci się skupić. Sprawdź jak wykorzystać to w pracy zdalnej."
+category: "Produktywność"
+tags: ["body doubling", "praca zdalna", "produktywność", "deep work"]
 ---
 
-Znasz to uczucie? Siadasz do pracy w domu, otwierasz laptopa i nagle okazuje sie, ze minela godzina, a Ty przegladasz social media. Ale wystarczy wyjsc do kawiarni albo coworkingu i praca idzie sama.
+Znasz to uczucie? Siadasz do pracy w domu, otwierasz laptopa i nagle okazuje się, że minęła godzina, a Ty przeglądasz social media. Ale wystarczy wyjść do kawiarni albo coworkingu i praca idzie sama.
 
 To nie przypadek. To body doubling.
 
 ## Czym jest body doubling?
 
-Body doubling to technika produktywnosci polegajaca na tym, ze pracujesz w obecnosci drugiej osoby. Ta osoba nie musi Ci pomagac, nie musi nawet robic tego samego co Ty. Wystarczy, ze jest obok.
+Body doubling to technika produktywności polegająca na tym, że pracujesz w obecności drugiej osoby. Ta osoba nie musi Ci pomagać, nie musi nawet robić tego samego co Ty. Wystarczy, że jest obok.
 
-Badania z zakresu psychologii spolecznej pokazuja, ze sama obecnosc innego czlowieka aktywuje w naszym mozgu mechanizmy odpowiedzialnosci spolecznej. Trudniej jest scrollowac Instagram, gdy ktos siedzi obok i pracuje.
+Badania z zakresu psychologii społecznej pokazują, że sama obecność innego człowieka aktywuje w naszym mózgu mechanizmy odpowiedzialności społecznej. Trudniej jest scrollować Instagram, gdy ktoś siedzi obok i pracuje.
 
-## Dlaczego to dziala?
+## Dlaczego to działa?
 
-Kilka mechanizmow stoi za skutecznoscia body doubling:
+Kilka mechanizmów stoi za skutecznością body doubling:
 
-- **Spoleczna odpowiedzialnosc** - nie chcesz byc ta osoba, ktora marnuje czas, gdy inni pracuja
-- **Zarazanie skupieniem** - neurony lustrzane sprawiaja, ze nastroj i zachowanie innych osob nas "zarazaja"
-- **Struktura czasowa** - umowiony blok pracy ma poczatek i koniec, co zmusza do dzialania
-- **Redukcja izolacji** - praca zdalna bywa samotna, obecnosc innych ludzi poprawia samopoczucie
+- **Społeczna odpowiedzialność** - nie chcesz być tą osobą, która marnuje czas, gdy inni pracują
+- **Zarażanie skupieniem** - neurony lustrzane sprawiają, że nastrój i zachowanie innych osób nas "zarażają"
+- **Struktura czasowa** - umówiony blok pracy ma początek i koniec, co zmusza do działania
+- **Redukcja izolacji** - praca zdalna bywa samotna, obecność innych ludzi poprawia samopoczucie
 
-## Body doubling online - czy to mozliwe?
+## Body doubling online - czy to możliwe?
 
-Tak. Badania z 2023 roku (Universitat Zurich) pokazuja, ze wirtualne body doubling dziala prawie tak samo dobrze jak fizyczne. Warunek: musi byc interakcja na poczatku (krotkie "czesc, co dzis robisz?") i na koncu ("jak poszlo?").
+Tak. Badania z 2023 roku (Universität Zürich) pokazują, że wirtualne body doubling działa prawie tak samo dobrze jak fizyczne. Warunek: musi być interakcja na początku (krótkie "cześć, co dziś robisz?") i na końcu ("jak poszło?").
 
-Wlasnie dlatego stworzylem MasterZone. Codziennie o stalych porach spotykamy sie online na bloki pracy glebokiej. Wlaczasz kamere, mowisz co planujesz zrobic, pracujesz 90 minut i na koncu podsumowujesz.
+Właśnie dlatego stworzyłem MasterZone. Codziennie o stałych porach spotykamy się online na bloki pracy głębokiej. Włączasz kamerę, mówisz co planujesz zrobić, pracujesz 90 minut i na końcu podsumowujesz.
 
-## Jak zaczac stosowac body doubling?
+## Jak zacząć stosować body doubling?
 
-1. **Znajdz partnera do pracy** - kolega, przyjaciol, spolecznosc online
-2. **Ustal stale godziny** - regularnosc jest kluczowa
-3. **Na poczatku powiedz co zrobisz** - publiczne zobowiazanie zwieksza szanse realizacji o 65%
-4. **Na koncu podsumuj** - zamkniecie petli daje satysfakcje i buduje nawyk
-5. **Nie gadaj w trakcie** - blok pracy to czas na cisza i fokus
+1. **Znajdź partnera do pracy** - kolega, przyjaciel, społeczność online
+2. **Ustal stałe godziny** - regularność jest kluczowa
+3. **Na początku powiedz co zrobisz** - publiczne zobowiązanie zwiększa szanse realizacji o 65%
+4. **Na końcu podsumuj** - zamknięcie pętli daje satysfakcję i buduje nawyk
+5. **Nie gadaj w trakcie** - blok pracy to czas na ciszę i fokus
 
 ## Podsumowanie
 
-Body doubling to jedna z najprostszych i najskuteczniejszych technik produktywnosci. Nie wymaga silnej woli, nie wymaga aplikacji, nie wymaga "systemu". Wymaga tylko jednego: drugiego czlowieka.
+Body doubling to jedna z najprostszych i najskuteczniejszych technik produktywności. Nie wymaga silnej woli, nie wymaga aplikacji, nie wymaga "systemu". Wymaga tylko jednego: drugiego człowieka.
 
-Jesli pracujesz zdalnie i masz problem z fokusem, sprobuj. Mozesz zaczac od jednego bloku dziennie.
+Jeśli pracujesz zdalnie i masz problem z fokusem, spróbuj. Możesz zacząć od jednego bloku dziennie.

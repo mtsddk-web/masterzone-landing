@@ -13,9 +13,9 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://rozproszenie.masterzone.edu.pl"),
-  title: "MasterZone - Koniec z Rozproszeniem",
-  description: "Program pomoże Ci odzyskać fokus, produktywność i kontrolę nad czasem. Dołącz do społeczności MasterZone i zacznij pracować głęboko.",
-  keywords: "fokus, produktywność, rozproszenie, koncentracja, deep work, praca głęboka",
+  title: "MasterZone - Przestań prokrastynować w samotności",
+  description: "Pracujesz z domu i nie możesz się skupić? Dołącz do ludzi, którzy codziennie pracują razem na żywo (body doubling) i kończą to, co zaczęli. Skupienie bez walki z sobą.",
+  keywords: "body doubling, praca głęboka, prokrastynacja, fokus, produktywność, praca zdalna, deep work, koncentracja",
   verification: {
     google: "qT6xxbkTyOYWZ05vBVgFUYbll0yCE7qGIkDdqIwSUSM",
   },
@@ -32,8 +32,8 @@ export const metadata: Metadata = {
     canonical: "https://rozproszenie.masterzone.edu.pl",
   },
   openGraph: {
-    title: "MasterZone - Koniec z Rozproszeniem",
-    description: "Odzyskaj fokus i produktywność",
+    title: "MasterZone - Przestań prokrastynować w samotności",
+    description: "Pracuj razem z innymi na żywo (body doubling). Skupienie bez walki z sobą.",
     url: "https://rozproszenie.masterzone.edu.pl",
     siteName: "MasterZone",
     locale: "pl_PL",

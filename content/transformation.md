@@ -7,7 +7,7 @@ steps:
   - number: "2"
     description: "Włączasz się na pierwszy blok pracy. Widzisz ludzi przy komputerach. Twój mózg mówi: 'ok, pracujemy'. Body doubling w akcji."
   - number: "3"
-    description: "W piątek planujesz tydzień z grupą. Mówisz na głos co chcesz zrobić. Nagle masz plan i ludzi, którzy zapytają czy go dowieźliście."
+    description: "W piątek planujesz tydzień z grupą. Mówisz na głos co chcesz zrobić. Nagle masz plan i ludzi, którzy zapytają czy go dowiozłeś."
   - number: "4"
     description: "Po tygodniu zauważasz: kończysz zadania, nie odkładasz na jutro, weekendy są wolne od poczucia winy."
   - number: "5"
