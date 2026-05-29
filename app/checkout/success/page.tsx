@@ -12,7 +12,7 @@ function SuccessContent() {
   useEffect(() => {
     if (sessionId) {
       trackEvent("Purchase", {
-        value: 97,
+        value: 67,
         currency: "PLN",
         content_name: "MasterZone Community",
       });

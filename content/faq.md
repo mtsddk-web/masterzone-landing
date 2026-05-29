@@ -2,8 +2,12 @@
 sectionTitle: "Najczęściej Zadawane Pytania"
 questions:
   - question: "Pierwsze 7 dni za darmo, co to oznacza?"
-    answer: "Wchodzisz na bloki pracy, planowanie, do społeczności i sprawdzasz na własnej skórze czy to dla Ciebie. Pełen dostęp od pierwszego dnia. Jeśli w ciągu 7 dni anulujesz, nie płacisz nic. Jeśli zostajesz, automatycznie przechodzisz na 97 PLN/miesiąc i nadal możesz anulować w każdej chwili."
-  - question: "97 PLN/miesiąc, czy to nie za dużo?"
+    answer: "Wchodzisz na bloki pracy, planowanie, do społeczności i sprawdzasz na własnej skórze czy to dla Ciebie. Pełen dostęp od pierwszego dnia. Jeśli w ciągu 7 dni anulujesz, nie płacisz nic. Jeśli zostajesz, automatycznie przechodzisz na 67 zł/miesiąc i nadal możesz anulować w każdej chwili."
+  - question: "Co się stanie po 7 dniach? Czy pobierzecie pieniądze automatycznie?"
+    answer: "Tak, jeśli nie anulujesz w trakcie tygodnia próbnego, po 7 dniach zaczyna się płatna subskrypcja 67 zł/miesiąc. Ale anulujesz w 2 kliknięcia w swoim panelu, bez dzwonienia do nas, bez pisania maili, bez tłumaczenia się. Zero haczyków. Jeśli zrezygnujesz w trakcie 7 dni, nie pobieramy nic."
+  - question: "Dlaczego teraz 67 zł, a nie 97 zł?"
+    answer: "67 zł to cena założycielska dla pierwszych 100 osób. Kto dołączy teraz, ma tę cenę zablokowaną na zawsze, nigdy nie wzrośnie. Cena rośnie wraz z grupą: po pierwszych 100 osobach będzie 97 zł, potem 150, potem 200. Dlaczego cena rośnie? Bo im większa społeczność, tym większa wartość: więcej relacji, większe grono, więcej współpracy i networkingu. Im wcześniej dołączysz, tym mniej płacisz, na zawsze."
+  - question: "67 zł/miesiąc, czy to nie za dużo?"
     answer: "To mniej niż 5 kaw w kawiarni, gdzie idziesz żeby 'mieć ludzi obok'. Albo mniej niż 1 godzina z coachem produktywności. W MasterZone dostajesz codzienne wsparcie, 20+ bloków pracy na żywo i społeczność. Pierwsze 7 dni za darmo, więc testujesz bez ryzyka. Członkowie często piszą, że to najlepsza inwestycja w ich produktywność."
   - question: "Próbowałem już wszystkiego: Pomodoro, aplikacje, kursy. Nic nie działa."
     answer: "Bo te narzędzia wymagają od Ciebie dyscypliny, której brakuje. MasterZone działa inaczej. Bazuje na body doubling, czyli obecności innych ludzi. Nie musisz się zmuszać. Logujesz się, widzisz ludzi przy pracy, i Twój mózg automatycznie przełącza się w tryb skupienia. To biologia, nie silna wola."
@@ -16,7 +20,7 @@ questions:
   - question: "Co jeśli nie mam czasu na kolejny program?"
     answer: "MasterZone nie dodaje pracy, tylko odejmuje chaos. Zamiast walczyć z prokrastynacją sam, dostajesz środowisko, które trzyma Cię w skupieniu. Członkowie często mówią, że w 90 minut na bloku robią więcej niż normalnie w 4 godziny."
   - question: "Czy mogę zrezygnować w każdej chwili?"
-    answer: "Tak. Bez umów, bez okresu wypowiedzenia. Anulujesz kiedy chcesz. Ale 92% członków zostaje, bo wreszcie mają środowisko, w którym produktywność przychodzi naturalnie."
+    answer: "Tak. Bez umów, bez okresu wypowiedzenia. Anulujesz kiedy chcesz w 2 kliknięcia w panelu. Ale 92% członków zostaje, bo wreszcie mają środowisko, w którym produktywność przychodzi naturalnie."
   - question: "Jak wygląda pierwszy tydzień?"
     answer: "Po dołączeniu dostajesz onboarding 1:1. Następnie dołączasz do pierwszego bloku pracy i sesji planowania. Sporo osób mówi, że różnicę czują już pierwszego dnia, bo sam fakt, że ktoś obok pracuje, zmienia wszystko."
 ---

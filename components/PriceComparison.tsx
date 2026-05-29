@@ -7,9 +7,9 @@ export default function PriceComparison() {
   const { goToCheckout } = useCheckout();
 
   const items = [
-    { icon: "Building2", name: "Coworking", price: "500-1500 zł", period: "/msc" },
-    { icon: "GraduationCap", name: "Personal coach", price: "2000+ zł", period: "/msc" },
-    { icon: "Target", name: "MasterZone", price: "97 zł", period: "/msc", featured: true },
+    { icon: "Building2", name: "Coworking", price: "500-1500 zł", period: "/miesiąc" },
+    { icon: "GraduationCap", name: "Personal coach", price: "2000+ zł", period: "/miesiąc" },
+    { icon: "Target", name: "MasterZone", price: "67 zł", period: "/miesiąc", featured: true },
   ];
 
   return (
@@ -22,9 +22,9 @@ export default function PriceComparison() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-          {items.map((item, i) => (
+          {items.map((item) => (
             <div
-              key={i}
+              key={item.name}
               className={`rounded-xl p-6 text-center transition-all ${
                 item.featured
                   ? "border-2 border-blue-600 shadow-lg bg-blue-50"

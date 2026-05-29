@@ -154,9 +154,9 @@ export default function Testimonials({ sectionTitle, testimonials }: Testimonial
         <div className="text-center">
           <button
             onClick={() => goToCheckout("testimonials_cta_button")}
-            className="inline-block bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white font-bold py-4 px-12 rounded-lg transition-all duration-300 text-lg shadow-xl hover:shadow-2xl transform hover:-translate-y-1 border-2 border-yellow-300 cursor-pointer"
+            className="inline-block bg-gradient-to-r from-orange-600 to-red-700 hover:from-orange-700 hover:to-red-800 text-white font-bold py-4 px-12 rounded-lg transition-all duration-300 text-lg shadow-xl hover:shadow-2xl transform hover:-translate-y-1 border-2 border-yellow-300 cursor-pointer"
           >
-            Dołącz do MasterZone: 97 PLN/mies
+            Zacznij 7 dni za darmo
           </button>
         </div>
       </div>

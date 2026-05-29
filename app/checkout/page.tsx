@@ -50,7 +50,7 @@ function CheckoutContent() {
     setError(null);
 
     trackEvent("InitiateCheckout", {
-      value: 97,
+      value: 67,
       currency: "PLN",
       trial: trialDays > 0,
       provider,
@@ -133,28 +133,23 @@ function CheckoutContent() {
         <div className="bg-white rounded-2xl shadow-2xl p-8 mb-6">
           {/* Price */}
           <div className="text-center mb-6 pb-6 border-b border-gray-200">
-            {trialDays > 0 ? (
-              <>
-                <div className="inline-block bg-green-100 text-green-800 font-bold text-sm px-4 py-1 rounded-full mb-3">
-                  {trialDays} dni za darmo
-                </div>
-                <div className="text-4xl font-bold text-gray-900 mb-1">
-                  97 PLN<span className="text-lg font-normal text-gray-500">/miesiąc</span>
-                </div>
-                <p className="text-sm text-gray-500">
-                  Pierwsza płatność po {trialDays} dniach. Anulujesz kiedy chcesz.
-                </p>
-              </>
-            ) : (
-              <>
-                <div className="text-4xl font-bold text-gray-900 mb-1">
-                  97 PLN<span className="text-lg font-normal text-gray-500">/miesiąc</span>
-                </div>
-                <p className="text-sm text-gray-500">
-                  Subskrypcja miesięczna. Anulujesz kiedy chcesz.
-                </p>
-              </>
+            {trialDays > 0 && (
+              <div className="inline-block bg-green-100 text-green-800 font-bold text-sm px-4 py-1 rounded-full mb-3">
+                {trialDays} dni za darmo
+              </div>
             )}
+            <div className="inline-block bg-amber-100 text-amber-800 font-semibold text-xs px-3 py-1 rounded-full mb-2">
+              Promo założycielska dla pierwszych 100 osób
+            </div>
+            <div className="text-4xl font-bold text-gray-900 mb-1 flex items-baseline justify-center gap-2">
+              <span className="text-lg font-normal text-gray-400 line-through">97 zł</span>
+              <span>67 zł<span className="text-lg font-normal text-gray-500">/miesiąc</span></span>
+            </div>
+            <p className="text-sm text-gray-500">
+              {trialDays > 0
+                ? `Cena 67 zł zablokowana na zawsze. Pierwsza płatność po ${trialDays} dniach. Anulujesz kiedy chcesz.`
+                : "Cena 67 zł zablokowana na zawsze. Subskrypcja miesięczna. Anulujesz kiedy chcesz."}
+            </p>
           </div>
 
           {/* Benefits */}
@@ -236,7 +231,7 @@ function CheckoutContent() {
                   `}
                 >
                   <span className="text-2xl mb-1">📲</span>
-                  <span className="font-bold text-base text-gray-900">Zapłać BLIKiem - 97 zł</span>
+                  <span className="font-bold text-base text-gray-900">Zapłać BLIKiem - 67 zł</span>
                   <span className="text-xs text-gray-600 mt-1 text-center">
                     Bez karty. Płacisz z apki bankowej (BLIK lub szybki przelew). Pierwszy miesiąc - 30 dni gwarancji zwrotu.
                   </span>

@@ -224,7 +224,7 @@ export default async function Home() {
         }))
       : joinMarkdown.blocks || [],
     contrastText: c.joinsection?.contrastText || '',
-    ctaText: joinMarkdown.ctaText || 'Dołącz do MasterZone - 97 PLN/miesiąc',
+    ctaText: joinMarkdown.ctaText || 'Zacznij 7 dni za darmo',
     ctaUrl: '/checkout',
     guarantee: joinMarkdown.guarantee,
     stats: joinMarkdown.stats,
@@ -240,9 +240,7 @@ export default async function Home() {
 
   return (
     <main>
-      {pricingProps.urgencyAlert && (
-        <AnnouncementBar message={pricingProps.urgencyAlert} />
-      )}
+      <AnnouncementBar message={pricingProps.urgencyAlert} />
       <Hero {...heroProps} />
       <Stats {...statsProps} />
       <VideoTestimonial {...videoTestimonialData} />

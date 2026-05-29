@@ -5,7 +5,9 @@ import { useCheckout } from "@/hooks/useCheckout";
 interface Plan {
   name: string;
   price: string;
+  regularPrice?: string;
   period: string;
+  priceNote?: string;
   description: string;
   features: string[];
   ctaText: string;
@@ -56,8 +58,8 @@ export default function Pricing({
 
         {/* Pricing Cards */}
         <div className="grid md:grid-cols-1 gap-8 max-w-lg mx-auto">
-          {plans && plans.map((plan, index) => (
-            <div key={index} className="relative">
+          {plans && plans.map((plan) => (
+            <div key={plan.name} className="relative">
               <div className="bg-gradient-to-br from-navy to-blue-700 rounded-2xl shadow-2xl p-8 text-white relative overflow-hidden">
                 {/* Popular Badge */}
                 {plan.featured && (
@@ -72,8 +74,14 @@ export default function Pricing({
 
                 {/* Price */}
                 <div className="text-center mb-8">
+                  {plan.regularPrice && (
+                    <div className="text-2xl text-indigo-300 line-through mb-1">{plan.regularPrice}</div>
+                  )}
                   <div className="text-6xl font-bold mb-2">{plan.price}</div>
                   <p className="text-indigo-200">{plan.period}</p>
+                  {plan.priceNote && (
+                    <p className="text-sm text-yellow-200 mt-3 max-w-sm mx-auto leading-snug">{plan.priceNote}</p>
+                  )}
                 </div>
 
                 {/* Features */}
@@ -99,7 +107,7 @@ export default function Pricing({
                 {/* CTA Button */}
                 <button
                   onClick={() => goToCheckout(`pricing_${plan.name.toLowerCase().replace(/\s/g, '_')}`)}
-                  className="block w-full bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white text-center font-bold py-4 px-8 rounded-lg transition-all duration-300 text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 border-2 border-yellow-300 cursor-pointer"
+                  className="block w-full bg-gradient-to-r from-orange-600 to-red-700 hover:from-orange-700 hover:to-red-800 text-white text-center font-bold py-4 px-8 rounded-lg transition-all duration-300 text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 border-2 border-yellow-300 cursor-pointer"
                 >
                   {plan.ctaText}
                 </button>

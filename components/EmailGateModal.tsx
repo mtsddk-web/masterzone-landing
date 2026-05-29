@@ -37,9 +37,7 @@ export default function EmailGateModal({ isOpen, onClose, onSuccess }: EmailGate
     }
 
     try {
-      console.log('🚀 Sending to API:', { name, email });
-
-      // Send to MailerLite
+      // Send to Sender (lead capture for trial)
       const response = await fetch('/api/subscribe-trial', {
         method: 'POST',
         headers: {
@@ -52,9 +50,7 @@ export default function EmailGateModal({ isOpen, onClose, onSuccess }: EmailGate
         }),
       });
 
-      console.log('📡 API response status:', response.status);
       const data = await response.json();
-      console.log('📦 API response data:', data);
 
       if (!response.ok || !data.success) {
         throw new Error(data.error || 'Coś poszło nie tak');
@@ -65,13 +61,6 @@ export default function EmailGateModal({ isOpen, onClose, onSuccess }: EmailGate
         source: "email_gate_modal",
         email: email
       });
-
-      // Track w MailerLite Universal (jeśli dostępne)
-      if (typeof window !== 'undefined' && (window as any).ml) {
-        (window as any).ml('track', 'email_gate_submitted', {
-          email: email
-        });
-      }
 
       // Success - show success message (no redirect - user must click link in email)
       setIsSuccess(true);
@@ -216,7 +205,7 @@ export default function EmailGateModal({ isOpen, onClose, onSuccess }: EmailGate
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white font-bold py-4 px-8 rounded-lg transition-all duration-300 text-lg shadow-xl hover:shadow-2xl transform hover:-translate-y-1 border-2 border-yellow-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+              className="w-full bg-gradient-to-r from-orange-600 to-red-700 hover:from-orange-700 hover:to-red-800 text-white font-bold py-4 px-8 rounded-lg transition-all duration-300 text-lg shadow-xl hover:shadow-2xl transform hover:-translate-y-1 border-2 border-yellow-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
             >
               {isSubmitting ? "Zapisuję..." : "Wyślij mi dostęp →"}
             </button>
@@ -228,7 +217,7 @@ export default function EmailGateModal({ isOpen, onClose, onSuccess }: EmailGate
                   <svg className="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                   </svg>
-                  97 PLN/mies • 30-dniowa gwarancja zwrotu
+                  67 zł/miesiąc • 30-dniowa gwarancja zwrotu
                 </p>
                 <p className="text-xs text-gray-500 flex items-center justify-center gap-2">
                   <svg className="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">

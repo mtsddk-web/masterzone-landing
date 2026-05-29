@@ -39,7 +39,7 @@ export default function CheckoutCancelPage() {
         <div className="space-y-4">
           <a
             href="/checkout"
-            className="block w-full bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white font-bold py-4 px-8 rounded-lg transition-all duration-300 text-lg shadow-xl border-2 border-yellow-300"
+            className="block w-full bg-gradient-to-r from-orange-600 to-red-700 hover:from-orange-700 hover:to-red-800 text-white font-bold py-4 px-8 rounded-lg transition-all duration-300 text-lg shadow-xl border-2 border-yellow-300"
           >
             Spróbuj ponownie
           </a>

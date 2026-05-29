@@ -214,7 +214,7 @@ export default function ValueStack({
           <div className="text-center">
             <button
               onClick={() => goToCheckout("valuestack_cta_button")}
-              className="inline-block bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white text-xl md:text-2xl font-bold py-5 px-10 rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 border-2 border-yellow-300 cursor-pointer"
+              className="inline-block bg-gradient-to-r from-orange-600 to-red-700 hover:from-orange-700 hover:to-red-800 text-white text-xl md:text-2xl font-bold py-5 px-10 rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 border-2 border-yellow-300 cursor-pointer"
             >
               {ctaText}
             </button>
