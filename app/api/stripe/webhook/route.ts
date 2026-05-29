@@ -94,7 +94,7 @@ async function upsertSubscription(
     status,
     price_id: sessionOrSub.price_id || null,
     currency: 'pln',
-    amount: sessionOrSub.amount || 9700,
+    amount: sessionOrSub.amount || 6700,
     current_period_start: sessionOrSub.current_period_start
       ? new Date(sessionOrSub.current_period_start * 1000).toISOString()
       : null,
@@ -188,7 +188,7 @@ export async function POST(request: Request) {
 
         await upsertSubscription(customerId, email, subscriptionId, subscription.status, {
           price_id: priceId,
-          amount: item?.price.unit_amount || 9700,
+          amount: item?.price.unit_amount || 6700,
           current_period_start: item?.current_period_start,
           current_period_end: item?.current_period_end,
           trial_start: subscription.trial_start,
@@ -205,7 +205,7 @@ export async function POST(request: Request) {
           'https://rozproszenie.masterzone.edu.pl/';
         const fbp = (session.metadata?.fbp as string) || null;
         const fbc = (session.metadata?.fbc as string) || null;
-        const amountPln = (item?.price.unit_amount || 9700) / 100;
+        const amountPln = (item?.price.unit_amount || 6700) / 100;
         const currency = item?.price.currency || 'pln';
 
         if (isTrial) {
@@ -284,7 +284,7 @@ export async function POST(request: Request) {
           await sendMetaCAPIEvent({
             eventName: 'Purchase',
             email,
-            value: (subItem?.price.unit_amount || 9700) / 100,
+            value: (subItem?.price.unit_amount || 6700) / 100,
             currency: subItem?.price.currency || 'pln',
             eventId: `sub_active_${subscription.id}`,
             sourceUrl:

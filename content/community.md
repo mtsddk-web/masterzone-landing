@@ -19,4 +19,8 @@ community:
     title: "Networking, który działa obu stronom"
     description: "Freelancerzy, soloprzedsiębiorcy, właściciele e-commerce, programiści. Ludzie, z którymi możesz wymienić się doświadczeniem i klientami."
     checked: true
+  - icon: "Check"
+    title: "Mastermind co 2 tygodnie"
+    description: "Co dwa tygodnie o 19:00 spotykamy się w gronie, w którym omawiamy realne wyzwania w biznesie i pracy. Burza mózgów, konkretne rady, wzajemne wsparcie. To miejsce, gdzie utykasz nad problemem i wychodzisz z rozwiązaniem."
+    checked: true
 ---

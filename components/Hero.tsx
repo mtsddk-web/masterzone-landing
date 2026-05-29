@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import Script from "next/script";
 import { useCheckout } from "@/hooks/useCheckout";
 import Icon from "./Icon";
@@ -14,7 +15,6 @@ interface HeroProps {
   ctaUrl: string;
   videoMediaId?: string;
   videoAspectRatio?: string;
-  videoFallbackImage?: string;
   trialInfo?: string;
   trialBadge?: string;
   trialDetails?: string;
@@ -36,7 +36,6 @@ export default function Hero({
   ctaUrl,
   videoMediaId,
   videoAspectRatio = "1.6",
-  videoFallbackImage = "/images/hero-fallback.jpg",
   trialInfo,
   trialBadge,
   trialDetails,
@@ -105,13 +104,19 @@ export default function Hero({
         />
       )}
     <section className="bg-gradient-to-br from-navy via-blue-700 to-blue-900 text-white py-8 md:py-16 lg:py-20 flex items-center relative">
-      {/* Logo - lewy górny róg (tylko desktop) */}
+      {/* Logo - lewy górny róg (tylko desktop). Logo ma czarne tlo PNG, wiec
+          obramowane jako badge z ringiem zeby ladnie kontrastowalo na navy. */}
       <div className="hidden md:block absolute top-6 left-6 z-10">
-        <img
-          src="/images/logo-masterzone.png"
-          alt="MasterZone Logo"
-          className="w-16 h-16 object-contain opacity-90 hover:opacity-100 transition-opacity"
-        />
+        <div className="rounded-xl bg-black/40 ring-1 ring-white/25 p-1.5 shadow-lg backdrop-blur-sm hover:ring-white/40 transition-all">
+          <Image
+            src="/images/logo-masterzone.png"
+            alt="MasterZone Logo"
+            width={56}
+            height={56}
+            priority
+            className="w-14 h-14 object-contain"
+          />
+        </div>
       </div>
 
       <div className="container-custom text-center">

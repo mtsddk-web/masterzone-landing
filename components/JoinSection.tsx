@@ -47,9 +47,9 @@ export default function JoinSection({
 
         {/* Content Blocks */}
         <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto mb-12">
-          {blocks.map((block, index) => (
+          {blocks.map((block) => (
             <div
-              key={index}
+              key={block.title}
               className="bg-white/10 backdrop-blur-sm rounded-xl p-8 hover:bg-white/20 transition-all duration-300"
             >
               <div className="mb-4 text-orange-300">

@@ -130,9 +130,9 @@ export default function Testimonials({ sectionTitle, testimonials }: Testimonial
 
           {/* Dots Indicator */}
           <div className="flex justify-center gap-2 mt-8">
-            {testimonials.map((_, index) => (
+            {testimonials.map((t, index) => (
               <button
-                key={index}
+                key={t.name + index}
                 onClick={() => setCurrentIndex(index)}
                 className={`w-3 h-3 rounded-full transition-all duration-300 ${
                   index === currentIndex

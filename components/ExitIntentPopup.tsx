@@ -10,6 +10,12 @@ export default function ExitIntentPopup() {
   const [hasShown, setHasShown] = useState(false);
   const [isReady, setIsReady] = useState(false);
 
+  // Rescue offer state
+  const [email, setEmail] = useState("");
+  const [error, setError] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+
   useEffect(() => {
     // Check if popup was already shown in this session
     const popupShown = sessionStorage.getItem("exitIntentShown");
@@ -46,40 +52,47 @@ export default function ExitIntentPopup() {
     };
   }, [isReady, hasShown]);
 
-  const [selectedReason, setSelectedReason] = useState("");
-  const [otherReason, setOtherReason] = useState("");
-
   const handleClose = () => {
     setIsVisible(false);
   };
 
-  const handleSubmit = async () => {
-    const reason = selectedReason === "other" ? otherReason : selectedReason;
+  const validateEmail = (val: string): boolean => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val.trim());
+  };
 
-    // Track w Facebook Pixel
-    trackEvent("Survey", {
-      source: "exit_intent_survey",
-      reason: reason
-    });
+  // Rescue offer: capture email -> Sender (separate source for segmentation)
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const clean = email.trim();
+    if (!validateEmail(clean)) {
+      setError("Podaj prawidłowy adres email");
+      return;
+    }
+    setError("");
+    setIsSubmitting(true);
 
-    // Wyślij do Google Sheets via API
+    trackEvent("Lead", { source: "exit_intent_rescue" });
+
     try {
-      await fetch('/api/exit-survey', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      const res = await fetch("/api/subscribe-trial", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          reason: reason,
-          timestamp: Date.now(),
-          url: window.location.href
+          email: clean,
+          source: "Exit Intent - oferta ratunkowa",
         }),
       });
-    } catch (error) {
-      console.error('Failed to send exit survey:', error);
+      const data = await res.json();
+      if (!res.ok || !data.success) {
+        throw new Error(data.error || "Coś poszło nie tak");
+      }
+      setIsSuccess(true);
+    } catch {
+      // Non-blocking: even if capture fails, let them proceed to checkout
+      setError("Nie udało się zapisać. Spróbuj jeszcze raz albo dołącz od razu.");
+    } finally {
+      setIsSubmitting(false);
     }
-
-    setIsVisible(false);
   };
 
   const handleCTA = () => {
@@ -106,114 +119,85 @@ export default function ExitIntentPopup() {
         </button>
 
         {/* Content */}
-        <div className="text-left">
-          {/* Icon */}
-          <div className="text-5xl mb-4 text-center">💬</div>
+        <div className="text-center">
+          {isSuccess ? (
+            // SUCCESS VIEW
+            <>
+              <div className="text-5xl mb-4">📬</div>
+              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3">
+                Sprawdź skrzynkę!
+              </h2>
+              <p className="text-base text-gray-600 mb-6">
+                Wysłałem Ci na maila przewodnik po pracy głębokiej (body doubling) plus
+                wszystko czego potrzebujesz, żeby zacząć 7 dni za darmo. Jeśli nie widzisz maila,
+                zajrzyj do folderu SPAM.
+              </p>
+              <button
+                onClick={handleCTA}
+                className="block w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white text-center font-bold py-3 px-6 rounded-lg transition-all cursor-pointer mb-2"
+              >
+                Zacznij 7 dni za darmo →
+              </button>
+              <button
+                onClick={handleClose}
+                className="w-full text-gray-500 hover:text-gray-700 font-medium py-2 text-sm transition-colors"
+              >
+                Wrócę później
+              </button>
+            </>
+          ) : (
+            // RESCUE OFFER VIEW
+            <>
+              {/* Icon */}
+              <div className="text-5xl mb-4">🎁</div>
 
-          {/* Headline */}
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3 text-center">
-            Zanim odejdziesz - pomóż nam!
-          </h2>
+              {/* Headline */}
+              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3">
+                Zanim odejdziesz - zostaw email
+              </h2>
 
-          {/* Subheadline */}
-          <p className="text-base text-gray-600 mb-6 text-center">
-            Co sprawiło, że opuszczasz stronę? Twoja opinia pomoże nam stworzyć lepszą ofertę.
-          </p>
+              {/* Subheadline */}
+              <p className="text-base text-gray-600 mb-6">
+                Wyślę Ci przewodnik po pracy głębokiej (body doubling) plus dostęp do
+                7 dni MasterZone za darmo. Bez zobowiązań, anulujesz kiedy chcesz.
+              </p>
 
-          {/* Survey Options */}
-          <div className="space-y-3 mb-6">
-            <label className="flex items-start p-3 bg-gray-50 rounded-lg hover:bg-gray-100 cursor-pointer transition-colors border-2 border-transparent has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50">
-              <input
-                type="radio"
-                name="exit-reason"
-                value="price"
-                checked={selectedReason === "price"}
-                onChange={(e) => setSelectedReason(e.target.value)}
-                className="mt-1 mr-3"
-              />
-              <span className="text-gray-800">Za drogo - 97 PLN/msc to za dużo</span>
-            </label>
+              {/* Email form */}
+              <form onSubmit={handleSubmit} className="space-y-3">
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => { setEmail(e.target.value); setError(""); }}
+                  placeholder="twoj@email.pl"
+                  disabled={isSubmitting}
+                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none text-base disabled:bg-gray-100"
+                  required
+                />
+                {error && (
+                  <p className="text-sm text-red-600 text-left">{error}</p>
+                )}
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full bg-gradient-to-r from-orange-600 to-red-700 hover:from-orange-700 hover:to-red-800 text-white font-bold py-3 px-6 rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed border-2 border-yellow-300"
+                >
+                  {isSubmitting ? "Wysyłam..." : "Wyślij mi przewodnik + dostęp →"}
+                </button>
+              </form>
 
-            <label className="flex items-start p-3 bg-gray-50 rounded-lg hover:bg-gray-100 cursor-pointer transition-colors border-2 border-transparent has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50">
-              <input
-                type="radio"
-                name="exit-reason"
-                value="not-for-me"
-                checked={selectedReason === "not-for-me"}
-                onChange={(e) => setSelectedReason(e.target.value)}
-                className="mt-1 mr-3"
-              />
-              <span className="text-gray-800">To nie dla mnie / Nie potrzebuję tego</span>
-            </label>
+              {/* Secondary: go straight to checkout */}
+              <button
+                onClick={handleCTA}
+                className="block w-full text-blue-600 hover:text-blue-800 font-semibold py-3 mt-3 text-sm transition-colors cursor-pointer"
+              >
+                Wolę od razu dołączyć do MasterZone →
+              </button>
 
-            <label className="flex items-start p-3 bg-gray-50 rounded-lg hover:bg-gray-100 cursor-pointer transition-colors border-2 border-transparent has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50">
-              <input
-                type="radio"
-                name="exit-reason"
-                value="no-time"
-                checked={selectedReason === "no-time"}
-                onChange={(e) => setSelectedReason(e.target.value)}
-                className="mt-1 mr-3"
-              />
-              <span className="text-gray-800">Nie mam teraz czasu / Wrócę później</span>
-            </label>
-
-            <label className="flex items-start p-3 bg-gray-50 rounded-lg hover:bg-gray-100 cursor-pointer transition-colors border-2 border-transparent has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50">
-              <input
-                type="radio"
-                name="exit-reason"
-                value="need-more-info"
-                checked={selectedReason === "need-more-info"}
-                onChange={(e) => setSelectedReason(e.target.value)}
-                className="mt-1 mr-3"
-              />
-              <span className="text-gray-800">Potrzebuję więcej informacji</span>
-            </label>
-
-            <label className="flex items-start p-3 bg-gray-50 rounded-lg hover:bg-gray-100 cursor-pointer transition-colors border-2 border-transparent has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50">
-              <input
-                type="radio"
-                name="exit-reason"
-                value="other"
-                checked={selectedReason === "other"}
-                onChange={(e) => setSelectedReason(e.target.value)}
-                className="mt-1 mr-3"
-              />
-              <span className="text-gray-800">Inne (wpisz poniżej)</span>
-            </label>
-
-            {selectedReason === "other" && (
-              <textarea
-                value={otherReason}
-                onChange={(e) => setOtherReason(e.target.value)}
-                placeholder="Powiedz nam więcej..."
-                className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none resize-none"
-                rows={3}
-              />
-            )}
-          </div>
-
-          {/* Buttons */}
-          <div className="space-y-3">
-            <button
-              onClick={handleSubmit}
-              disabled={!selectedReason || (selectedReason === "other" && !otherReason)}
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
-            >
-              Wyślij opinię
-            </button>
-
-            <button
-              onClick={handleCTA}
-              className="block w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white text-center font-bold py-3 px-6 rounded-lg transition-all cursor-pointer"
-            >
-              Jednak chcę dołączyć do MasterZone →
-            </button>
-          </div>
-
-          <p className="text-xs text-gray-400 mt-4 text-center">
-            Dziękujemy za feedback - pomaga nam to rozwijać MasterZone
-          </p>
+              <p className="text-xs text-gray-400 mt-2">
+                Zero spamu. Możesz wypisać się jednym kliknięciem.
+              </p>
+            </>
+          )}
         </div>
       </div>
 

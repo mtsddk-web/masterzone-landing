@@ -79,9 +79,9 @@ export default function ValueStack({
 
             {/* Alternative Items List */}
             <div className="space-y-4 mb-6">
-              {alternativeItems.map((item, index) => (
+              {alternativeItems.map((item) => (
                 <div
-                  key={index}
+                  key={item.name}
                   className="flex justify-between items-start gap-3 pb-3 border-b border-gray-200 last:border-0"
                 >
                   <div className="flex-1">
@@ -131,9 +131,9 @@ export default function ValueStack({
 
             {/* Included Items List */}
             <div className="space-y-3 mb-6">
-              {items.map((item, index) => (
+              {items.map((item) => (
                 <div
-                  key={index}
+                  key={item.name}
                   className="flex items-start gap-3 bg-white/60 rounded-lg p-3"
                 >
                   <span className="text-green-600 flex-shrink-0 mt-0.5">

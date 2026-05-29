@@ -19,8 +19,9 @@ export async function POST(request: Request) {
 
     const origin = request.headers.get('origin') || 'https://rozproszenie.masterzone.edu.pl';
 
-    // Cena MasterZone: 97 PLN = 9700 groszy
-    const totalAmount = '9700';
+    // Cena MasterZone promo zalozycielska: 67 zl = 6700 groszy
+    // (PayU obecnie wylaczone - PAYU_ENABLED=false w checkout)
+    const totalAmount = '6700';
 
     // Pobierz IP klienta (wymagane przez PayU)
     const forwardedFor = request.headers.get('x-forwarded-for');
@@ -43,7 +44,7 @@ export async function POST(request: Request) {
       continueUrl: `${origin}/checkout/success?provider=payu`,
       customerIp,
       merchantPosId: process.env.PAYU_POS_ID!,
-      description: 'MasterZone Community - 97 PLN (pierwszy miesiac)',
+      description: 'MasterZone Community - 67 zl (pierwszy miesiac)',
       currencyCode: 'PLN',
       totalAmount,
       products: [

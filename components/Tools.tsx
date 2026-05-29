@@ -69,9 +69,9 @@ export default function Tools({
         {/* TOOLS SECTION - Vertical list with large icons */}
         {isToolsSection && (
           <div className="max-w-5xl mx-auto space-y-6 mb-12">
-            {items.map((tool, index) => (
+            {items.map((tool) => (
               <div
-                key={index}
+                key={tool.title}
                 className="flex items-start gap-6 p-8 bg-white border-l-8 border-green-500 rounded-r-2xl shadow-lg hover:shadow-2xl hover:border-green-600 transition-all duration-300 hover:translate-x-2"
               >
                 <div className="flex-shrink-0 w-20 h-20 flex items-center justify-center bg-green-50 rounded-2xl text-green-600">
@@ -95,7 +95,7 @@ export default function Tools({
           <div className="max-w-4xl mx-auto mb-12">
             {items.map((tool, index) => (
               <div
-                key={index}
+                key={tool.title}
                 className="relative flex gap-6 mb-8 last:mb-0"
               >
                 {/* Timeline line */}
@@ -131,9 +131,9 @@ export default function Tools({
         {isCommunitySection && (
           <div className="max-w-6xl mx-auto mb-12">
             <div className="grid md:grid-cols-2 gap-8">
-              {items.map((tool, index) => (
+              {items.map((tool) => (
                 <div
-                  key={index}
+                  key={tool.title}
                   className="relative group"
                 >
                   {/* Glow effect on hover */}

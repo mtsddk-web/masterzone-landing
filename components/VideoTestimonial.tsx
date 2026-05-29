@@ -30,8 +30,9 @@ function VideoCard({ video }: { video: VideoItem }) {
         ) : (
           <video
             controls
-            className="w-full max-w-md mx-auto rounded-lg shadow-lg"
-            preload="metadata"
+            className="w-full max-w-md mx-auto rounded-lg shadow-lg aspect-video bg-gray-900"
+            preload="none"
+            poster="/images/hero-poster.jpg"
             onError={() => setFailed(true)}
           >
             <source src={video.videoUrl} type="video/mp4" />
@@ -81,8 +82,8 @@ export default function VideoTestimonial({
 
         {/* Videos Grid - 3 columns on larger screens */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-          {videos.map((video, index) => (
-            <VideoCard key={index} video={video} />
+          {videos.map((video) => (
+            <VideoCard key={video.videoUrl} video={video} />
           ))}
         </div>
       </div>

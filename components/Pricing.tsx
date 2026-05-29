@@ -86,8 +86,8 @@ export default function Pricing({
 
                 {/* Features */}
                 <ul className="space-y-4 mb-8">
-                  {plan.features.map((feature, featureIndex) => (
-                    <li key={featureIndex} className="flex items-start">
+                  {plan.features.map((feature) => (
+                    <li key={feature} className="flex items-start">
                       <svg
                         className="w-6 h-6 mr-3 flex-shrink-0 text-green-400"
                         fill="currentColor"

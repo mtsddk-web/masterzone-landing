@@ -34,7 +34,7 @@ export default function FAQ({ sectionTitle, faqs, questions }: FAQProps) {
         <div className="max-w-3xl mx-auto space-y-4">
           {items.map((faq, index) => (
             <div
-              key={index}
+              key={faq.question}
               className="bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300"
             >
               {/* Question */}

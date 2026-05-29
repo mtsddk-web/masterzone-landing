@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 import { trackEvent } from "@/components/FacebookPixel";
@@ -116,10 +117,13 @@ function CheckoutContent() {
       <div className="max-w-lg w-full">
         {/* Logo */}
         <div className="text-center mb-8">
-          <img
+          <Image
             src="/images/logo-masterzone.png"
             alt="MasterZone"
-            className="w-16 h-16 mx-auto mb-4 object-contain"
+            width={64}
+            height={64}
+            priority
+            className="w-16 h-16 mx-auto mb-4 object-contain rounded-lg"
           />
           <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
             Dołącz do MasterZone
