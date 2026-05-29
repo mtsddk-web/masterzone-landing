@@ -80,11 +80,11 @@ function SuccessContent() {
           <ol className="space-y-3 text-blue-100">
             <li className="flex items-start gap-3">
               <span className="bg-yellow-400 text-gray-900 font-bold w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 text-sm">1</span>
-              <span><strong className="text-white">Sprawdź skrzynkę email</strong> - w ciągu kilku minut otrzymasz osobiste zaproszenie od Skool z przyciskiem &bdquo;JOIN NOW&rdquo;. Sprawdź też folder SPAM.</span>
+              <span><strong className="text-white">Sprawdź skrzynkę email</strong> - wysłaliśmy Ci link, którym dołączysz do społeczności MasterZone. Sprawdź też folder SPAM.</span>
             </li>
             <li className="flex items-start gap-3">
               <span className="bg-yellow-400 text-gray-900 font-bold w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 text-sm">2</span>
-              <span>Kliknij <strong className="text-white">JOIN NOW</strong> w mailu i załóż darmowe konto na Skool (lub zaloguj się, jeśli już masz). <strong className="text-yellow-300">Użyj tego samego adresu email</strong>, na który dostałeś zaproszenie.</span>
+              <span>Kliknij <strong className="text-white">Dołącz do społeczności</strong> w mailu i załóż darmowe konto na Skool (lub zaloguj się, jeśli już masz). <strong className="text-yellow-300">Użyj tego samego adresu email</strong>, którego użyłeś przy zakupie.</span>
             </li>
             <li className="flex items-start gap-3">
               <span className="bg-yellow-400 text-gray-900 font-bold w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 text-sm">3</span>

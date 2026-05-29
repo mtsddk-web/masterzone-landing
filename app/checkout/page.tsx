@@ -29,8 +29,22 @@ function CheckoutContent() {
   const [isLoading, setIsLoading] = useState(false);
   const [selectedProvider, setSelectedProvider] = useState<"stripe" | "payu" | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [email, setEmail] = useState<string>(emailParam || "");
+  const [emailError, setEmailError] = useState<string | null>(null);
+
+  const validateEmail = (val: string): boolean => {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(val.trim());
+  };
 
   const handleCheckout = async (provider: "stripe" | "payu") => {
+    // Walidacja email przed Stripe
+    const cleanEmail = email.trim();
+    if (!validateEmail(cleanEmail)) {
+      setEmailError("Podaj prawidłowy adres email");
+      return;
+    }
+    setEmailError(null);
     setIsLoading(true);
     setSelectedProvider(provider);
     setError(null);
@@ -40,6 +54,18 @@ function CheckoutContent() {
       currency: "PLN",
       trial: trialDays > 0,
       provider,
+    });
+
+    // Pre-warm Sender PRZED Stripe - jesli network fail, kontynuuj (zapisemy z webhook).
+    fetch("/api/subscribe-trial", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email: cleanEmail,
+        source: "checkout_page",
+      }),
+    }).catch((err) => {
+      console.warn("[checkout] subscribe-trial pre-warm failed (non-blocking):", err);
     });
 
     try {
@@ -55,7 +81,7 @@ function CheckoutContent() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           trial: trialDays || undefined,
-          email: emailParam || undefined,
+          email: cleanEmail,
           utm: {
             source: utmSource || undefined,
             medium: utmMedium || undefined,
@@ -158,6 +184,31 @@ function CheckoutContent() {
                 </li>
               ))}
             </ul>
+          </div>
+
+          {/* Email Input */}
+          <div className="mb-4">
+            <label htmlFor="checkout-email" className="block text-sm font-semibold text-gray-700 mb-2">
+              Twój email
+            </label>
+            <input
+              id="checkout-email"
+              type="email"
+              value={email}
+              onChange={(e) => { setEmail(e.target.value); setEmailError(null); }}
+              placeholder="twoj@email.pl"
+              disabled={isLoading}
+              required
+              className={`w-full px-4 py-3 border-2 rounded-lg focus:outline-none text-base ${
+                emailError ? "border-red-400 focus:border-red-500" : "border-gray-300 focus:border-blue-500"
+              } disabled:bg-gray-100 disabled:cursor-not-allowed`}
+            />
+            {emailError && (
+              <p className="mt-2 text-sm text-red-600">{emailError}</p>
+            )}
+            <p className="mt-2 text-xs text-gray-500">
+              Na ten adres wyślemy zaproszenie do społeczności Skool.
+            </p>
           </div>
 
           {/* Error message */}

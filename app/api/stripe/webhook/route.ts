@@ -2,13 +2,19 @@ import { NextResponse } from 'next/server';
 import { createHash } from 'crypto';
 import { getStripe } from '@/lib/stripe';
 import { supabaseAdmin } from '@/lib/supabase-server';
+import { senderUpsertSubscriber } from '@/lib/sender';
+import { sendSkoolInvite } from '@/lib/skool';
 import Stripe from 'stripe';
 
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!;
 
-async function sendMetaCAPIPurchase(params: {
+/**
+ * Meta CAPI helper - generic, supports Purchase + StartTrial (i kolejne event types).
+ */
+async function sendMetaCAPIEvent(params: {
+  eventName: 'Purchase' | 'StartTrial' | 'Subscribe';
   email: string;
-  amount: number;
+  value: number;          // value in PLN (NIE w groszach)
   currency: string;
   eventId: string;
   sourceUrl?: string;
@@ -29,7 +35,7 @@ async function sendMetaCAPIPurchase(params: {
   const payload = {
     data: [
       {
-        event_name: 'Purchase',
+        event_name: params.eventName,
         event_time: Math.floor(Date.now() / 1000),
         event_id: params.eventId,
         event_source_url: params.sourceUrl || 'https://rozproszenie.masterzone.edu.pl/',
@@ -41,7 +47,7 @@ async function sendMetaCAPIPurchase(params: {
         },
         custom_data: {
           currency: params.currency.toUpperCase(),
-          value: params.amount / 100,
+          value: params.value,
           content_name: 'MasterZone Strefa Skupienia',
           content_category: 'subscription',
         },
@@ -54,18 +60,18 @@ async function sendMetaCAPIPurchase(params: {
       `https://graph.facebook.com/v25.0/${pixelId}/events?access_token=${accessToken}`,
       {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'User-Agent': 'atlas-mz/1.0' },
         body: JSON.stringify(payload),
       }
     );
     const data = await res.json();
     if (!res.ok) {
-      console.error('Meta CAPI error:', res.status, data);
+      console.error(`Meta CAPI ${params.eventName} error:`, res.status, data);
     } else {
-      console.log('Meta CAPI Purchase sent:', params.email, data);
+      console.log(`Meta CAPI ${params.eventName} sent:`, params.email, data?.events_received);
     }
   } catch (error) {
-    console.error('Meta CAPI fetch error:', error);
+    console.error(`Meta CAPI ${params.eventName} fetch error:`, error);
   }
 }
 
@@ -120,33 +126,34 @@ async function upsertSubscription(
   }
 }
 
-async function tagMailerLite(email: string, status: string) {
-  const apiKey = process.env.MAILERLITE_API_KEY;
-  if (!apiKey) return;
-
-  try {
-    const groupId = process.env.MAILERLITE_PAID_GROUP_ID;
-
-    await fetch('https://connect.mailerlite.com/api/subscribers', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-      body: JSON.stringify({
-        email,
-        fields: {
-          trial_status: status,
-          payment_date: new Date().toISOString(),
-        },
-        groups: groupId ? [groupId] : [],
-        status: 'active',
-      }),
-    });
-  } catch (error) {
-    console.error('MailerLite tag error:', error);
+/**
+ * Tag subscriber w Sender po pelnej platnosci (status='paid') albo canceled.
+ * Migracja MailerLite -> Sender (28.05.2026).
+ */
+async function tagSender(email: string, status: 'paid' | 'canceled' | 'past_due') {
+  if (!email) return;
+  const paidGroupId = process.env.SENDER_PAID_GROUP_ID?.trim();
+  if (!paidGroupId) {
+    console.warn('[webhook] SENDER_PAID_GROUP_ID not configured');
+    return;
   }
+
+  // Dla canceled/past_due - nie dodajemy do Paid Members group, tylko log
+  // (idealnie powinien byc osobny Cancellers group, ale MVP wystarczy log + Stripe status).
+  if (status !== 'paid') {
+    console.log(`[webhook] subscriber ${email} status=${status} (no Sender group change)`);
+    return;
+  }
+
+  await senderUpsertSubscriber({
+    email,
+    groups: [paidGroupId],
+    trigger_automation: false,
+    fields: {
+      trial_status: status,
+      payment_date: new Date().toISOString(),
+    },
+  });
 }
 
 export async function POST(request: Request) {
@@ -192,29 +199,65 @@ export async function POST(request: Request) {
           utm_campaign: session.metadata?.utm_campaign,
         });
 
-        // Tag in MailerLite
-        await tagMailerLite(email, 'paid');
+        const isTrial = !!subscription.trial_end && subscription.status === 'trialing';
+        const sourceUrl =
+          (session.metadata?.landing_url as string) ||
+          'https://rozproszenie.masterzone.edu.pl/';
+        const fbp = (session.metadata?.fbp as string) || null;
+        const fbc = (session.metadata?.fbc as string) || null;
+        const amountPln = (item?.price.unit_amount || 9700) / 100;
+        const currency = item?.price.currency || 'pln';
 
-        // Send Meta CAPI Purchase (server-side, closes the attribution loop).
-        // fbc/fbp z metadata sesji => Meta dopina Purchase do kliku w reklame.
-        await sendMetaCAPIPurchase({
-          email,
-          amount: item?.price.unit_amount || 9700,
-          currency: item?.price.currency || 'pln',
-          eventId: session.id,
-          sourceUrl:
-            (session.metadata?.landing_url as string) ||
-            'https://rozproszenie.masterzone.edu.pl/',
-          fbp: (session.metadata?.fbp as string) || null,
-          fbc: (session.metadata?.fbc as string) || null,
-        });
+        if (isTrial) {
+          // Trial start = StartTrial CAPI (value 0, sygnal dla Meta ze user wszedl w funnel)
+          await sendMetaCAPIEvent({
+            eventName: 'StartTrial',
+            email,
+            value: 0,
+            currency,
+            eventId: `start_trial_${session.id}`,
+            sourceUrl,
+            fbp,
+            fbc,
+          });
 
-        console.log(`Checkout completed: ${email}, subscription: ${subscriptionId}`);
+          // Wyslij Skool invite od razu po starcie trialu (klient ma odzyskac kontekst po Stripe checkout)
+          if (email) {
+            await sendSkoolInvite({
+              email,
+              firstname: session.customer_details?.name?.split(' ')[0],
+            });
+          }
+        } else {
+          // Direct purchase (bez trialu) - Sender PAID + Purchase CAPI
+          await tagSender(email, 'paid');
+          await sendMetaCAPIEvent({
+            eventName: 'Purchase',
+            email,
+            value: amountPln,
+            currency,
+            eventId: session.id,
+            sourceUrl,
+            fbp,
+            fbc,
+          });
+
+          // Skool invite tez po direct purchase
+          if (email) {
+            await sendSkoolInvite({
+              email,
+              firstname: session.customer_details?.name?.split(' ')[0],
+            });
+          }
+        }
+
+        console.log(`Checkout completed: ${email}, subscription: ${subscriptionId}, trial=${isTrial}`);
         break;
       }
 
       case 'customer.subscription.updated': {
         const subscription = event.data.object as Stripe.Subscription;
+        const previous = (event.data.previous_attributes || {}) as Partial<Stripe.Subscription>;
         const customerId = subscription.customer as string;
         const customer = await getStripe().customers.retrieve(customerId);
         const email = (customer as Stripe.Customer).email || '';
@@ -232,6 +275,26 @@ export async function POST(request: Request) {
           utm_campaign: subscription.metadata?.utm_campaign || undefined,
         });
 
+        // Trial -> active = REAL Purchase: Sender Paid + CAPI Purchase
+        const wasTrialing = previous.status === 'trialing';
+        const nowActive = subscription.status === 'active';
+        if (wasTrialing && nowActive && email) {
+          console.log(`[webhook] trial -> active for ${email}, sending Purchase events`);
+          await tagSender(email, 'paid');
+          await sendMetaCAPIEvent({
+            eventName: 'Purchase',
+            email,
+            value: (subItem?.price.unit_amount || 9700) / 100,
+            currency: subItem?.price.currency || 'pln',
+            eventId: `sub_active_${subscription.id}`,
+            sourceUrl:
+              (subscription.metadata?.landing_url as string) ||
+              'https://rozproszenie.masterzone.edu.pl/',
+            fbp: (subscription.metadata?.fbp as string) || null,
+            fbc: (subscription.metadata?.fbc as string) || null,
+          });
+        }
+
         console.log(`Subscription updated: ${subscription.id}, status: ${subscription.status}`);
         break;
       }
@@ -246,7 +309,7 @@ export async function POST(request: Request) {
           current_period_end: subscription.items.data[0]?.current_period_end,
         });
 
-        await tagMailerLite(email, 'canceled');
+        await tagSender(email, 'canceled');
         console.log(`Subscription canceled: ${subscription.id}`);
         break;
       }
