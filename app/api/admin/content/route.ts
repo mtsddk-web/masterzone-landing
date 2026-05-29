@@ -2,8 +2,21 @@ import { NextResponse } from 'next/server';
 import { revalidatePath } from 'next/cache';
 import { supabaseAdmin } from '@/lib/supabase-server';
 
-// GET - return all content rows
-export async function GET() {
+// Server-side authorization: every request must carry x-admin-secret matching
+// ADMIN_SECRET env. Without it, no CMS content is exposed (read or write).
+function isAuthorized(request: Request): boolean {
+  const secret = process.env.ADMIN_SECRET;
+  if (!secret) return false;
+  const provided = request.headers.get('x-admin-secret');
+  return provided === secret;
+}
+
+// GET - return all content rows (auth required)
+export async function GET(request: Request) {
+  if (!isAuthorized(request)) {
+    return NextResponse.json({ error: 'unauthorized' }, { status: 401 });
+  }
+
   if (!supabaseAdmin) {
     return NextResponse.json({ error: 'Supabase not configured' }, { status: 500 });
   }
@@ -21,8 +34,12 @@ export async function GET() {
   return NextResponse.json(data);
 }
 
-// PUT - batch upsert per section
+// PUT - batch upsert per section (auth required)
 export async function PUT(request: Request) {
+  if (!isAuthorized(request)) {
+    return NextResponse.json({ error: 'unauthorized' }, { status: 401 });
+  }
+
   if (!supabaseAdmin) {
     return NextResponse.json({ error: 'Supabase not configured' }, { status: 500 });
   }

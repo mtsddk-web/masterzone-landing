@@ -13,12 +13,15 @@ interface ContentRow {
   field_order: number;
 }
 
-// Simple password gate (no auth needed - Monika gets the password)
-const ADMIN_PASSWORD = 'masterzone2026';
+// Auth is verified server-side via /api/admin/auth (compares against ADMIN_SECRET).
+// The returned token is stored in memory + localStorage and sent as x-admin-secret
+// on every CMS request. No password is hardcoded in the client bundle.
+const TOKEN_STORAGE_KEY = 'mz_admin_token';
 
 export default function AdminPage() {
   const [authed, setAuthed] = useState(false);
   const [password, setPassword] = useState('');
+  const [token, setToken] = useState<string | null>(null);
   const [rows, setRows] = useState<ContentRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [openSection, setOpenSection] = useState<string | null>(null);
@@ -31,28 +34,53 @@ export default function AdminPage() {
     setTimeout(() => setToast(null), 3000);
   }, []);
 
-  // Check localStorage for auth
+  // Restore token from localStorage (will be re-validated on first content fetch)
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('mz_admin_auth');
-      if (saved === ADMIN_PASSWORD) setAuthed(true);
+      const saved = localStorage.getItem(TOKEN_STORAGE_KEY);
+      if (saved) {
+        setToken(saved);
+        setAuthed(true);
+      }
     }
   }, []);
 
-  const handleLogin = () => {
-    if (password === ADMIN_PASSWORD) {
-      setAuthed(true);
-      localStorage.setItem('mz_admin_auth', password);
-    } else {
+  const handleLogin = async () => {
+    try {
+      const res = await fetch('/api/admin/auth', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password }),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        if (data?.token) {
+          setToken(data.token);
+          setAuthed(true);
+          localStorage.setItem(TOKEN_STORAGE_KEY, data.token);
+          return;
+        }
+      }
       showToast('Nieprawidlowe haslo');
+    } catch {
+      showToast('Blad polaczenia');
     }
   };
 
   // Fetch content on load
   useEffect(() => {
-    if (!authed) return;
-    fetch('/api/admin/content')
-      .then(r => r.json())
+    if (!authed || !token) return;
+    fetch('/api/admin/content', { headers: { 'x-admin-secret': token } })
+      .then(r => {
+        if (r.status === 401) {
+          // stale/invalid token -> force re-login
+          localStorage.removeItem(TOKEN_STORAGE_KEY);
+          setToken(null);
+          setAuthed(false);
+          throw new Error('unauthorized');
+        }
+        return r.json();
+      })
       .then((data: ContentRow[]) => {
         if (Array.isArray(data)) {
           setRows(data);
@@ -75,7 +103,7 @@ export default function AdminPage() {
         setEditedFields(grouped);
         setLoading(false);
       });
-  }, [authed]);
+  }, [authed, token]);
 
   const handleFieldChange = (section: string, key: string, value: string) => {
     setEditedFields(prev => ({
@@ -92,7 +120,10 @@ export default function AdminPage() {
     try {
       const res = await fetch('/api/admin/content', {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          ...(token ? { 'x-admin-secret': token } : {}),
+        },
         body: JSON.stringify({ section, fields: editedFields[section] || {} }),
       });
       const result = await res.json();
