@@ -4,6 +4,7 @@ import { useState } from "react";
 
 interface VideoItem {
   videoUrl: string;
+  poster?: string;
   name: string;
   role: string;
 }
@@ -32,7 +33,7 @@ function VideoCard({ video }: { video: VideoItem }) {
             controls
             className="w-full max-w-md mx-auto rounded-lg shadow-lg aspect-video bg-gray-900"
             preload="none"
-            poster="/images/hero-poster.jpg"
+            poster={video.poster || "/images/hero-poster.jpg"}
             onError={() => setFailed(true)}
           >
             <source src={video.videoUrl} type="video/mp4" />

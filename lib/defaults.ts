@@ -140,7 +140,7 @@ export const HOMEPAGE_DEFAULTS: Record<string, Record<string, string>> = {
     headline: 'Dołącz do MasterZone i przestań pracować sam',
     subtitle: 'Codziennie pracujesz z ludźmi, którzy rozumieją Twoją codzienność. Planujesz raz w tygodniu z jasnością. I wreszcie kończysz to, co zaczynasz - bez zmuszania się.',
     block1_title: 'Body doubling - Twoje wirtualne biuro',
-    block1_description: 'Zamiast pustego mieszkania - codziennie pracujesz z innymi na żywo. Kamera włączona, muzyka w tle, każdy robi swoje. Twój mózg przełącza się w tryb skupienia automatycznie - bo widzi, że inni pracują.',
+    block1_description: 'Zamiast pustego mieszkania - codziennie pracujesz z innymi na żywo. Kamery włączone, każdy robi swoje. Twój mózg przełącza się w tryb skupienia automatycznie - bo widzi, że inni pracują.',
     block2_title: '67 zł/miesiąc - bez umów, pełna kontrola',
     block2_description: 'Nie ma haczyków ani umów. 67 zł zablokowane na zawsze dla pierwszych 100 osób, potem cena rośnie z grupą. Zostajesz tak długo, jak to działa. Anulujesz kiedy chcesz. To mniej niż coworking, a dostajesz codzienne wsparcie, planowanie i społeczność.',
     contrastText: 'Jutro możesz znów siedzieć sam, scrollować telefon i obiecywać sobie że \'od poniedziałku się ogarnę\'. Albo możesz dołączyć do ludzi, którzy już to zrobili.',

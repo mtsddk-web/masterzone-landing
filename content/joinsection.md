@@ -4,7 +4,7 @@ subtitle: "Codziennie pracujesz z ludźmi, którzy rozumieją Twoją codziennoś
 blocks:
   - icon: "Users"
     title: "Body doubling: Twoje wirtualne biuro"
-    description: "Zamiast pustego mieszkania, codziennie pracujesz z innymi na żywo. Kamera włączona, muzyka w tle, każdy robi swoje. Twój mózg przełącza się w tryb skupienia automatycznie, bo widzi, że inni pracują."
+    description: "Zamiast pustego mieszkania, codziennie pracujesz z innymi na żywo. Kamery włączone, każdy robi swoje. Twój mózg przełącza się w tryb skupienia automatycznie, bo widzi, że inni pracują."
   - icon: "RefreshCw"
     title: "7 dni za darmo, potem 67 zł/miesiąc, bez umów"
     description: "Pierwsze 7 dni testujesz za darmo: wchodzisz na bloki, planowanie, do społeczności. Jeśli zostajesz, to 67 zł/miesiąc dla pierwszych 100 osób (cena zablokowana na zawsze), bez umów i haczyków. Anulujesz kiedy chcesz. Mniej niż coworking, a dostajesz codzienne wsparcie."
