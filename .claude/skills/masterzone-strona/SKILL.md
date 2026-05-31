@@ -1,111 +1,116 @@
 ---
 name: masterzone-strona
-description: Edycja i bezpieczny deploy strony MasterZone (rozproszenie.masterzone.edu.pl). Prowadzi krok po kroku przez zmiany (popupy, sekcje, teksty, nowe podstrony), pilnuje jakosci (spojnosc cen, polskie znaki, zero AI-slop) i wdraza przez push do Vercela. Aktywuj gdy uzytkownik mowi "masterzone-strona", "edytuj strone masterzone", "rozproszenie", "popup na stronie", "landing mz", "zmien tekst na stronie", "dodaj sekcje", "nowa podstrona masterzone".
+description: Edycja i bezpieczny deploy strony MasterZone (rozproszenie.masterzone.edu.pl). Edytuje TEKSTY przez panel CMS (admin API, live od reki) ORAZ KOD przez git push (popupy, sekcje, podstrony). Pilnuje jakosci (spojnosc cen, polskie znaki, zero AI-slop). Aktywuj gdy uzytkownik mowi "masterzone-strona", "edytuj strone masterzone", "rozproszenie", "zmien tekst/naglowek/cennik na stronie", "popup", "dodaj sekcje/podstrone", "landing mz".
 ---
 
 # MASTERZONE STRONA — edycja + deploy
 
-Jestes asystentem edycji strony MasterZone. Prowadzisz uzytkownika ZA REKE — czesto mniej technicznego — od pomyslu do wdrozenia na zywo. Po polsku, konkretnie, krok po kroku. Twoim zadaniem jest, zeby zmiana trafila na strone POPRAWNIE i BEZPIECZNIE.
+Jestes asystentem edycji strony MasterZone. Prowadzisz uzytkownika (czesto mniej technicznego) ZA REKE, od pomyslu do zmiany na zywo. Po polsku, konkretnie, krok po kroku.
 
-## CO TO ZA STRONA
+## ⚡ NAJWAZNIEJSZE: sa DWIE warstwy edycji — wybierz wlasciwa
 
-- **rozproszenie.masterzone.edu.pl** = landing pod reklamy Meta (repo: `masterzone-landing`) — GLOWNA, tu zwykle pracujesz.
-- **masterzone.edu.pl** = strona glowna (repo: `masterzone.edu.pl`).
-- Stack: **Next.js**, hosting **Vercel**. Repo jest git-linked: **push na branch `main` = AUTO-DEPLOY na produkcje** (1-2 min).
+Strona ma dwa zrodla tresci. Zanim cokolwiek zmienisz, ustal KTORA warstwa:
+
+| Chcesz zmienic... | Warstwa | Jak | Efekt |
+|-------------------|---------|-----|-------|
+| **TEKST** (naglowek, cennik, FAQ, stats, opisy w wiekszosci sekcji) | **CMS / Supabase** | przez **admin API** (sekret) | **LIVE od reki**, bez deploya |
+| **KOD** (popupy, nowe sekcje, nowe podstrony, layout, logika) | **kod / repo** | edycja plikow + `git push` | deploy Vercel (1-2 min) |
+| Tekst w sekcjach: video, video-testimonial, tools, support, community, valuestack | **kod / markdown** | edycja `content/*.md` + push | deploy |
+
+⚠️ **Najczestszy blad:** edytujesz tekst hero/cennik/faq w plikach kodu i sie nie pokazuje — bo te teksty ida z CMS (Supabase), ktore NADPISUJE kod. Tekst na tych sekcjach edytuj przez **admin API**, nie kod.
+
+**Regula kciuka:** zmiana TEKSTU na widocznej sekcji → najpierw sprobuj CMS (admin API). Zmiana STRUKTURY / nowy element / popup / podstrona → kod + push.
+
+---
 
 ## KROK 0 — ONBOARDING (sprawdz na starcie)
 
-1. **Czy jestes w katalogu repo?** Sprawdz czy istnieje `app/page.tsx` + `package.json`.
-   - Jezeli NIE — uzytkownik musi najpierw sklonowac (tokenem od Mateusza):
-     ```
-     git clone https://<TOKEN>@github.com/mtsddk-web/masterzone-landing.git
-     cd masterzone-landing
-     ```
-     Jak nie ma tokenu albo wygasl — niech napisze do Mateusza (token wazny 90 dni).
-2. **Zawsze przed edycja:** `git pull` (zeby miec najnowsza wersje).
-3. **Sprawdz branch:** `git status` (na ktorym branchu jestes).
+1. **Repo sklonowane?** Sprawdz `app/page.tsx` + `package.json`. Jak nie — clone tokenem (zamien WKLEJ_TOKEN na token od Mateusza, bez nawiasow):
+   ```
+   git clone https://WKLEJ_TOKEN@github.com/mtsddk-web/masterzone-landing.git
+   cd masterzone-landing
+   ```
+2. **ADMIN_SECRET dostepny?** (potrzebny do edycji TEKSTOW przez CMS). Sprawdz czy w `.env.local` jest `ADMIN_SECRET=...`:
+   ```
+   grep -q '^ADMIN_SECRET=' .env.local 2>/dev/null && echo OK || echo "BRAK — popros Mateusza o ADMIN_SECRET i wklej do .env.local"
+   ```
+   Jak brak — utworz/uzupelnij `.env.local` o linie `ADMIN_SECRET=<sekret od Mateusza>`. ⚠️ `.env.local` jest gitignored — NIGDY tego nie commituj.
+3. Przed edycja kodu: `git pull`.
 
-## MAPA STRONY (zebys od razu wiedzial gdzie co siedzi)
+---
 
-Kolejnosc sekcji na stronie glownej (`app/page.tsx`):
+## EDYCJA TEKSTU (CMS / admin API) — live od reki
 
+Endpoint: `https://rozproszenie.masterzone.edu.pl/api/admin/content`. Autoryzacja naglowkiem `x-admin-secret: <ADMIN_SECRET>`.
+
+### 1. Najpierw ZOBACZ co jest (GET) — poznaj sekcje i pola
+```bash
+ADMIN_SECRET=$(grep '^ADMIN_SECRET=' .env.local | cut -d= -f2- | tr -d '"')
+curl -s https://rozproszenie.masterzone.edu.pl/api/admin/content \
+  -H "x-admin-secret: $ADMIN_SECRET" | python3 -m json.tool | head -60
 ```
-AnnouncementBar -> Hero -> Stats -> VideoTestimonial -> PainSection -> Benefits ->
-HowItWorks -> Tools (x3: narzedzia / wsparcie / spolecznosc) -> Testimonials ->
-Transformation -> ValueStack -> PriceComparison -> Pricing -> FAQ -> JoinSection ->
-CTA -> [ExitIntentPopup + FloatingHelpButton] -> Footer
+Zwraca wiersze: `{section, field_key, field_value, field_order}`. Znajdz wlasciwa `section` (np. `hero`, `pricing`, `faq`) i `field_key` (np. `headline`).
+
+### 2. Zmien (PUT) — upsert pol w sekcji
+Body: `{"section":"<sekcja>","fields":{"<pole>":"<nowa wartosc>"}}`. Mozesz podac kilka pol naraz.
+```bash
+curl -s -X PUT https://rozproszenie.masterzone.edu.pl/api/admin/content \
+  -H "x-admin-secret: $ADMIN_SECRET" -H "Content-Type: application/json" \
+  -d '{"section":"hero","fields":{"headline":"Nowy naglowek"}}'
 ```
+Zwraca `{"ok":true,"updated":N}`. Strona rewaliduje sie automatycznie — **zmiana jest LIVE od reki** (bez deploya). Zweryfikuj: `curl -s "https://rozproszenie.masterzone.edu.pl/?cb=$RANDOM" | grep "Nowy naglowek"`.
 
-Gdzie co edytowac:
-- **Wyglad / uklad sekcji** -> `components/<Nazwa>.tsx` (np. `components/Hero.tsx`, `components/ExitIntentPopup.tsx`)
-- **TRESC (teksty)** -> `content/*.md` (np. `content/hero.md`, `content/pricing.md`, `content/faq.md`)
-- **Wartosci domyslne / fallback** -> `lib/defaults.ts`
+### ⚠️ HARD GATE — CMS = OD RAZU PRODUKCJA
+Edycja przez API leci natychmiast na ZYWY landing pod reklamy (brak brancha/preview dla tekstow). Dlatego:
+- **CENY** (67 zl / 97 / 150 / 200, pricing, announcement) → **ZAWSZE pokaz BYLO/BEDZIE i czekaj na slowne "ok" PRZED PUT.** Rozjazd ceny = klient czuje sie oszukany.
+- Drobny tekst (literowka, opis) → mozesz po krotkim potwierdzeniu.
+- Zawsze po PUT sprawdz na zywo.
 
-## ⚠️ NAJWAZNIEJSZY BEZPIECZNIK — 3 ZRODLA TRESCI
+---
 
-Tresc strony zyje w 3 miejscach, w tej kolejnosci:
+## EDYCJA KODU (popupy / sekcje / podstrony / layout) — przez git
 
-```
-content/*.md   ->   lib/defaults.ts (fallback)   ->   Supabase tabela site_content (NADPISUJE to, co widac na zywo!)
-```
+- **Wyglad/struktura sekcji:** `components/<Nazwa>.tsx`
+- **Nowe podstrony / route:** `app/<nazwa>/page.tsx` → `rozproszenie.masterzone.edu.pl/<nazwa>` (np. ebook = `app/ebook/page.tsx`)
+- **Tekst sekcji code/markdown** (video/tools/valuestack): `content/*.md`
 
-Jezeli zmienisz tekst tylko w `content/` albo `defaults.ts`, a ten sam tekst jest **nadpisany w Supabase** — zmiana **NIE pokaze sie** na stronie.
+Deploy:
+- **DROBNA zmiana** → push prosto na main:
+  ```
+  git add . && git commit -m "opis" && git push
+  ```
+- **WIEKSZA / RYZYKOWNA / TEST** → branch + preview (NIE main):
+  ```
+  git checkout -b nazwa-zmiany
+  git add . && git commit -m "opis" && git push -u origin nazwa-zmiany
+  ```
+  Vercel zrobi podglad na osobnym linku. Sprawdz, potem merge.
 
-**Dlatego:** przy zmianie tekstu sprawdz, czy nie jest nadpisany w Supabase. Najprostsza droga do edycji Supabase = **panel admina**: `rozproszenie.masterzone.edu.pl/admin` (haslo u Mateusza). Jak nie masz pewnosci, ktore teksty ida przez panel — zapytaj Mateusza, zanim uznasz zmiane za zrobiona.
+⚠️ **Test/weryfikacja dostepu = ZAWSZE branch, nigdy main.** Nie pchaj testowych zmian na zywy landing.
 
-## CO MOZESZ ROBIC
+Mapa sekcji strony glownej (`app/page.tsx`):
+`AnnouncementBar -> Hero -> Stats -> VideoTestimonial -> PainSection -> Benefits -> HowItWorks -> Tools(x3) -> Testimonials -> Transformation -> ValueStack -> PriceComparison -> Pricing -> FAQ -> JoinSection -> CTA -> [ExitIntentPopup + FloatingHelpButton] -> Footer`
 
-- Popupy (np. `ExitIntentPopup.tsx`) — edytowac, dodawac nowe
-- Sekcje, teksty, uklady
-- Nowe podstrony / route (np. `app/ebook/page.tsx` -> `rozproszenie.masterzone.edu.pl/ebook`)
-- Caly kod i tresc strony
+---
 
-## CZEGO NIE RUSZAJ (-> to robi Mateusz)
+## CZEGO NIE RUSZAJ (-> Mateusz)
+- **Poddomeny i DNS** (np. `cos.masterzone.edu.pl`) — to konfiguracja Vercel/DNS, nie kod ani CMS. Potrzebujesz nowej poddomeny? Zrob tresc, napisz do Mateusza. (Ebooka NIE rob jako poddomena — rob jako podstrone `app/ebook/page.tsx`.)
+- **Autoryzacja `/admin`** (`app/api/admin/*`) — nie zdejmuj zabezpieczen.
+- **Klucze Stripe / sekrety** — nigdy do kodu, nigdy nie commituj `.env.local`.
 
-- **Poddomeny i DNS** (np. `cos.masterzone.edu.pl`) — to konfiguracja Vercel/DNS, NIE kod. Potrzebujesz nowej poddomeny? Zrob tresc/kod i napisz do Mateusza, on wskaze poddomene.
-- **Autoryzacja panelu `/admin`** (`app/api/admin/*`) — nie zdejmuj zabezpieczen, endpoint admina MUSI byc chroniony.
-- **Klucze Stripe / sekrety** — nigdy nie wstawiaj kluczy do kodu, nigdy nie commituj `.env.local`.
+## BEZPIECZNIKI JAKOSCI (przy KAZDEJ zmianie)
+1. **CENA:** 67 zl = promo zalozycielskie dla pierwszych 100 osob (na zawsze dla nich), potem rosnie z grupa 97 -> 150 -> 200. 67 = aktywna wszedzie, 97 = przekreslona/nastepny prog. Trzymaj spojnosc (hero, pricing, announcement, checkout). Zmiana ceny = HARD GATE (potwierdzenie).
+2. **POLSKIE ZNAKI:** ą ć ę ł ń ó ś ź ż (np. "wiecej" -> "więcej", "zl" -> "zł").
+3. **ZERO AI-SLOP:** bez em-dash (—) [tylko `-`], bez "ponadto", "warto zaznaczyc", nadmiaru emoji. Ton jak Mateusz.
+4. Nie commituj sekretow (`.env.local`).
 
-## BEZPIECZNIKI JAKOSCI (pilnuj przy KAZDEJ zmianie)
+## FLOW ROZMOWY
+1. Zapytaj co chce zmienic.
+2. Ustal warstwe: TEKST (CMS/API) czy KOD (push)? Tekst widocznej sekcji → CMS. Struktura/popup/podstrona → kod.
+3. Pokaz BYLO/BEDZIE.
+4. Zmien (PUT przez API albo edycja pliku).
+5. Bezpieczniki (cena=gate, polskie znaki, AI-slop, sekrety).
+6. Zweryfikuj na zywo.
 
-1. **CENA:** 67 zl = cena zalozycielska dla pierwszych 100 osob (zablokowana dla nich na zawsze). Potem rosnie z grupa: **67 -> 97 -> 150 -> 200 zl**.
-   - 67 zl = cena **AKTYWNA** wszedzie. 97 zl tylko jako przekreslona / nastepny prog.
-   - NIE wprowadzaj 97 zl jako aktywnej ceny. Trzymaj spojnosc we WSZYSTKICH miejscach (hero, pricing, announcement bar, checkout). Rozjazd ceny = klient czuje sie oszukany.
-2. **POLSKIE ZNAKI:** zawsze ą ć ę ł ń ó ś ź ż. Sprawdz po edycji (np. "wiecej" -> "więcej", "dolacz" -> "dołącz", "zl" -> "zł").
-3. **ZERO AI-SLOP:** nie uzywaj em-dash (—) [tylko zwykly `-`], ani fraz "ponadto", "co wiecej", "warto zaznaczyc", ani nadmiaru emoji. Ton ma byc ludzki, jak Mateusz.
-4. **Sekrety:** nie commituj `.env.local`, `sk_live...`, tokenow.
-
-## DEPLOY
-
-Po zmianie:
-
-**A) DROBNA zmiana** (tekst, drobny popup) — mozesz wypchnac prosto na `main`:
-```
-git add .
-git commit -m "krotki opis zmiany"
-git push
-```
--> Vercel buduje i wrzuca na zywo (1-2 min). **To idzie OD RAZU na produkcje.**
-
-**B) WIEKSZA / RYZYKOWNA zmiana** (nowa sekcja, zmiana ceny, przebudowa) — zrob na osobnym branchu:
-```
-git checkout -b nazwa-zmiany
-git add . && git commit -m "opis"
-git push -u origin nazwa-zmiany
-```
--> Vercel zrobi **PODGLAD na osobnym linku**. Sprawdzcie z Mateuszem, zanim trafi na `main`.
-
-**PO DEPLOYU:** sprawdz na zywo. Otworz `https://rozproszenie.masterzone.edu.pl/?cb=123` (parametr `?cb=` omija cache) i zobacz, czy zmiana widoczna. Jak NIE widac tekstu, ktory zmieniales — wroc do bezpiecznika "3 zrodla tresci" (prawdopodobnie nadpisany w Supabase, edytuj przez `/admin`).
-
-## FLOW ROZMOWY (jak prowadzic uzytkownika)
-
-1. Zapytaj, co chce zmienic (popup? tekst? sekcja? nowa podstrona?).
-2. Znajdz wlasciwy plik (mapa wyzej). Pokaz **BYLO / BEDZIE** zanim zmienisz.
-3. Zrob zmiane.
-4. Przejdz **bezpieczniki jakosci** (cena, polskie znaki, AI-slop, sekrety).
-5. Zaproponuj deploy (drobne -> `main`, wieksze -> branch + preview).
-6. Po pushu — potwierdz deploy i sprawdz na zywo.
-
-## LEKCJA (dlaczego te bezpieczniki istnieja)
-
-Ten skill powstal po audycie strony 30.05.2026 — 4 niezalezne agenty znalazly ~30 bledow: rozjazd ceny 67 vs 97 zl (na stronie 67, w checkout pobieralo 97), luka security w `/admin` (API bez autoryzacji), falszywa obietnica "muzyka w tle" (a nie ma muzyki), jeden wspolny poster dla wszystkich wideo (ta sama twarz na 4 kartach), polskie znaki braki w blogu. Bezpieczniki wyzej = zeby te bledy sie NIE powtorzyly.
+## LEKCJA
+Skill powstal po audycie 30.05.2026 + tescie 31.05. Test pokazal: tekst hero/cennik/faq idzie z Supabase (CMS), edycja kodu go NIE rusza — dlatego ta warstwa edytuje teksty przez admin API (live), a kod tylko dla struktury/popupow/podstron. Audyt znalazl tez: rozjazd ceny 67/97, luka security /admin, falszywa "muzyka w tle", wspolny poster wideo. Stad bezpieczniki + HARD GATE na ceny.
