@@ -5,6 +5,7 @@ import Stats from "@/components/Stats";
 import Benefits from "@/components/Benefits";
 import Tools from "@/components/Tools";
 import PainSection from "@/components/PainSection";
+import BeforeAfter from "@/components/BeforeAfter";
 import HowItWorks from "@/components/HowItWorks";
 import VideoTestimonial from "@/components/VideoTestimonial";
 import Testimonials from "@/components/Testimonials";
@@ -245,6 +246,7 @@ export default async function Home() {
       <Stats {...statsProps} />
       <VideoTestimonial {...videoTestimonialData} />
       <PainSection {...painProps} />
+      <BeforeAfter />
       <Benefits {...benefitsProps} />
       <HowItWorks {...howProps} />
       <Tools {...toolsData} />
