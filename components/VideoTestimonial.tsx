@@ -81,8 +81,8 @@ export default function VideoTestimonial({
           )}
         </div>
 
-        {/* Videos Grid - 3 columns on larger screens */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+        {/* Videos Grid - 4 w jednym rzedzie na duzym ekranie (lg+), 2x2 na tablecie, stos na telefonie */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
           {videos.map((video) => (
             <VideoCard key={video.videoUrl} video={video} />
           ))}
