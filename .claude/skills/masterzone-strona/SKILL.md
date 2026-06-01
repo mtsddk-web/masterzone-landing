@@ -30,11 +30,12 @@ Strona ma dwa zrodla tresci. Zanim cokolwiek zmienisz, ustal KTORA warstwa:
    git clone https://WKLEJ_TOKEN@github.com/mtsddk-web/masterzone-landing.git
    cd masterzone-landing
    ```
-2. **ADMIN_SECRET dostepny?** (potrzebny do edycji TEKSTOW przez CMS). Sprawdz czy w `.env.local` jest `ADMIN_SECRET=...`:
+2. **ADMIN_SECRET** (potrzebny do edycji TEKSTOW przez CMS). Sprawdz: `grep -q '^ADMIN_SECRET=' .env.local 2>/dev/null && echo OK || echo BRAK`.
+   Jesli BRAK — **NIE kaz uzytkownikowi recznie tworzyc pliku.** Popros go: "Wklej mi ADMIN_SECRET, ktory dostales od Mateusza" — a gdy go poda, **TY SAM zapisz do `.env.local`**:
    ```
-   grep -q '^ADMIN_SECRET=' .env.local 2>/dev/null && echo OK || echo "BRAK — popros Mateusza o ADMIN_SECRET i wklej do .env.local"
+   printf 'ADMIN_SECRET=%s\n' 'WARTOSC_KTORA_WKLEIL_UZYTKOWNIK' >> .env.local
    ```
-   Jak brak — utworz/uzupelnij `.env.local` o linie `ADMIN_SECRET=<sekret od Mateusza>`. ⚠️ `.env.local` jest gitignored — NIGDY tego nie commituj.
+   Potwierdz: "Zapisane, juz nie musisz tego robic recznie." ⚠️ `.env.local` jest gitignored — NIGDY nie commituj. To jednorazowy krok (potem skill bierze sekret stamtad sam).
 3. Przed edycja kodu: `git pull`.
 
 ---
