@@ -211,6 +211,22 @@ export default async function Home() {
     questions: faqItems.length > 0 ? faqItems : faqMarkdown.questions || [],
   };
 
+  // SEO: dane strukturalne FAQ (FAQPage / JSON-LD) - rich snippets w Google
+  const faqJsonLd =
+    faqProps.questions.length > 0
+      ? {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: faqProps.questions.map(
+            (q: { question: string; answer: string }) => ({
+              "@type": "Question",
+              name: q.question,
+              acceptedAnswer: { "@type": "Answer", text: q.answer },
+            })
+          ),
+        }
+      : null;
+
   // Join Section
   const joinBlocks = extractNumbered(c.joinsection || {}, 'block', 2, ['title', 'description']);
   const joinMarkdown = getContentData("joinsection.md");
@@ -258,6 +274,12 @@ export default async function Home() {
       <PriceComparison />
       <Pricing {...pricingProps} />
       <div id="faq">
+        {faqJsonLd && (
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+          />
+        )}
         <FAQ {...faqProps} />
       </div>
       <JoinSection {...joinProps} />
