@@ -30,12 +30,15 @@ Strona ma dwa zrodla tresci. Zanim cokolwiek zmienisz, ustal KTORA warstwa:
    git clone https://WKLEJ_TOKEN@github.com/mtsddk-web/masterzone-landing.git
    cd masterzone-landing
    ```
-2. **ADMIN_SECRET** (potrzebny do edycji TEKSTOW przez CMS). Sprawdz: `grep -q '^ADMIN_SECRET=' .env.local 2>/dev/null && echo OK || echo BRAK`.
-   Jesli BRAK — **NIE kaz uzytkownikowi recznie tworzyc pliku.** Popros go: "Wklej mi ADMIN_SECRET, ktory dostales od Mateusza" — a gdy go poda, **TY SAM zapisz do `.env.local`**:
+2. **ADMIN_SECRET** (do edycji TEKSTOW przez CMS). Sprawdz: `grep -q '^ADMIN_SECRET=' .env.local 2>/dev/null && echo OK || echo BRAK`.
+   Jesli BRAK — ⚠️ **NIE kaz wklejac sekretu w chat** (nie moze trafic do transkryptu) ANI recznie tworzyc pliku. Zamiast tego uzyj schowka:
+   - Popros: "Skopiuj ADMIN_SECRET (ten od Mateusza) do schowka — Cmd+C — i napisz 'ok'."
+   - Gdy user potwierdzi, zapisz **ze schowka** (wartosc NIE pojawia sie w komendzie ani w output):
    ```
-   printf 'ADMIN_SECRET=%s\n' 'WARTOSC_KTORA_WKLEIL_UZYTKOWNIK' >> .env.local
+   printf 'ADMIN_SECRET=%s\n' "$(pbpaste)" >> .env.local
    ```
-   Potwierdz: "Zapisane, juz nie musisz tego robic recznie." ⚠️ `.env.local` jest gitignored — NIGDY nie commituj. To jednorazowy krok (potem skill bierze sekret stamtad sam).
+   - Potwierdz: "Zapisane ze schowka (nie wyswietlam wartosci). Robisz to raz." ⚠️ `.env.local` gitignored — NIGDY nie commituj.
+   (macOS: `pbpaste`. Linux: `xclip -o -selection clipboard` lub `xsel -b`.)
 3. Przed edycja kodu: `git pull`.
 
 ---
