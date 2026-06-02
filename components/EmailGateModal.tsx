@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { trackEvent } from "./FacebookPixel";
+import { getAttribution } from "@/lib/utmCapture";
 import Icon from "./Icon";
 
 interface EmailGateModalProps {
@@ -46,7 +47,8 @@ export default function EmailGateModal({ isOpen, onClose, onSuccess }: EmailGate
         body: JSON.stringify({
           name: name.trim(),
           email: email,
-          source: 'Email Gate - Skool'
+          source: 'Email Gate - Skool',
+          utm: getAttribution(),
         }),
       });
 

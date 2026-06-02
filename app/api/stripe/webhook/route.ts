@@ -116,6 +116,8 @@ async function upsertSubscription(
   if (sessionOrSub.utm_source) row.utm_source = sessionOrSub.utm_source;
   if (sessionOrSub.utm_medium) row.utm_medium = sessionOrSub.utm_medium;
   if (sessionOrSub.utm_campaign) row.utm_campaign = sessionOrSub.utm_campaign;
+  if (sessionOrSub.utm_content) row.utm_content = sessionOrSub.utm_content;
+  if (sessionOrSub.landing_url) row.landing_url = sessionOrSub.landing_url;
 
   const { error } = await supabaseAdmin
     .from('subscriptions')
@@ -197,6 +199,8 @@ export async function POST(request: Request) {
           utm_source: session.metadata?.utm_source,
           utm_medium: session.metadata?.utm_medium,
           utm_campaign: session.metadata?.utm_campaign,
+          utm_content: session.metadata?.utm_content,
+          landing_url: session.metadata?.landing_url,
         });
 
         const isTrial = !!subscription.trial_end && subscription.status === 'trialing';
@@ -273,6 +277,8 @@ export async function POST(request: Request) {
           utm_source: subscription.metadata?.utm_source || undefined,
           utm_medium: subscription.metadata?.utm_medium || undefined,
           utm_campaign: subscription.metadata?.utm_campaign || undefined,
+          utm_content: subscription.metadata?.utm_content || undefined,
+          landing_url: subscription.metadata?.landing_url || undefined,
         });
 
         // Trial -> active = REAL Purchase: Sender Paid + CAPI Purchase

@@ -2,6 +2,7 @@
 
 import Script from "next/script";
 import { useEffect } from "react";
+import { captureAttribution } from "@/lib/utmCapture";
 
 const PIXEL_ID = "1203345207633415";
 
@@ -65,6 +66,8 @@ const sendToCapi = (payload: Record<string, unknown>) => {
 export default function FacebookPixel() {
   useEffect(() => {
     if (typeof window === "undefined") return;
+    // First-touch UTM capture (przed jakimkolwiek trackiem / nawigacja).
+    captureAttribution();
     const fbq = (window as any).fbq;
     if (typeof fbq !== "function") return;
     const eventId = generateEventId();

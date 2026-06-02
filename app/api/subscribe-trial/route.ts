@@ -9,7 +9,18 @@ import { senderUpsertSubscriber } from '@/lib/sender';
  */
 export async function POST(request: Request) {
   try {
-    const { name, email, source } = await request.json();
+    const { name, email, source, utm } = (await request.json()) as {
+      name?: string;
+      email?: string;
+      source?: string;
+      utm?: {
+        utm_source?: string;
+        utm_medium?: string;
+        utm_campaign?: string;
+        utm_content?: string;
+        landing_url?: string;
+      };
+    };
 
     if (!email || !email.includes('@')) {
       return NextResponse.json({ success: false, error: 'Invalid email address' }, { status: 400 });
@@ -21,6 +32,15 @@ export async function POST(request: Request) {
       return NextResponse.json({ success: false, error: 'Group not configured' }, { status: 500 });
     }
 
+    // Atrybucja leada (lead email-gate / exit-intent / checkout pre-warm) - zapis
+    // do custom fields Sender, zeby leady z reklamy bez platnosci tez byly sledzone.
+    const attributionFields: Record<string, string> = {};
+    if (utm?.utm_source) attributionFields.utm_source = utm.utm_source;
+    if (utm?.utm_medium) attributionFields.utm_medium = utm.utm_medium;
+    if (utm?.utm_campaign) attributionFields.utm_campaign = utm.utm_campaign;
+    if (utm?.utm_content) attributionFields.utm_content = utm.utm_content;
+    if (utm?.landing_url) attributionFields.landing_url = utm.landing_url.slice(0, 480);
+
     const result = await senderUpsertSubscriber({
       email,
       firstname: name?.trim() || undefined,
@@ -31,6 +51,7 @@ export async function POST(request: Request) {
         last_interest: new Date().toISOString(),
         signup_date: new Date().toISOString(),
         trial_status: 'pending',
+        ...attributionFields,
       },
     });
 

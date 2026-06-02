@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 import { trackEvent } from "@/components/FacebookPixel";
+import { getAttribution } from "@/lib/utmCapture";
 
 function readCookie(name: string): string | undefined {
   if (typeof document === "undefined") return undefined;
@@ -16,10 +17,13 @@ function CheckoutContent() {
   const searchParams = useSearchParams();
   const trial = searchParams.get("trial");
   const emailParam = searchParams.get("email");
-  const utmSource = searchParams.get("utm_source");
-  const utmMedium = searchParams.get("utm_medium");
-  const utmCampaign = searchParams.get("utm_campaign");
-  const fbclid = searchParams.get("fbclid");
+  // URL params maja priorytet; jak pusto - fallback na first-touch z localStorage.
+  const attr = typeof window !== "undefined" ? getAttribution() : {};
+  const utmSource = searchParams.get("utm_source") || attr.utm_source;
+  const utmMedium = searchParams.get("utm_medium") || attr.utm_medium;
+  const utmCampaign = searchParams.get("utm_campaign") || attr.utm_campaign;
+  const utmContent = searchParams.get("utm_content") || attr.utm_content;
+  const fbclid = searchParams.get("fbclid") || attr.fbclid;
 
   const trialDays = trial !== null ? parseInt(trial, 10) : 7;
 
@@ -64,6 +68,13 @@ function CheckoutContent() {
       body: JSON.stringify({
         email: cleanEmail,
         source: "checkout_page",
+        utm: {
+          utm_source: utmSource || undefined,
+          utm_medium: utmMedium || undefined,
+          utm_campaign: utmCampaign || undefined,
+          utm_content: utmContent || undefined,
+          landing_url: attr.landing_url || undefined,
+        },
       }),
     }).catch((err) => {
       console.warn("[checkout] subscribe-trial pre-warm failed (non-blocking):", err);
@@ -87,10 +98,13 @@ function CheckoutContent() {
             source: utmSource || undefined,
             medium: utmMedium || undefined,
             campaign: utmCampaign || undefined,
+            content: utmContent || undefined,
           },
           fbp,
           fbc,
-          landingUrl: typeof document !== "undefined" ? document.referrer || undefined : undefined,
+          landingUrl:
+            attr.landing_url ||
+            (typeof document !== "undefined" ? document.referrer || undefined : undefined),
         }),
       });
 

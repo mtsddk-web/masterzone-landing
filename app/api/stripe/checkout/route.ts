@@ -7,7 +7,7 @@ export async function POST(request: Request) {
     const { trial, email, utm, fbp, fbc, landingUrl } = body as {
       trial?: number;
       email?: string;
-      utm?: { source?: string; medium?: string; campaign?: string };
+      utm?: { source?: string; medium?: string; campaign?: string; content?: string };
       fbp?: string;
       fbc?: string;
       landingUrl?: string;
@@ -21,6 +21,7 @@ export async function POST(request: Request) {
       utm_source: utm?.source || '',
       utm_medium: utm?.medium || '',
       utm_campaign: utm?.campaign || '',
+      utm_content: utm?.content || '',
       fbp: fbp || '',
       fbc: fbc || '',
       landing_url: (landingUrl || '').slice(0, 480),

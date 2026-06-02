@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { trackEvent } from "./FacebookPixel";
 import { useCheckout } from "@/hooks/useCheckout";
+import { getAttribution } from "@/lib/utmCapture";
 
 export default function ExitIntentPopup() {
   const { goToCheckout } = useCheckout();
@@ -80,6 +81,7 @@ export default function ExitIntentPopup() {
         body: JSON.stringify({
           email: clean,
           source: "Exit Intent - oferta ratunkowa",
+          utm: getAttribution(),
         }),
       });
       const data = await res.json();
