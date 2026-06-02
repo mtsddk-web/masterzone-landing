@@ -256,7 +256,9 @@ export default async function Home() {
   };
 
   return (
-    <main>
+    // pb-24 na mobile: rezerwa pod sticky mobile CTA (fixed bottom-0 w Hero), zeby
+    // Footer nie chowal sie pod barem. md:pb-0 = desktop bez zmian.
+    <main className="pb-24 md:pb-0">
       <AnnouncementBar message={pricingProps.urgencyAlert} />
       <Hero {...heroProps} />
       <Stats {...statsProps} />

@@ -23,7 +23,7 @@ export default function CTA({ headline, subheadline, buttonText, buttonUrl }: CT
         </p>
         <button
           onClick={() => goToCheckout("cta_bottom_button")}
-          id="skool-cta"
+          id="cta-bottom"
           className="inline-block bg-gradient-to-r from-orange-600 to-red-700 hover:from-orange-700 hover:to-red-800 text-white font-bold py-4 px-12 rounded-lg transition-all duration-300 text-lg shadow-xl hover:shadow-2xl transform hover:-translate-y-1 border-2 border-yellow-300 cursor-pointer"
         >
           {buttonText}

@@ -305,6 +305,20 @@ export default function Hero({
         )}
       </div>
     </section>
+
+    {/* Sticky mobile CTA - ZAWSZE widoczny na mobile (in-app browser IG/FB ma niski
+        viewport, glowny CTA w Hero ladowal pod fold -> 0 klikniec). md:hidden = tylko mobile. */}
+    <div
+      className="md:hidden fixed bottom-0 inset-x-0 z-40 px-4 pt-3 bg-navy/95 backdrop-blur-sm border-t border-white/15 shadow-[0_-4px_20px_rgba(0,0,0,0.35)]"
+      style={{ paddingBottom: "calc(0.75rem + env(safe-area-inset-bottom))" }}
+    >
+      <button
+        onClick={() => goToCheckout("sticky_mobile_cta")}
+        className="w-full bg-gradient-to-r from-orange-600 to-red-700 active:from-orange-700 active:to-red-800 text-white font-bold py-3.5 rounded-lg text-base shadow-xl border-2 border-yellow-300 cursor-pointer"
+      >
+        {ctaText}
+      </button>
+    </div>
     </>
   );
 }
