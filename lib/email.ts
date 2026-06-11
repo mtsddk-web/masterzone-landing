@@ -28,8 +28,16 @@ const USER_AGENT = 'atlas-mz/1.0';
 export async function sendMail(args: SendMailArgs): Promise<SendMailResult> {
   const apiKey = process.env.RESEND_API_KEY?.trim();
   if (!apiKey) {
-    console.warn('[email] RESEND_API_KEY missing - skipping mail to', args.to);
-    return { ok: false, error: 'RESEND_API_KEY not configured' };
+    // CELOWO WYLACZONE: RESEND_API_KEY nie jest ustawiony na Vercel prod.
+    // Skool-invite mailem przez Resend to ścieżka opcjonalna - klient i tak trafia
+    // na Skool przez: (a) redirect na /checkout/success (instrukcja krok 1-3) +
+    // (b) welcome/automation Sender po dodaniu do grupy. Nie traktujemy braku klucza
+    // jako bledu - logujemy jawnie raz, dla widocznosci w logach Vercela.
+    console.warn(
+      `[email] RESEND disabled (no RESEND_API_KEY) - skipping transactional mail to ${args.to}. ` +
+        `Sciezka aktywacji: success page + Sender welcome.`
+    );
+    return { ok: false, error: 'RESEND_API_KEY not configured (intentional)' };
   }
 
   const payload = {

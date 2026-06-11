@@ -1,6 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
+import { senderUpsertSubscriber } from "@/lib/sender";
 
-const WORKSHOP_GROUP_ID = "181727205492000257";
+/**
+ * /api/workshop-signup - zapis na warsztat (np. "Sabotazysci Mentalni").
+ *
+ * Sender.net (primary). Wczesniej POSTowal do MailerLite (grupa 181727205492000257),
+ * ale MailerLite ma WSZYSTKIE automatyzacje wylaczone => leady szly w prozne.
+ * Migracja MailerLite -> Sender (decyzja 28.05.2026), zgodnie z subscribe-trial.
+ *
+ * Idempotencja: senderUpsertSubscriber robi create OR add-to-group (422 fallback).
+ */
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "https://masterzone.edu.pl",
@@ -33,95 +42,46 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const apiKey = process.env.MAILERLITE_API_KEY;
-    if (!apiKey) {
-      console.error("MAILERLITE_API_KEY not configured");
+    const workshopGroupId = process.env.SENDER_WORKSHOP_GROUP_ID?.trim();
+    if (!workshopGroupId) {
+      console.error("[workshop-signup] SENDER_WORKSHOP_GROUP_ID not configured");
       return NextResponse.json(
         { error: "Konfiguracja API nie jest dostępna" },
         { status: 500, headers: corsHeaders }
       );
     }
 
-    const subscriberData = {
-      email: email,
-      groups: [WORKSHOP_GROUP_ID],
+    const result = await senderUpsertSubscriber({
+      email,
+      firstname: name?.trim() || undefined,
+      groups: [workshopGroupId],
+      trigger_automation: true, // pal automation Sender (potwierdzenie zapisu / link Zoom)
       fields: {
-        name: name,
         source: `Warsztat Sabotazysci - ref:${source}`,
         signup_date: new Date().toISOString(),
       },
-    };
+    });
 
-    const response = await fetch(
-      "https://connect.mailerlite.com/api/subscribers",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${apiKey}`,
-          Accept: "application/json",
-        },
-        body: JSON.stringify(subscriberData),
-      }
-    );
-
-    if (!response.ok) {
-      if (response.status === 422 || response.status === 409) {
-        // Subscriber exists - try to reactivate and add to group
-        const existingRes = await fetch(
-          `https://connect.mailerlite.com/api/subscribers/${email}`,
-          {
-            headers: {
-              Authorization: `Bearer ${apiKey}`,
-              Accept: "application/json",
-            },
-          }
-        );
-        if (existingRes.ok) {
-          const existing = await existingRes.json();
-          const subId = existing.data?.id;
-          if (subId) {
-            await fetch(
-              `https://connect.mailerlite.com/api/subscribers/${subId}`,
-              {
-                method: "PUT",
-                headers: {
-                  "Content-Type": "application/json",
-                  Authorization: `Bearer ${apiKey}`,
-                  Accept: "application/json",
-                },
-                body: JSON.stringify({
-                  status: "active",
-                  groups: [WORKSHOP_GROUP_ID],
-                  fields: { name: name },
-                }),
-              }
-            );
-            console.log("Workshop re-signup:", email);
-          }
-        }
-        return NextResponse.json(
-          { success: true, message: "Zapisano pomyślnie" },
-          { status: 200, headers: corsHeaders }
-        );
-      }
-      const errorData = await response.json().catch(() => null);
-      console.error("MailerLite API Error:", response.status, errorData);
-      throw new Error(`MailerLite API error: ${response.status}`);
+    if (!result.ok) {
+      console.error(
+        "[workshop-signup] Sender upsert failed:",
+        result.status,
+        result.error
+      );
+      return NextResponse.json(
+        { error: result.error || "Nie udało się zapisać. Spróbuj ponownie." },
+        { status: result.status || 500, headers: corsHeaders }
+      );
     }
 
-    const result = await response.json();
-    console.log("Workshop signup:", email);
+    console.log("[workshop-signup] signup ok:", email);
 
     return NextResponse.json(
-      {
-        success: true,
-        message: "Zapisano pomyślnie",
-      },
+      { success: true, message: "Zapisano pomyślnie" },
       { headers: corsHeaders }
     );
   } catch (error) {
-    console.error("Error in workshop-signup:", error);
+    console.error("[workshop-signup] error:", error);
     return NextResponse.json(
       { error: "Wystąpił błąd. Spróbuj ponownie." },
       { status: 500, headers: corsHeaders }

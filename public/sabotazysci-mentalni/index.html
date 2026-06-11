@@ -1021,14 +1021,30 @@
             btn.disabled = true;
             btn.textContent = 'Zapisuję...';
 
-            // Send to MailerLite via API
+            function showError(msg) {
+                errorEl.textContent = msg || 'Nie udało się zapisać. Spróbuj ponownie za chwilę.';
+                errorEl.style.display = 'block';
+                btn.disabled = false;
+                btn.textContent = '🎯 ZAPISUJĘ SIĘ ZA DARMO';
+            }
+
+            // Zapis przez API (Sender). Pokazujemy sukces TYLKO gdy API potwierdzi zapis.
             fetch(API_URL, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ name: name, email: email })
             })
-            .then(function(res) { return res.json(); })
-            .then(function(data) {
+            .then(function(res) {
+                return res.json().then(function(data) {
+                    return { ok: res.ok, data: data };
+                });
+            })
+            .then(function(result) {
+                if (!result.ok || !result.data || result.data.error) {
+                    // NIE udawaj sukcesu - pokaz blad, lead sie nie zapisal.
+                    showError(result.data && result.data.error ? result.data.error : null);
+                    return;
+                }
                 document.getElementById('signup-form').style.display = 'none';
                 document.getElementById('signup-success').style.display = 'block';
                 setTimeout(function() {
@@ -1036,17 +1052,8 @@
                 }, REDIRECT_DELAY);
             })
             .catch(function(err) {
-                // Even if API fails, show success and redirect (localStorage backup)
-                try {
-                    var signups = JSON.parse(localStorage.getItem('warsztat_signups') || '[]');
-                    signups.push({ name: name, email: email, date: new Date().toISOString() });
-                    localStorage.setItem('warsztat_signups', JSON.stringify(signups));
-                } catch(e) {}
-                document.getElementById('signup-form').style.display = 'none';
-                document.getElementById('signup-success').style.display = 'block';
-                setTimeout(function() {
-                    window.location.href = SKOOL_GROUP_URL;
-                }, REDIRECT_DELAY);
+                // Blad sieci/serwera - lead NIE zostal zapisany. Nie udawaj sukcesu.
+                showError('Problem z połączeniem. Sprawdź internet i spróbuj ponownie.');
             });
 
             return false;

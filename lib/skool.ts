@@ -13,7 +13,10 @@
 
 import { sendMail } from './email';
 
-const FALLBACK_SKOOL_URL = 'https://www.skool.com/masterzone/about';
+// Fallback gdy SKOOL_INVITE_URL nie ustawiony. Celuje na strone glowna spolecznosci
+// (skool.com/masterzone), NIE na /about - bo /about pokazuje publiczna/standardowa cene,
+// a klient po zakupie ma dolaczyc, nie placic ponownie.
+const FALLBACK_SKOOL_URL = 'https://www.skool.com/masterzone';
 
 interface SkoolInviteArgs {
   email: string;

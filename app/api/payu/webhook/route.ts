@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { createHash } from 'crypto';
 import { supabaseAdmin } from '@/lib/supabase-server';
-import { getPayU } from '@/lib/payu';
+import { senderUpsertSubscriber } from '@/lib/sender';
 
 /**
  * PayU Webhook - odbiera notyfikacje o statusie płatności
@@ -10,13 +10,18 @@ import { getPayU } from '@/lib/payu';
  * Format: sender=checkout;signature=HASH;algorithm=MD5;content=DOCUMENT
  * Signature = MD5(body + secondKey)
  * secondKey = PAYU_CLIENT_SECRET
+ *
+ * UWAGA: PayU obecnie wylaczone (PAYU_ENABLED=false w checkout). Ten handler jest
+ * uspiony - gdy PayU wstanie, tagowanie celuje w Sender (zywe narzedzie), nie MailerLite.
  */
 
 function verifyPayUSignature(body: string, signatureHeader: string | null): boolean {
   const secondKey = process.env.PAYU_CLIENT_SECRET;
+  // Fail-closed: bez secondKey nie da sie zweryfikowac podpisu -> odrzuc.
+  // (Wczesniej fail-open zwracal true = kazdy POST byl "zaufany".)
   if (!secondKey) {
-    console.warn('PAYU_CLIENT_SECRET not set - skipping signature verification');
-    return true;
+    console.error('PAYU_CLIENT_SECRET not set - rejecting webhook (cannot verify signature)');
+    return false;
   }
 
   if (!signatureHeader) {
@@ -47,33 +52,32 @@ function verifyPayUSignature(body: string, signatureHeader: string | null): bool
   return calculated === expectedSignature;
 }
 
-async function tagMailerLite(email: string, status: string) {
-  const apiKey = process.env.MAILERLITE_API_KEY;
-  if (!apiKey) return;
+/**
+ * Tag subscriber w Sender po platnosci PayU (status='paid'/'renewed').
+ * Migracja MailerLite -> Sender (28.05.2026), spojnie ze stripe/webhook.
+ */
+async function tagSender(email: string, status: string) {
+  if (!email) return;
 
-  try {
-    const groupId = process.env.MAILERLITE_PAID_GROUP_ID;
+  const paidGroupId = process.env.SENDER_PAID_GROUP_ID?.trim();
+  if (!paidGroupId) {
+    console.warn('[payu-webhook] SENDER_PAID_GROUP_ID not configured');
+    return;
+  }
 
-    await fetch('https://connect.mailerlite.com/api/subscribers', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-      body: JSON.stringify({
-        email,
-        fields: {
-          payment_provider: 'payu',
-          payment_status: status,
-          payment_date: new Date().toISOString(),
-        },
-        groups: groupId ? [groupId] : [],
-        status: 'active',
-      }),
-    });
-  } catch (error) {
-    console.error('MailerLite tag error:', error);
+  const result = await senderUpsertSubscriber({
+    email,
+    groups: [paidGroupId],
+    trigger_automation: false,
+    fields: {
+      payment_provider: 'payu',
+      payment_status: status,
+      payment_date: new Date().toISOString(),
+    },
+  });
+
+  if (!result.ok) {
+    console.error('[payu-webhook] Sender tag failed:', result.status, result.error);
   }
 }
 
@@ -211,9 +215,9 @@ export async function POST(request: Request) {
   // Zapisz w Supabase
   await upsertSubscription(orderId, email, status, totalAmount, metadata, cardToken, isRecurring);
 
-  // Tag w MailerLite tylko dla COMPLETED
+  // Tag w Sender tylko dla COMPLETED
   if (status === 'COMPLETED') {
-    await tagMailerLite(email, isRecurring ? 'renewed' : 'paid');
+    await tagSender(email, isRecurring ? 'renewed' : 'paid');
   }
 
   // PayU wymaga odpowiedzi 200 OK

@@ -9,8 +9,21 @@ import type { PayUOrder } from '@/lib/payu';
  * i tokenizacji; tu chodzi o najprostszą, niezawodną ścieżkę bez karty na evencie.
  * Odnowienie po miesiącu obsługujemy mailowo. Stripe (karta) nadal robi pełną subskrypcję.
  */
+// PayU swiadomie wylaczone (UI: PAYU_ENABLED=false w app/checkout/page.tsx).
+// Guard server-side: bezposredni POST nie moze tworzyc zamowien PayU dopoki
+// NEXT_PUBLIC_PAYU_ENABLED !== "true". Domyslnie zablokowane (fail-closed).
+const PAYU_ENABLED = process.env.NEXT_PUBLIC_PAYU_ENABLED === 'true';
+
 export async function POST(request: Request) {
   try {
+    if (!PAYU_ENABLED) {
+      console.warn('[payu-checkout] blocked: PayU disabled (NEXT_PUBLIC_PAYU_ENABLED != "true")');
+      return NextResponse.json(
+        { error: 'Płatność PayU jest obecnie niedostępna.' },
+        { status: 403 }
+      );
+    }
+
     const body = await request.json();
     const { email, utm } = body as {
       email?: string;
