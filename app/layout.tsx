@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import FacebookPixel from "@/components/FacebookPixel";
+import GoogleAnalytics from "@/components/GoogleAnalytics";
 import MicrosoftClarity from "@/components/MicrosoftClarity";
 
 const inter = Inter({
@@ -60,12 +61,14 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fast.wistia.com" />
         <link rel="preconnect" href="https://fast.wistia.net" />
         <link rel="preconnect" href="https://connect.facebook.net" />
+        <link rel="preconnect" href="https://www.googletagmanager.com" />
         <link rel="preconnect" href="https://www.clarity.ms" />
         <link rel="preconnect" href="https://www.facebook.com" />
         <link rel="dns-prefetch" href="https://www.skool.com" />
       </head>
       <body className={inter.className}>
         <FacebookPixel />
+        <GoogleAnalytics />
         <MicrosoftClarity />
         {children}
       </body>

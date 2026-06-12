@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
@@ -42,6 +42,44 @@ function CheckoutContent() {
     return re.test(val.trim());
   };
 
+  // Guard anty-dubel: pamieta ostatni email zapisany jako lead, zeby nie
+  // dublowac (onBlur zapisze, a pozniejszy klik "Karta" nie wysle 2x tego samego).
+  const leadCapturedRef = useRef<string | null>(null);
+
+  // Lead capture na samym polu email - ODPALANE ZANIM user dotknie karty.
+  // Cel: kazdy email wpisany na /checkout = zapisany lead (Sender + event Lead),
+  // wiec przestajemy tracic kontakty osob ktore odpadaja na barierze karty.
+  // Endpoint /api/subscribe-trial juz istnieje (upsert do Sender.net, pala welcome).
+  const captureLead = (rawEmail: string, source: string) => {
+    const cleanEmail = rawEmail.trim().toLowerCase();
+    if (!validateEmail(cleanEmail)) return;
+    if (leadCapturedRef.current === cleanEmail) return; // juz zapisany - skip
+    leadCapturedRef.current = cleanEmail;
+
+    // Event Lead (pixel + CAPI) - sygnal konwersji dla Meta wczesniej niz Purchase.
+    trackEvent("Lead", { source, content_name: "checkout_email" });
+
+    fetch("/api/subscribe-trial", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email: cleanEmail,
+        source,
+        utm: {
+          utm_source: utmSource || undefined,
+          utm_medium: utmMedium || undefined,
+          utm_campaign: utmCampaign || undefined,
+          utm_content: utmContent || undefined,
+          landing_url: attr.landing_url || undefined,
+        },
+      }),
+    }).catch((err) => {
+      // Non-blocking: blad zapisu leada NIE moze blokowac platnosci.
+      console.warn("[checkout] lead capture failed (non-blocking):", err);
+      leadCapturedRef.current = null; // pozwol na retry przy kolejnej probie
+    });
+  };
+
   const handleCheckout = async (provider: "stripe" | "payu") => {
     // Walidacja email przed Stripe
     const cleanEmail = email.trim();
@@ -61,24 +99,9 @@ function CheckoutContent() {
       provider,
     });
 
-    // Pre-warm Sender PRZED Stripe - jesli network fail, kontynuuj (zapisemy z webhook).
-    fetch("/api/subscribe-trial", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        email: cleanEmail,
-        source: "checkout_page",
-        utm: {
-          utm_source: utmSource || undefined,
-          utm_medium: utmMedium || undefined,
-          utm_campaign: utmCampaign || undefined,
-          utm_content: utmContent || undefined,
-          landing_url: attr.landing_url || undefined,
-        },
-      }),
-    }).catch((err) => {
-      console.warn("[checkout] subscribe-trial pre-warm failed (non-blocking):", err);
-    });
+    // Pre-warm Sender PRZED Stripe. captureLead ma guard anty-dubel - jesli onBlur
+    // juz zapisal ten email jako lead, NIE wysle 2x (skip po leadCapturedRef).
+    captureLead(cleanEmail, "checkout_page");
 
     try {
       const endpoint = provider === "stripe" ? "/api/stripe/checkout" : "/api/payu/checkout";
@@ -209,6 +232,7 @@ function CheckoutContent() {
               type="email"
               value={email}
               onChange={(e) => { setEmail(e.target.value); setEmailError(null); }}
+              onBlur={(e) => captureLead(e.target.value, "checkout_email_only")}
               placeholder="twoj@email.pl"
               disabled={isLoading}
               required

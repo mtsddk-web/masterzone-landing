@@ -103,7 +103,7 @@ export default function Hero({
           fetchPriority="high"
         />
       )}
-    <section className="bg-gradient-to-br from-navy via-blue-700 to-blue-900 text-white py-8 md:py-16 lg:py-20 flex items-center relative">
+    <section className="bg-gradient-to-br from-navy via-blue-700 to-blue-900 text-white py-5 md:py-16 lg:py-20 flex items-center relative">
       {/* Logo - lewy górny róg (tylko desktop). Logo ma czarne tlo PNG, wiec
           obramowane jako badge z ringiem zeby ladnie kontrastowalo na navy. */}
       <div className="hidden md:block absolute top-6 left-6 z-10">
@@ -119,7 +119,7 @@ export default function Hero({
         </div>
       </div>
 
-      <div className="container-custom text-center">
+      <div className="container-custom text-center flex flex-col">
         {/* Preheadline - eyebrow/tagline (NIE button - usunieto border/rounded/pill styling) */}
         {preheadline && (
           <p className="mb-3 md:mb-6 text-sm md:text-base lg:text-lg font-medium text-yellow-300/90 uppercase tracking-wider">
@@ -145,9 +145,12 @@ export default function Hero({
           </p>
         )}
 
-        {/* Video Player with fallback */}
+        {/* Video Player with fallback.
+            MOBILE: order-3 -> ląduje POD ofertą+CTA (cold ruch z Meta widzi ofertę i przycisk
+            od razu nad foldem, video to dodatek dla scrollujących). DESKTOP: md:order-2 ->
+            klasyczna kolejnosc (video, potem oferta) bo fold desktop jest wysoki. */}
         {videoMediaId && (
-          <div className="max-w-4xl mx-auto mb-4 md:mb-8 px-4">
+          <div className="order-3 md:order-2 max-w-4xl mx-auto mb-4 md:mb-8 px-4">
             <div className="rounded-lg md:rounded-2xl overflow-hidden shadow-2xl">
               {videoFailed ? (
                 /* Fallback placeholder when Wistia video is unavailable */
@@ -201,9 +204,14 @@ export default function Hero({
           </div>
         )}
 
+        {/* OFFER + CTA BLOCK.
+            MOBILE: order-2 -> tuz pod naglowkiem, NAD video (oferta 7 dni za darmo + 67 zl +
+            przycisk widoczne bez scrolla na ciasnym viewportcie in-app FB/IG). DESKTOP:
+            md:order-3 -> po video, kolejnosc bez zmian. */}
+        <div className="order-2 md:order-3 w-full flex flex-col items-center">
         {/* Trial Info - primary: 7 dni za darmo, secondary: early bird, tertiary: trust */}
         {(trialBadge || trialDetails || trialInfo || earlyBirdPrice) && (
-          <div className="mb-5 flex flex-col items-center gap-2">
+          <div className="mb-3 md:mb-5 flex flex-col items-center gap-1.5 md:gap-2">
             {trialBadge ? (
               <>
                 {/* PRIMARY: free trial badge (zero risk hook) */}
@@ -293,6 +301,8 @@ export default function Hero({
             <p className="text-xs md:text-sm text-yellow-300 font-semibold">Iza, Wirtualna Asystentka</p>
           </div>
         </div>
+        </div>
+        {/* /OFFER + CTA BLOCK */}
 
         {/* Skool Info */}
         {skoolInfo && (

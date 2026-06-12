@@ -56,7 +56,7 @@ export default function PrivacyPage() {
               <li>Stripe, PayU - obsługa płatności</li>
               <li>Skool - dostarczenie społeczności</li>
               <li>Meta (Facebook) - reklamy i piksel konwersji</li>
-              <li>Microsoft Clarity, Vercel Analytics - analityka strony</li>
+              <li>Google Analytics, Microsoft Clarity, Vercel Analytics - analityka strony</li>
               <li>Sender.net / MailerLite - wysyłka e-maili</li>
               <li>Biuro rachunkowe - rozliczenia księgowe</li>
             </ul>
@@ -93,7 +93,7 @@ export default function PrivacyPage() {
             <h2 className="text-xl font-bold mb-3 text-yellow-300">7. Pliki cookies</h2>
             <p>
               Używamy ciasteczek niezbędnych do działania serwisu oraz ciasteczek analitycznych i marketingowych
-              (Meta Pixel, Microsoft Clarity). Możesz wyłączyć je w ustawieniach przeglądarki.
+              (Meta Pixel, Google Analytics, Microsoft Clarity). Możesz wyłączyć je w ustawieniach przeglądarki.
             </p>
           </div>
 
