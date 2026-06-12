@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pobierz MasterPlan</title>
+<meta name="robots" content="noindex, nofollow">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+* { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --blue: #246ac8; --blue-light: #bfd8f0; --orange: #ff751f; --orange-dark: #e5641a;
+  --bg: #0a0a0a; --text: #e8e8e8; --muted: #a3a3a3; --dim: #737373;
+  --card: rgba(255,255,255,0.04); --card-border: rgba(255,255,255,0.1);
+}
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg); color: var(--text); line-height: 1.6;
+  -webkit-font-smoothing: antialiased; min-height: 100vh;
+  display: flex; align-items: center; justify-content: center; padding: 28px 20px;
+  background-image: radial-gradient(ellipse at 50% 0%, rgba(36,106,200,0.18) 0%, transparent 60%);
+}
+.card { width: 100%; max-width: 480px; text-align: center; }
+.logo { width: 64px; height: auto; margin: 0 auto 26px; display: block; }
+.eyebrow {
+  display: inline-block; font-size: 0.74rem; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--orange); background: rgba(255,117,31,0.12); border-radius: 100px; padding: 5px 15px; margin-bottom: 18px;
+}
+h1 { font-size: clamp(1.7rem, 6vw, 2.4rem); font-weight: 900; color: #fff; line-height: 1.18; letter-spacing: -0.02em; margin-bottom: 16px; }
+.sub { font-size: 1.05rem; color: var(--muted); margin-bottom: 24px; }
+.sub b { color: var(--blue-light); font-weight: 600; }
+
+.gets { list-style: none; text-align: left; max-width: 340px; margin: 0 auto 26px; }
+.gets li { display: flex; align-items: center; gap: 10px; font-size: 0.96rem; color: var(--text); margin-bottom: 8px; }
+.gets svg { width: 20px; height: 20px; color: var(--orange); flex-shrink: 0; }
+
+form { display: flex; flex-direction: column; gap: 12px; }
+input {
+  width: 100%; font-family: inherit; font-size: 1rem; color: #fff;
+  background: var(--card); border: 1px solid var(--card-border); border-radius: 12px;
+  padding: 15px 18px; outline: none; transition: border-color .2s;
+}
+input::placeholder { color: var(--dim); }
+input:focus { border-color: var(--blue); }
+button {
+  width: 100%; font-family: inherit; font-size: 1.1rem; font-weight: 700; color: #fff;
+  background: var(--orange); border: 0; border-radius: 12px; padding: 17px; cursor: pointer;
+  box-shadow: 0 6px 30px rgba(255,117,31,0.32); transition: background .2s, transform .15s; margin-top: 4px;
+}
+button:hover { background: var(--orange-dark); transform: translateY(-1px); }
+button:disabled { opacity: 0.6; cursor: default; transform: none; }
+.note { font-size: 0.82rem; color: var(--dim); margin-top: 16px; line-height: 1.5; }
+.err { color: #ff8a8a; font-size: 0.9rem; margin-top: 12px; min-height: 1px; }
+.foot { margin-top: 28px; font-size: 0.78rem; color: var(--dim); }
+.foot b { color: var(--text); font-weight: 700; }
+.foot b span { color: var(--blue); }
+</style>
+</head>
+<body>
+  <div class="card">
+    <img class="logo" src="https://radekpustelnik.pl/wp-content/uploads/2026/05/mz-logo.png" alt="MasterZone">
+    <div class="eyebrow">Darmowy do pobrania</div>
+    <h1>Zaplanuj tydzień tak, żeby mieć więcej wolnego</h1>
+    <p class="sub">Zostaw maila, a od razu przeniosę Cię do <b>filmu, w którym tłumaczę wszystko krok po kroku</b> — plus dostajesz szablon MasterPlan do wypełnienia i instrukcję.</p>
+
+    <ul class="gets">
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 12 2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg> Film wyjaśniający krok po kroku</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 12 2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg> MasterPlan do wypełnienia (PDF do druku)</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 12 2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg> Instrukcja planowania krok po kroku</li>
+    </ul>
+
+    <form id="optin">
+      <input type="text" id="name" name="name" placeholder="Twoje imię" autocomplete="given-name" required>
+      <input type="email" id="email" name="email" placeholder="Twój główny mail" autocomplete="email" required>
+      <button type="submit" id="btn">Pokaż mi film i pliki</button>
+    </form>
+    <div class="err" id="err"></div>
+
+    <p class="note">Po zapisie od razu otwiera Ci się strona z filmem i plikami. Zero spamu — maila użyjemy tylko, żeby wysłać Ci pliki i czasem coś wartościowego o planowaniu. Wypiszesz się jednym klikiem.</p>
+
+    <div class="foot"><b>Master<span>Zone</span></b> · Radek Pustelnik</div>
+  </div>
+
+<script>
+  var form = document.getElementById('optin');
+  var btn = document.getElementById('btn');
+  var err = document.getElementById('err');
+  var WORKER = 'https://mz-youtube-optin.masterzone.workers.dev';
+  var THANKYOU = 'https://rozproszenie.masterzone.edu.pl/masterplan-email';
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    err.textContent = '';
+    var email = document.getElementById('email').value.trim();
+    var name = document.getElementById('name').value.trim();
+    if (!email || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { err.textContent = 'Wpisz poprawny adres email.'; return; }
+    btn.disabled = true; btn.textContent = 'Wysyłam…';
+
+    fetch(WORKER, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: email, name: name, source: 'mail' })
+    })
+    .then(function(r){ return r.json().catch(function(){ return {}; }); })
+    .then(function(d){
+      if (d && d.ok) {
+        var dest = THANKYOU + (d.token ? '?u=' + encodeURIComponent(d.token) : '');
+        (window.top || window).location.href = dest;
+      } else { throw new Error('fail'); }
+    })
+    .catch(function(){
+      // Nawet przy błędzie sieci nie blokujemy dostępu do plików — przekieruj
+      (window.top || window).location.href = THANKYOU;
+    });
+  });
+</script>
+</body>
+</html>

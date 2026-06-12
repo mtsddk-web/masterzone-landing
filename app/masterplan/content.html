@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Twój MasterPlan — pobierz</title>
+<meta name="robots" content="noindex, nofollow">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --blue: #246ac8;
+  --blue-light: #bfd8f0;
+  --navy: #183c6d;
+  --orange: #ff751f;
+  --orange-dark: #e5641a;
+  --bg: #0a0a0a;
+  --text: #e8e8e8;
+  --muted: #a3a3a3;
+  --dim: #737373;
+  --card: rgba(255,255,255,0.035);
+  --card-border: rgba(255,255,255,0.08);
+}
+
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg); color: var(--text); line-height: 1.65;
+  -webkit-font-smoothing: antialiased; overflow-x: hidden;
+}
+.wrap { width: 100%; max-width: 1000px; margin: 0 auto; padding: 0 24px; }
+/* czytelność: dłuższe teksty w wygodnej szerokości, środek; reszta korzysta z całej szerokości */
+.hero p, .hero .spamnote, .upsell .sub, .dl-hint, .guarantee, .stat-pill { max-width: 640px; margin-left: auto; margin-right: auto; }
+@media (min-width: 760px) {
+  .hero h1 { font-size: clamp(2.4rem, 4.5vw, 3.4rem); }
+  .downloads { max-width: 760px; margin: 0 auto; }
+}
+
+/* ===== STICKY OFFER BAR ===== */
+.sticky-offer {
+  position: sticky; top: 0; z-index: 200;
+  display: flex; align-items: center; justify-content: center; gap: 14px;
+  padding: 10px 18px;
+  background: rgba(10,12,18,0.92);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(36,106,200,0.3); font-size: 0.9rem;
+}
+.sticky-offer span { color: var(--text); }
+.sticky-offer b { color: #fff; font-weight: 800; }
+.sticky-offer .sticky-cta {
+  background: var(--orange); color: #fff; font-weight: 700; font-size: 0.85rem;
+  padding: 7px 18px; border-radius: 8px; text-decoration: none; white-space: nowrap;
+  box-shadow: 0 2px 14px rgba(255,117,31,0.35); transition: background .2s, transform .2s;
+}
+.sticky-offer .sticky-cta:hover { background: var(--orange-dark); transform: translateY(-1px); }
+.sticky-offer.turbo-mode { background: linear-gradient(90deg, #b81d1d, #e0322d); border-bottom-color: rgba(255,255,255,0.2); padding: 13px 18px; font-size: 0.95rem; }
+.sticky-turbo { color: #fff; font-weight: 600; }
+.sticky-turbo b { color: #fff; font-weight: 900; letter-spacing: 0.04em; }
+.sticky-turbo #stickyTimer { font-weight: 900; font-variant-numeric: tabular-nums; }
+.sticky-offer.turbo-mode .sticky-cta { background: #fff; color: #c41f1f; box-shadow: 0 2px 14px rgba(0,0,0,0.3); }
+.sticky-offer.turbo-mode .sticky-cta:hover { background: #f0f0f0; }
+@media (max-width: 430px) {
+  .sticky-offer { font-size: 0.78rem; gap: 10px; padding: 9px 12px; }
+  .sticky-offer .sticky-cta { padding: 6px 14px; }
+}
+
+/* ===== HERO ===== */
+.hero {
+  text-align: center; padding: 46px 22px 40px;
+  background: radial-gradient(ellipse at 50% -10%, rgba(36,106,200,0.22) 0%, transparent 65%);
+}
+.hero .logo { width: 74px; height: auto; display: block; margin: 0 auto 22px; animation: pop 0.5s ease-out; }
+.check {
+  width: 54px; height: 54px; margin: 0 auto 22px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(36,106,200,0.12); border: 1.5px solid rgba(36,106,200,0.4);
+  box-shadow: 0 0 40px rgba(36,106,200,0.25); animation: pop 0.5s ease-out 0.1s both;
+}
+.check svg { width: 28px; height: 28px; }
+@keyframes pop { 0% { transform: scale(0.7); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+.hero h1 {
+  font-size: clamp(1.9rem, 6vw, 2.8rem); font-weight: 900; color: #fff;
+  line-height: 1.15; letter-spacing: -0.02em; margin-bottom: 18px;
+}
+.hero p { font-size: 1.08rem; color: var(--muted); max-width: 480px; margin: 0 auto; }
+.hero p b { color: var(--blue-light); font-weight: 600; }
+.spamnote { max-width: 500px; margin: 20px auto 0; font-size: 0.92rem; line-height: 1.55; color: var(--blue-light); background: rgba(255,117,31,0.1); border: 1px solid rgba(255,117,31,0.35); border-radius: 12px; padding: 13px 18px; }
+.spamnote b { color: #fff; font-weight: 700; }
+
+/* ===== DOWNLOADS ===== */
+.downloads { padding: 12px 0 8px; }
+.dl-card {
+  display: flex; align-items: center; gap: 18px;
+  background: var(--card); border: 1px solid var(--card-border);
+  border-radius: 16px; padding: 22px; margin-bottom: 16px;
+  transition: border-color .25s, transform .25s;
+}
+.dl-card:hover { border-color: rgba(255,117,31,0.45); transform: translateY(-2px); }
+.dl-ico { width: 46px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; color: var(--blue); }
+.dl-ico svg { width: 34px; height: 34px; }
+.dl-body { flex: 1; min-width: 0; }
+.dl-body h3 { font-size: 1.08rem; font-weight: 700; color: #fff; line-height: 1.25; margin-bottom: 3px; }
+.dl-body .meta { font-size: 0.82rem; color: var(--dim); margin-bottom: 2px; }
+.dl-body .tag { font-size: 0.92rem; color: var(--blue-light); font-weight: 500; }
+.dl-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--orange); color: #fff; font-size: 0.98rem; font-weight: 700;
+  padding: 12px 22px; border-radius: 11px; text-decoration: none; white-space: nowrap; flex-shrink: 0;
+  box-shadow: 0 4px 24px rgba(255,117,31,0.28); transition: background .25s, transform .2s, box-shadow .25s;
+}
+.dl-btn:hover { background: var(--orange-dark); transform: translateY(-1px); box-shadow: 0 6px 32px rgba(255,117,31,0.42); }
+.dl-btn svg { width: 17px; height: 17px; }
+.dl-hint { text-align: center; font-size: 0.92rem; color: var(--dim); margin: 18px 0 4px; }
+.dl-hint b { color: var(--muted); font-weight: 600; }
+
+/* ===== BRIDGE BAR (most do oferty) ===== */
+.bridge-bar {
+  display: flex; align-items: center; gap: 14px; text-align: left;
+  margin: 26px 0 4px; padding: 16px 20px; border-radius: 14px;
+  background: linear-gradient(90deg, rgba(255,117,31,0.14), rgba(255,117,31,0.05));
+  border: 1px solid rgba(255,117,31,0.4);
+}
+.bridge-bar .bb-ico { font-size: 1.6rem; flex-shrink: 0; }
+.bridge-bar p { margin: 0; font-size: 0.98rem; line-height: 1.5; color: var(--text); }
+.bridge-bar p b { color: #fff; font-weight: 700; }
+.bridge-bar .bb-down { color: var(--orange); font-weight: 800; }
+
+/* ===== UPSELL ZONE ===== */
+.upsell {
+  margin-top: 56px; padding: 52px 0 44px;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(36,106,200,0.12) 0%, transparent 60%),
+    linear-gradient(180deg, rgba(24,60,109,0.18) 0%, rgba(10,10,10,0) 100%);
+  border-top: 1px solid rgba(36,106,200,0.18);
+}
+.upsell .label {
+  text-align: center; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--orange); margin-bottom: 14px;
+}
+.upsell h2 {
+  text-align: center; font-size: clamp(1.6rem, 5vw, 2.3rem); font-weight: 800; color: #fff;
+  line-height: 1.2; letter-spacing: -0.02em; margin-bottom: 10px;
+}
+.upsell h2 .accent { color: var(--blue-light); }
+.upsell .sub { text-align: center; font-size: 1.05rem; color: var(--muted); max-width: 500px; margin: 0 auto 30px; }
+
+/* video */
+.video-wrap {
+  width: 100%; border-radius: 16px; overflow: hidden; background: #05080f;
+  border: 1px solid rgba(36,106,200,0.25); margin-bottom: 36px; box-shadow: 0 10px 50px rgba(0,0,0,0.5);
+}
+.video-wrap wistia-player { display: block; width: 100%; }
+
+/* ===== BENEFITS ===== */
+.benefits-h { text-align: center; font-size: 1.2rem; font-weight: 800; color: #fff; margin-bottom: 20px; }
+.benefit { display: flex; align-items: flex-start; gap: 15px; padding: 12px 4px; }
+.benefit-ico {
+  width: 42px; height: 42px; flex-shrink: 0; border-radius: 11px;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(255,117,31,0.12); color: var(--orange);
+}
+.benefit-ico svg { width: 22px; height: 22px; }
+.benefit-txt b { color: #fff; font-weight: 700; display: block; margin-bottom: 1px; font-size: 1.02rem; }
+.benefit-txt span { color: var(--muted); font-size: 0.95rem; }
+
+.stat-pill {
+  text-align: center; margin: 30px auto 32px; max-width: 360px;
+  background: rgba(36,106,200,0.1); border: 1px solid rgba(36,106,200,0.25);
+  border-radius: 14px; padding: 22px;
+}
+.stat-pill .num { font-size: 2.6rem; font-weight: 900; color: var(--blue); line-height: 1; }
+.stat-pill .lbl { font-size: 0.95rem; color: var(--muted); margin-top: 4px; }
+
+/* ===== OFFER CARD ===== */
+.offer-card {
+  background: rgba(255,255,255,0.03); border: 2px solid rgba(36,106,200,0.35);
+  border-radius: 22px; padding: 34px 26px; text-align: center; margin-bottom: 8px;
+  box-shadow: 0 0 60px rgba(36,106,200,0.12);
+}
+.offer-card.flash { animation: offerflash 1.5s ease-out; }
+@keyframes offerflash {
+  0%, 100% { box-shadow: 0 0 60px rgba(36,106,200,0.12); }
+  30% { box-shadow: 0 0 0 3px var(--orange), 0 0 80px rgba(255,117,31,0.4); }
+}
+.offer-eyebrow {
+  display: inline-block; font-size: 0.8rem; font-weight: 800; letter-spacing: 0.04em;
+  color: #fff; margin-bottom: 6px;
+}
+.offer-sub-h { color: var(--orange); font-size: 1rem; font-weight: 700; margin-bottom: 24px; }
+.plans { display: flex; gap: 14px; margin-bottom: 22px; }
+.plan {
+  flex: 1; background: rgba(255,255,255,0.03); border: 1px solid var(--card-border);
+  border-radius: 16px; padding: 26px 18px 22px; display: flex; flex-direction: column;
+  position: relative; text-align: center;
+}
+.plan-best { border: 2px solid var(--orange); box-shadow: 0 0 44px rgba(255,117,31,0.16); }
+.plan-badge {
+  position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+  background: var(--orange); color: #fff; font-size: 0.72rem; font-weight: 800;
+  letter-spacing: 0.03em; padding: 5px 16px; border-radius: 100px; white-space: nowrap;
+}
+.plan-badge-turbo { background: #e0322d; font-size: 0.76rem; padding: 6px 16px; box-shadow: 0 0 22px rgba(224,50,45,0.55); }
+.plan-badge-turbo #turboTimer { font-variant-numeric: tabular-nums; }
+.plan-badge-founding { background: var(--blue); }
+.plan-name { font-size: 0.92rem; font-weight: 700; color: var(--blue-light); margin-bottom: 12px; }
+.plan-price { font-size: 2.3rem; font-weight: 900; color: #fff; line-height: 1; }
+.plan-price .old { font-size: 1.05rem; color: var(--dim); text-decoration: line-through; font-weight: 600; margin-right: 5px; }
+.plan-price small { font-size: 0.82rem; font-weight: 600; color: var(--muted); }
+.plan-permc { font-size: 0.85rem; color: var(--orange); font-weight: 700; margin-top: 4px; }
+.plan-feats { list-style: none; text-align: left; margin: 16px 0 18px; font-size: 0.9rem; color: var(--text); padding: 0; }
+.plan-feats li { margin-bottom: 7px; padding-left: 4px; }
+.plan .cta-btn { margin-top: auto; font-size: 1rem; padding: 14px 18px; width: 100%; box-shadow: none; }
+.plan-best .cta-btn { box-shadow: 0 0 30px rgba(255,117,31,0.3); }
+.guarantee {
+  display: flex; align-items: center; gap: 12px; text-align: left;
+  font-size: 0.95rem; color: var(--blue-light); background: rgba(36,106,200,0.08);
+  border: 1px solid rgba(36,106,200,0.2); border-radius: 12px; padding: 14px 18px; margin-bottom: 4px;
+}
+.guarantee svg { width: 26px; height: 26px; flex-shrink: 0; color: var(--blue); }
+.guarantee b { color: #fff; }
+
+/* ===== TESTIMONIALS ===== */
+.testi-h { text-align: center; font-size: 1.15rem; font-weight: 800; color: #fff; margin: 34px 0 18px; }
+.testi-card { background: var(--card); border: 1px solid var(--card-border); border-radius: 14px; padding: 20px 22px; margin-bottom: 14px; }
+.testi-card p { font-size: 0.98rem; color: var(--text); font-style: italic; margin-bottom: 10px; }
+.testi-card .who { font-size: 0.88rem; color: var(--blue); font-weight: 600; }
+
+.soft-link { display: block; text-align: center; font-size: 0.9rem; color: var(--blue); text-decoration: none; font-weight: 500; margin-top: 22px; }
+.soft-link:hover { color: var(--blue-light); }
+
+.cta-btn {
+  display: inline-block; background: var(--orange); color: #fff; font-size: 1.12rem; font-weight: 700;
+  padding: 17px 46px; border-radius: 12px; text-decoration: none;
+  transition: background .25s, transform .2s, box-shadow .25s;
+}
+.cta-btn:hover { background: var(--orange-dark); transform: translateY(-2px); }
+
+/* ===== FOOTER ===== */
+footer { text-align: center; padding: 40px 22px 48px; color: var(--dim); font-size: 0.85rem; }
+footer .flogo { width: 38px; height: auto; opacity: 0.85; margin-bottom: 10px; }
+
+/* ===== EXIT-INTENT POPUP ===== */
+.exit-pop { display: none; position: fixed; inset: 0; z-index: 99999; background: rgba(5,8,15,0.88); backdrop-filter: blur(7px); -webkit-backdrop-filter: blur(7px); align-items: center; justify-content: center; padding: 22px; }
+.exit-pop.on { display: flex; animation: exitfade .25s ease-out; }
+@keyframes exitfade { from { opacity: 0; } to { opacity: 1; } }
+.exit-card { position: relative; max-width: 440px; width: 100%; background: #0f1420; border: 2px solid var(--orange); border-radius: 20px; padding: 40px 30px 28px; text-align: center; box-shadow: 0 24px 90px rgba(0,0,0,0.6), 0 0 60px rgba(255,117,31,0.22); animation: exitscale .3s ease-out; }
+@keyframes exitscale { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+.exit-x { position: absolute; top: 10px; right: 14px; background: none; border: 0; color: var(--dim); font-size: 1.7rem; line-height: 1; cursor: pointer; padding: 4px; }
+.exit-x:hover { color: #fff; }
+.exit-eyebrow { font-size: 0.76rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: var(--orange); margin-bottom: 12px; }
+.exit-card h2 { font-size: clamp(1.5rem, 6vw, 1.9rem); font-weight: 900; color: #fff; line-height: 1.18; margin-bottom: 14px; letter-spacing: -0.01em; }
+.exit-card p { font-size: 1.02rem; color: var(--muted); margin-bottom: 24px; line-height: 1.6; }
+.exit-card p b { color: var(--blue-light); font-weight: 700; }
+.exit-cta { display: block; width: 100%; border: 0; cursor: pointer; font-family: inherit; background: var(--orange); color: #fff; font-size: 1.1rem; font-weight: 700; padding: 17px; border-radius: 12px; text-decoration: none; box-shadow: 0 6px 30px rgba(255,117,31,0.35); transition: background .2s, transform .15s; }
+.exit-nobrainer { background: rgba(36,106,200,0.12); border: 1px solid rgba(36,106,200,0.3); border-radius: 10px; padding: 12px 16px; font-size: 0.95rem; line-height: 1.5; color: var(--blue-light); margin-bottom: 22px; }
+.exit-nobrainer b { color: #fff; }
+.exit-cta:hover { background: var(--orange-dark); transform: translateY(-1px); }
+.exit-no { display: inline-block; margin-top: 14px; background: none; border: 0; color: var(--dim); font-size: 0.88rem; cursor: pointer; text-decoration: underline; font-family: inherit; }
+.exit-no:hover { color: var(--muted); }
+
+@media (max-width: 540px) {
+  .dl-card { flex-wrap: wrap; gap: 12px; padding: 18px; }
+  .dl-ico { width: 38px; }
+  .dl-btn { width: 100%; justify-content: center; padding: 13px; }
+  .dl-body { flex-basis: calc(100% - 50px); }
+  .plans { flex-direction: column; }
+}
+</style>
+<!-- Wistia player -->
+<script src="https://fast.wistia.com/player.js" async></script>
+<script src="https://fast.wistia.com/embed/dnxhajmymz.js" async type="module"></script>
+<style>wistia-player[media-id='dnxhajmymz']:not(:defined) { background: center / contain no-repeat url('https://fast.wistia.com/embed/medias/dnxhajmymz/swatch'); display: block; filter: blur(5px); padding-top:56.25%; }</style>
+</head>
+<body>
+
+<!-- sticky pasek oferty -->
+<div class="sticky-offer" id="stickyOffer">
+  <span class="sticky-normal"><b>Dołącz do społeczności MasterZone</b> · 7 dni za darmo</span>
+  <span class="sticky-turbo" style="display:none;">🔥 <b>Roczna oferta</b> — tylko tutaj, znika za <span id="stickyTimer">--:--</span></span>
+  <a href="#oferta" class="sticky-cta" id="stickyCta">Dołącz</a>
+</div>
+
+<!-- ===== HERO / POTWIERDZENIE ===== -->
+<header class="hero">
+  <img class="logo" src="https://radekpustelnik.pl/wp-content/uploads/2026/05/mz-logo.png" alt="MasterZone">
+  <div class="check">
+    <svg viewBox="0 0 24 24" fill="none" stroke="#246ac8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+  </div>
+  <div class="wrap">
+    <h1>Gotowe. Twój MasterPlan czeka niżej.</h1>
+    <p>Pobierz oba pliki. <b>Wysłaliśmy Ci je też mailem</b> — żebyś mógł wrócić do nich, kiedy zechcesz.</p>
+    <div class="spamnote">📩 <b>Maila nie ma w skrzynce?</b> Zajrzyj do <b>SPAMU</b> (albo zakładki <b>Oferty</b>) i przeciągnij wiadomość do „Głównej" — czasem tam ląduje.</div>
+  </div>
+</header>
+
+<!-- ===== POBRANIA ===== -->
+<section class="downloads">
+  <div class="wrap">
+
+    <div class="dl-card">
+      <div class="dl-ico">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="m9 14 2 2 4-4"/></svg>
+      </div>
+      <div class="dl-body">
+        <h3>MasterPlan do wypełnienia</h3>
+        <div class="meta">PDF · 4 strony · do druku</div>
+        <div class="tag">Twój szablon na każdy tydzień.</div>
+      </div>
+      <a class="dl-btn" href="https://radekpustelnik.pl/wp-content/uploads/2026/05/masterplan-do-wypelnienia.pdf" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>
+        Pobierz PDF
+      </a>
+    </div>
+
+    <div class="dl-card">
+      <div class="dl-ico">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+      </div>
+      <div class="dl-body">
+        <h3>Instrukcja planowania tygodnia</h3>
+        <div class="meta">PDF · 22 strony</div>
+        <div class="tag">Pokazuje krok po kroku, jak go wypełnić.</div>
+      </div>
+      <a class="dl-btn" href="https://radekpustelnik.pl/wp-content/uploads/2026/05/masterplan-instrukcja-planowania-tygodnia.pdf" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>
+        Pobierz PDF
+      </a>
+    </div>
+
+    <p class="dl-hint">Szablon wydrukuj i miej pod ręką — <b>instrukcja przeprowadzi Cię krok po kroku</b>.</p>
+
+    <!-- ===== PASEK-MOST do oferty ===== -->
+    <div class="bridge-bar">
+      <div class="bb-ico">🎁</div>
+      <p><b>Masz już plan tygodnia — to połowa drogi.</b> W podziękowaniu za film mam dla Ciebie coś ekstra, zjedź kawałek niżej. <span class="bb-down">↓</span></p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== UPSELL: MASTERZONE ===== -->
+<section class="upsell">
+  <div class="wrap">
+    <div class="label">Poznaj moc MasterZone</div>
+    <h2>Dowieź ten plan <span class="accent">2x szybciej.</span></h2>
+    <p class="sub">Plan był gotowy, a w środę i tak nic — znasz to. W MasterZone siadasz do roboty obok ludzi, którzy pilnują, że robisz swoje, i robota idzie 2x szybciej.</p>
+
+    <!-- ===== WISTIA: film MasterZone (story + testimoniale) ===== -->
+    <div class="video-wrap">
+      <wistia-player media-id="dnxhajmymz" aspect="1.7777777777777777"></wistia-player>
+    </div>
+
+    <!-- ===== BENEFITY (co zyskasz) ===== -->
+    <div class="benefits-h">Co dostajesz w środku:</div>
+
+    <div class="benefit">
+      <div class="benefit-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg></div>
+      <div class="benefit-txt"><b>Plan w aplikacji</b><span>Planujesz tydzień w apce, która sama przypomina i prowadzi — koniec z kartką gubioną do środy.</span></div>
+    </div>
+    <div class="benefit">
+      <div class="benefit-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></div>
+      <div class="benefit-txt"><b>Ktoś Cię pilnuje</b><span>Siadasz do bloku pracy obok ludzi, którzy pilnują, że faktycznie siądziesz. Trudniej odpalić scrolla, gdy reszta robi swoje.</span></div>
+    </div>
+    <div class="benefit">
+      <div class="benefit-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg></div>
+      <div class="benefit-txt"><b>Gotowy szablon Canva</b><span>Edytowalna wersja MasterPlanu do druku albo na ekran — odpalasz i masz plan tygodnia w 5 minut.</span></div>
+    </div>
+    <div class="benefit">
+      <div class="benefit-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
+      <div class="benefit-txt"><b>Piątek z listą na zielono</b><span>Najważniejsze robisz do południa, więc w piątek patrzysz na listę odhaczoną do końca, nie na to, co znów zostało.</span></div>
+    </div>
+    <div class="benefit">
+      <div class="benefit-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+      <div class="benefit-txt"><b>Koniec z robotą w pojedynkę</b><span>Pracujesz obok ludzi, którzy ogarniają robotę z domu tak samo jak Ty — i którzy widzą, że dowozisz.</span></div>
+    </div>
+
+    <div class="stat-pill">
+      <div class="num">92%</div>
+      <div class="lbl">osób, które dołączają — zostaje</div>
+    </div>
+
+    <!-- ===== OFERTA ===== -->
+    <div class="offer-card" id="oferta">
+      <div class="offer-eyebrow">Dołącz do społeczności MasterZone</div>
+      <div class="offer-sub-h">7 dni za darmo — potem wybierasz, jak wolisz:</div>
+
+      <div class="plans">
+        <div class="plan">
+          <div class="plan-badge plan-badge-founding">Cena założycielska</div>
+          <div class="plan-name">Miesięcznie</div>
+          <div class="plan-price"><span class="old">97</span>67<small> zł/mc</small></div>
+          <div class="plan-permc">tylko dla pierwszych 100 osób</div>
+          <ul class="plan-feats">
+            <li>✓ <b>Zamrożona na zawsze</b> — potem cena rośnie</li>
+            <li>✓ 7 dni za darmo, rezygnujesz kiedy chcesz</li>
+            <li>✓ płatność kartą, w PLN</li>
+          </ul>
+          <a class="cta-btn" href="https://buy.stripe.com/28E8wP724cRj2Wv1gZbZe01" target="_top">Zacznij 7 dni za darmo</a>
+        </div>
+
+        <div class="plan plan-best" id="turboPlan" style="display:none;">
+          <div class="plan-badge plan-badge-turbo">⏳ tylko przez <span id="turboTimer">60:00</span></div>
+          <div class="plan-name">Rok z góry · tylko tutaj</div>
+          <div class="plan-price"><span class="old">804</span>597<small> zł/rok</small></div>
+          <div class="plan-permc">≈ 50 zł/mc · 3 miesiące gratis</div>
+          <ul class="plan-feats">
+            <li>✓ Ta cena jest <b>tylko stąd</b> — nigdzie indziej</li>
+            <li>✓ płacisz BLIKiem lub kartą</li>
+            <li>✓ 7 dni gwarancja zwrotu — zero ryzyka</li>
+          </ul>
+          <a class="cta-btn" id="turboCta" href="https://buy.stripe.com/5kQ28r3PSg3v8gPe3LbZe02" target="_top">Zgarniam — bez ryzyka</a>
+        </div>
+      </div>
+
+      <div class="guarantee">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+        <span><b>Zero ryzyka.</b> Masz 7 dni gwarancji zwrotu — zgarniasz oszczędność, a jeśli się nie spodoba, oddajemy pieniądze. Bez pytań.</span>
+      </div>
+    </div>
+
+    <!-- ===== TESTYMONIALE (pod ceną) ===== -->
+    <div class="testi-h">Mówią członkowie</div>
+    <div class="testi-card">
+      <p>„90 minut od 9 do 10:30 jest niesamowite — wiem, że inni pracują razem ze mną. Czuję ich skupienie i sam siadam do roboty."</p>
+      <div class="who">— Michał Nowakowski</div>
+    </div>
+    <div class="testi-card">
+      <p>„Dochody wzrosły ponad 100% przez trzy miesiące. Bez tego uporządkowania nigdy by się nie wydarzyło."</p>
+      <div class="who">— Michał Krzemiński, przedsiębiorca i muzyk</div>
+    </div>
+    <div class="testi-card">
+      <p>„Włączam się o 9, o 11 mam gotowy najważniejszy projekt. Wieczory i weekend mam dla siebie."</p>
+      <div class="who">— Członkini MasterZone</div>
+    </div>
+
+    <a class="soft-link" href="https://www.skool.com/masterzone/about" target="_blank" rel="noopener">albo najpierw zerknij, co jest w środku →</a>
+  </div>
+</section>
+
+<!-- ===== EXIT-INTENT POPUP ===== -->
+<div class="exit-pop" id="exitPop">
+  <div class="exit-card">
+    <button class="exit-x" id="exitX" aria-label="Zamknij">&times;</button>
+    <div class="exit-eyebrow">Czekaj — na pewno?</div>
+    <h2>Na pewno chcesz stracić tę ofertę?</h2>
+    <p>W podziękowaniu za to, że obejrzałeś film i chcesz coś zmienić, mam dla Ciebie <b>coś ekstra</b> — ofertę, której nie ma nigdzie indziej i która jest dostępna <b>tylko teraz</b>.</p>
+    <p class="exit-nobrainer">7 dni za darmo. 7 dni gwarancji zwrotu. <b>Zero ryzyka</b> — masz tylko wieczory do odzyskania.</p>
+    <button class="exit-cta" id="exitOffer">Pokaż mi ofertę</button>
+    <button class="exit-no" id="exitNo">Nie, rezygnuję z oferty</button>
+  </div>
+</div>
+
+<footer>
+  <img class="flogo" src="https://radekpustelnik.pl/wp-content/uploads/2026/05/mz-logo.png" alt="MasterZone">
+  <div>MasterZone · Radek Pustelnik · © 2026</div>
+</footer>
+
+<script>
+  // Klik w pobieranie → PDF w nowej karcie, strona zjeżdża do oferty
+  document.querySelectorAll('.dl-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var o = document.getElementById('oferta');
+      if (!o) return;
+      setTimeout(function(){
+        o.scrollIntoView({behavior:'smooth', block:'center'});
+        o.classList.add('flash');
+        setTimeout(function(){ o.classList.remove('flash'); }, 1600);
+      }, 500);
+    });
+  });
+
+  // ===== TURBO: oferta roczna tylko przez 1h (czas z serwera = nie do zresetowania) =====
+  (function(){
+    var WORKER = "https://mz-youtube-optin.masterzone.workers.dev";
+    var u = '';
+    try { u = new URLSearchParams((window.top || window).location.search).get('u') || ''; }
+    catch(e) { u = new URLSearchParams(location.search).get('u') || ''; }
+    var plan = document.getElementById('turboPlan');
+    if (!u || !plan) return;
+    fetch(WORKER + "/deadline?u=" + encodeURIComponent(u))
+      .then(function(r){ return r.json(); })
+      .then(function(d){
+        if (!d || !d.active || d.remaining <= 0) return; // po czasie / bez tokenu = bez oferty rocznej
+        document.getElementById('turboCta').href = WORKER + "/turbo?u=" + encodeURIComponent(u);
+        plan.style.display = '';
+        var sticky = document.getElementById('stickyOffer');
+        var sN = sticky && sticky.querySelector('.sticky-normal');
+        var sT = sticky && sticky.querySelector('.sticky-turbo');
+        var sCta = document.getElementById('stickyCta');
+        var stEl = document.getElementById('stickyTimer');
+        if (sticky){ sticky.classList.add('turbo-mode'); if(sN) sN.style.display='none'; if(sT) sT.style.display=''; if(sCta) sCta.textContent='Zgarnij'; }
+        var rem = d.remaining;
+        var el = document.getElementById('turboTimer');
+        function fmt(r){ var m=Math.floor(r/60), s=r%60; return (m<10?'0':'')+m+':'+(s<10?'0':'')+s; }
+        function render(){
+          if (rem <= 0) {
+            clearInterval(iv);
+            plan.style.display = 'none';
+            if (sticky){ sticky.classList.remove('turbo-mode'); if(sN) sN.style.display=''; if(sT) sT.style.display='none'; if(sCta) sCta.textContent='Dołącz'; }
+            return;
+          }
+          var t = fmt(rem);
+          el.textContent = t;
+          if (stEl) stEl.textContent = t;
+          rem--;
+        }
+        render();
+        var iv = setInterval(render, 1000);
+      })
+      .catch(function(){});
+  })();
+
+  // ===== Exit-intent popup =====
+  (function(){
+    var pop = document.getElementById('exitPop');
+    if (!pop) return;
+    var shown = false;
+    function show(){
+      if (shown) return;
+      try { if (sessionStorage.getItem('mzExit')) return; sessionStorage.setItem('mzExit','1'); } catch(e){}
+      shown = true; pop.classList.add('on');
+    }
+    function hide(){ pop.classList.remove('on'); }
+    // desktop: kursor ucieka górą ekranu
+    document.addEventListener('mouseout', function(e){ if (!e.relatedTarget && e.clientY <= 0) show(); });
+    // mobile: przewinął w dół, a teraz szybko wraca w górę blisko topu
+    var lastY = window.pageYOffset, maxY = 0;
+    window.addEventListener('scroll', function(){
+      var y = window.pageYOffset;
+      if (y > maxY) maxY = y;
+      if (maxY > 600 && y < 240 && (lastY - y) > 6) show();
+      lastY = y;
+    }, { passive: true });
+    document.getElementById('exitX').addEventListener('click', hide);
+    document.getElementById('exitNo').addEventListener('click', hide);
+    var off = document.getElementById('exitOffer');
+    if (off) off.addEventListener('click', function(){ hide(); var o = document.getElementById('oferta'); if (o) o.scrollIntoView({behavior:'smooth', block:'start'}); });
+    pop.addEventListener('click', function(e){ if (e.target === pop) hide(); });
+  })();
+</script>
+
+</body>
+</html>
